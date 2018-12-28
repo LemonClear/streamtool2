@@ -80,21 +80,30 @@ endif
 
 export BUILD_SRC
 
-## set objtree, src, obj
+## 7.2 set objtree, src, obj
 objtree         := .
 src             := $(srctree)
 obj             := $(objtree)
 
 export srctree objtree
 
-## set version header
+## 7.3 set version header
 version_h := include/version.h
 
-## simulator version 
+## 7.4 simulator version 
 SIMUVERSION = $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
 export VERSION PATCHLEVEL SUBLEVEL SIMUVERSION
 
-## Make variables (CC, etc...)
+## 7.5 kconfig
+KCONFIG_CONFIG  ?= .config
+export KCONFIG_CONFIG
+
+## SHELL used by kbuild
+CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
+	  else if [ -x /bin/bash ]; then echo /bin/bash; \
+	  else echo sh; fi ; fi)
+
+## 7.6 Make variables (CC, etc...)
 AS              = as
 LD              = ld
 CC              = gcc
@@ -104,37 +113,20 @@ NM              = nm
 STRIP           = strip
 OBJCOPY         = objcopy
 OBJDUMP         = objdump
-CFLAGS          = -g
+CFLAGS          = 
 CXXFLAGS        = 
-ARFLAG          = -rcs
 
-export CONFIG_SHELL AS LD CC AR NM STRIP OBJCOPY OBJDUMP CFLAGS CXXFLAGS ARFLAG
+export CONFIG_SHELL AS LD CC AR NM STRIP OBJCOPY OBJDUMP
 export MAKE
 
-## simulator main entry 
+## 7.7 simulator main entry 
 PHONY += simu
 _all: simu
 
-## 3rdparty controller libs
-ARCHLIBS        := -L./arch/riscv/ -lRiscv -lpthread
-SUBDIRS         := ./kernel ./lib
-INCLUDE_DIRS    := -I./include -I./arch/include -I./lib/include -I./kernel/include
-source          := $(wildcard *.c)
-objects         := $(patsubst %.c,%.o,$(source))
-
-## main compile
-simu:$(objects) $(SUBDIRS)
-	$(CC) $< -o $@ $(ARCHLIBS)
-
-$(objects):%o:%c
-	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-
-$(SUBDIRS):trace
-	+$(MAKE) -C $@
-
-trace:
-	@echo $(SUBDIRS)
-	@echo 'bengin compile...'
+## 7.8 objects link to simulator
+arch-y          := arch/
+core-y          := kernel/
+lib-y           := lib/
 
 
 PHONY += help
@@ -142,12 +134,10 @@ help:
 	@echo  'Cleaning targets:'
 	@echo  '  clean           - Remove most generated files but keep the .config'
 
+simu: help
+
 
 endif # skip-makefile
-
-
-PHONY += clean
-clean:
 
 
 # End-1.Force
