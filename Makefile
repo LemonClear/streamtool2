@@ -27,47 +27,7 @@ _all:
 # 2.Look for make include files relative to root of src 
 MAKEFLAGS += -rR --include-dir=$(CURDIR)
 
-# 3.Build source dir
-ifeq ($(BUILD_SRC),)
-
-# 4.Output to separate dir
-ifeq ("$(origin O)", "command line")
-  BUILD_OUTPUT := $(O)
-endif
-
-# 5.Cancel implicit rules on top Makefile
-$(CURDIR)/Makefile Makefile: ;
-
-ifneq ($(words $(subst :, ,$(CURDIR))), 1)
-  $(error main directory cannot contain spaces nor colons)
-endif
-
-# 6.BUILD_OUTPUT dir exist(or use -O dir), Run increasement make
-ifneq ($(BUILD_OUTPUT),)
-saved-output := $(BUILD_OUTPUT)
-BUILD_OUTPUT := $(shell mkdir -p $(BUILD_OUTPUT) && cd $(BUILD_OUTPUT) && pwd)
-$(if $(BUILD_OUTPUT),, $(error failed to create output directory "$(saved-output)"))
-
-PHONY += $(MAKECMDGOALS) sub-make
-
-$(filter-out _all sub-make $(CURDIR)/Makefile, $(MAKECMDGOALS)) _all: sub-make
-	@:
-
-## invoke a increasement make in the output directory, passing relevant variables
-sub-make:
-	$(MAKE) -C $(BUILD_OUTPUT) BUILD_SRC=$(CURDIR) \
-	-f $(CURDIR)/Makefile $(filter-out _all sub-make,$(MAKECMDGOALS))
-
-## end increasement make, and avoid full build
-skip-makefile := 1
-endif # ifneq ($(BUILD_OUTPUT),)
-
-endif # ifeq ($(BUILD_SRC),)
-
-# 7.BUILD_OUTPUT dir not exist, Run full make
-ifeq ($(skip-makefile),)
-
-## 7.1 set source dir
+# 3.set source dir
 ifeq ($(BUILD_SRC),)
   srctree := .
 else
@@ -87,14 +47,14 @@ obj             := $(objtree)
 
 export srctree objtree
 
-## set version header
-version_h := include/version.h
+## out dir
+BUILD_OUTPUT  = $(srctree)/out
+BUILD_OUTPUT := $(shell mkdir -p $(BUILD_OUTPUT) && cd $(BUILD_OUTPUT) && pwd)
+$(if $(BUILD_OUTPUT),, $(error failed to create output directory "$(saved-output)"))
 
-## simulator version 
-SIMUVERSION = $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
-export VERSION PATCHLEVEL SUBLEVEL SIMUVERSION
+export BUILD_OUTPUT
 
-## Make variables (CC, etc...)
+# 4.Make variables (CC, etc...)
 AS              = as
 LD              = ld
 CC              = gcc
@@ -107,47 +67,40 @@ OBJDUMP         = objdump
 CFLAGS          = -g
 CXXFLAGS        = 
 ARFLAG          = -rcs
+AWK             = awk
 
-export CONFIG_SHELL AS LD CC AR NM STRIP OBJCOPY OBJDUMP CFLAGS CXXFLAGS ARFLAG
+export CONFIG_SHELL AS LD CC AR NM STRIP OBJCOPY OBJDUMP CFLAGS CXXFLAGS ARFLAG AWK
 export MAKE
 
-## simulator main entry 
+# 5.simulator main entry 
 PHONY += simu
 _all: simu
 
-## 3rdparty controller libs
-ARCHLIBS        := -L./arch/riscv/ -lRiscv -lpthread
-SUBDIRS         := ./kernel ./lib
-INCLUDE_DIRS    := -I./include -I./arch/include -I./lib/include -I./kernel/include
-source          := $(wildcard *.c)
-objects         := $(patsubst %.c,%.o,$(source))
+# 6.3rdparty controller libs
+CLIBS           := 
+ARCHLIBS        := -L$(srctree)/arch/riscv/ -lRiscv -lpthread
+SUBDIRS         := $(srctree)/kernel #$(srctree)/lib
+INCLUDE_DIRS    := -I$(srctree)/include -I$(srctree)/arch/include -I$(srctree)/lib/include -I$(srctree)/kernel/include
+#source          := $(wildcard *.c)
+objects         := $(BUILD_OUTPUT)/*.o
 
-## main compile
-simu:$(objects) $(SUBDIRS)
-	$(CC) $< -o $@ $(ARCHLIBS)
+export CLIBS ARCHLIBS INCLUDE_DIRS
 
-$(objects):%o:%c
-	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
+# 7.main compile
+simu:$(SUBDIRS)
+	$(CC) $(objects) -o $@
+	mv $@ $(BUILD_OUTPUT)
 
 $(SUBDIRS):trace
 	+$(MAKE) -C $@
 
 trace:
-	@echo $(SUBDIRS)
-	@echo 'bengin compile...'
-
-
-PHONY += help
-help:
-	@echo  'Cleaning targets:'
-	@echo  '  clean           - Remove most generated files but keep the .config'
-
-
-endif # skip-makefile
+	@echo 'bengin compile...... $(SUBDIRS)'
 
 
 PHONY += clean
 clean:
+	$(shell rm -rf $(BUILD_OUTPUT))
 
 
 # End-1.Force
