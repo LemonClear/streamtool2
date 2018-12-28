@@ -15,5 +15,11 @@
 # limitations under the License.
 #
 */
-using namespace std;
+#ifndef __MIDLAYER_H__
+#define __MIDLAYER_H__
 
+
+
+
+
+#endif

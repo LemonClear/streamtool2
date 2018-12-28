@@ -15,5 +15,11 @@
 # limitations under the License.
 #
 */
-using namespace std;
+#ifndef __OF_H__
+#define __OF_H__
 
+
+
+
+
+#endif

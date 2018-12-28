@@ -15,5 +15,11 @@
 # limitations under the License.
 #
 */
-using namespace std;
+#ifndef __MATH_H__
+#define __MATH_H__
 
+
+
+
+
+#endif
