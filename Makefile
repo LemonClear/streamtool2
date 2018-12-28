@@ -76,7 +76,7 @@ export MAKE
 PHONY += simu
 _all: simu
 
-# 6.3rdparty controller libs
+# 6.libs includes objects
 CLIBS           := 
 ARCHLIBS        := -L$(srctree)/arch/riscv/ -lRiscv -lpthread
 SUBDIRS         := $(srctree)/kernel #$(srctree)/lib
@@ -91,6 +91,7 @@ simu:$(SUBDIRS)
 	$(CC) $(objects) -o $@
 	mv $@ $(BUILD_OUTPUT)
 
+## build sub-dirs
 $(SUBDIRS):trace
 	+$(MAKE) -C $@
 
