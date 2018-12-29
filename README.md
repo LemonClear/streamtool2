@@ -14,6 +14,6 @@ Release Notes:
 Readme:
 1. Under Apache-V2 lisence
 2. C code call CPP code use lib/midlayer/ patten
-3.
+3. If have dynamic so lib, should use "make install" after "make"
 4.
 
