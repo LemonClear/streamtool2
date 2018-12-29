@@ -19,7 +19,6 @@ source          := $(wildcard *.cpp)
 objects         := $(patsubst %.cpp,%.o,$(source))
 
 ## flags
-CXXFLAGS        += -fPIC
 LFLAGS          := --shared
 TARGET          := libmidlayer.so
 
@@ -28,12 +27,12 @@ PHONY:_all
 _all:$(TARGET)
 
 $(TARGET):$(objects) $(SUBDIRS)
-	$(CXX) $(LFLAGS) $^ -o $@ $(INCLUDE_DIRS)
-	cp $@ $(BUILD_OUTPUT)
+	$(CXX) $(LFLAGS) -o $@ $^ $(INCLUDE_DIRS)
+	mv $@ $(BUILD_OUTPUT)
+	mv $^ $(BUILD_OUTPUT_LIBOBJS)
 
 $(objects):%.o:%.cpp
-	$(CXX) -c $(CXXFLAGS) $< -o $@ $(INCLUDE_DIRS)
-	cp $@ $(BUILD_OUTPUT)
+	$(CXX) -c $< -o $@ $(CXXFLAGS) $(INCLUDE_DIRS)
 
 $(SUBDIRS):trace
 	+$(MAKE) -C $@

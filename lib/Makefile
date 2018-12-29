@@ -30,7 +30,7 @@ _all:$(objects) $(SUBDIRS)
 
 $(objects):%.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-	mv $@ $(BUILD_OUTPUT)
+	mv $@ $(BUILD_OUTPUT_LIBOBJS)
 
 $(SUBDIRS):trace
 	+$(MAKE) -C $@

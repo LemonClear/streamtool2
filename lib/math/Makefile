@@ -29,11 +29,11 @@ _all:$(TARGET)
 
 $(TARGET):$(objects) $(SUBDIRS)
 	$(CC) $(LFLAGS) $^ -o $@ $(INCLUDE_DIRS)
-	cp $@ $(BUILD_OUTPUT)
+	mv $@ $(BUILD_OUTPUT)
+	mv $^ $(BUILD_OUTPUT_LIBOBJS)
 
 $(objects):%.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-	cp $@ $(BUILD_OUTPUT)
 
 $(SUBDIRS):trace
 	+$(MAKE) -C $@
