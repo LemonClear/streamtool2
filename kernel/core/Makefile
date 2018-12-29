@@ -35,6 +35,7 @@ trace:
 	@echo 'bengin compile...... $(SUBDIRS)'
 
 
-#clean:
+clean:
+	rm -rf $(objects)
 
 .PHONY: $(PHONY)
