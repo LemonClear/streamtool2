@@ -15,5 +15,20 @@
 # limitations under the License.
 #
 */
+#include<iostream>
 using namespace std;
 
+void function();
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+        void midlayer_function()
+        {
+                function();
+        }
+
+#ifdef __cplusplus
+}
+#endif
