@@ -19,7 +19,8 @@ source          := $(wildcard *.c)
 objects         := $(patsubst %.c,%.o,$(source))
 
 ## flags
-LFLAGS          := --shared -fPIC
+CFLAGS          += -fPIC
+LFLAGS          := --shared
 TARGET          := libmath.so
 
 ## main compile
