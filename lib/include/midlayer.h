@@ -18,7 +18,7 @@
 #ifndef __MIDLAYER_H__
 #define __MIDLAYER_H__
 
-extern "C" void midlayer_function();
+void midlayer_function();
 
 
 

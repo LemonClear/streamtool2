@@ -16,9 +16,12 @@
 #
 */
 #include <stdio.h>
+#include <midlayer.h>
 
 int main(int argc, char* argv[])
 {
         printf("hello word!!\n");
+        midlayer_function();
+
         return 0;
 }
