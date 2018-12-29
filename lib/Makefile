@@ -14,9 +14,11 @@
 # limitations under the License.
 #
 
-SUBDIRS         := #./math \
-                   ./midlayer \
-		   ./of
+SUBDIRS         := ./math \
+		   ./midlayer \
+		   ./of \
+		   ./debugger
+
 source          := $(wildcard *.c)
 objects         := $(patsubst %.c,%.o,$(source))
 
@@ -37,6 +39,7 @@ trace:
 	@echo 'bengin compile...... $(SUBDIRS)'
 
 
-#clean:
+clean:
+	rm -f $(objects)
 
 .PHONY: $(PHONY)
