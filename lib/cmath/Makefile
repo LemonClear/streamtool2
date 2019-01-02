@@ -28,7 +28,7 @@ PHONY:_all
 _all:$(TARGET)
 
 $(TARGET):$(objects) $(SUBDIRS)
-	$(CC) $(LFLAGS) $^ -o $@ $(INCLUDE_DIRS)
+	$(CC) $(LFLAGS) -o $@ $^ $(INCLUDE_DIRS)
 	mv $@ $(BUILD_OUTPUT)
 	mv $^ $(BUILD_OUTPUT_LIBOBJS)
 
