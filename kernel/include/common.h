@@ -18,20 +18,26 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+/*device ip definition*/
+typedef struct registers {
+        const char* name;
+        long
+}Regs;
+
 /*device operation functions definition*/
 typedef struct device_ops {
         void (*open)();
         void (*read)();
         void (*write)();
         void (*tick_once)();
-}IP_ops;
+}ip_operations;
 
 /*device ip definition*/
 typedef struct device {
         const char* name;
 
-        IP_ops ops;
-}IP;
+        ip_operations ops;
+}ip;
 
 /**/
 
