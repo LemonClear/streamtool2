@@ -19,16 +19,14 @@ source          := $(wildcard *.c)
 objects         := $(patsubst %.c,%.o,$(source))
 
 ## flags
-CFLAGS          += -fPIC
-LFLAGS          := --shared
-TARGET          := libof.so
+TARGET          := libof.a
 
 ## main compile
 PHONY:_all
 _all:$(TARGET)
 
 $(TARGET):$(objects) $(SUBDIRS)
-	$(CC) $(LFLAGS) $^ -o $@ $(INCLUDE_DIRS)
+	$(AR) $(ARFLAG) -o $@ $^
 	mv $@ $(BUILD_OUTPUT)
 	mv $^ $(BUILD_OUTPUT_LIBOBJS)
 

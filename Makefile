@@ -71,7 +71,7 @@ OBJCOPY         = objcopy
 OBJDUMP         = objdump
 CFLAGS          = -g -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC
 CXXFLAGS        = -m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC
-ARFLAG          = -rcs
+ARFLAG          = -r
 AWK             = awk
 
 export AS LD CC CXX AR NM STRIP OBJCOPY OBJDUMP CFLAGS CXXFLAGS ARFLAG AWK
@@ -82,14 +82,19 @@ PHONY += simu
 _all: simu
 
 # 6.libs includes objects
-objects         := $(BUILD_OUTPUT)/*.o
+objects          := $(BUILD_OUTPUT)/*.o
 
-ARCH_LIBS       :=
+ARCH_LIBS        :=
 
-STATIC_LIBS     :=
+STATIC_LIBS_PATH := -L$(srctree)/out/
 
-DYNAMIC_LIBS    := -L$(srctree)/out/ \
-			-lmidlayer
+STATIC_LIBS      := -lof
+
+DYNAMIC_LIBS_PATH:= -L$(srctree)/out/
+
+DYNAMIC_LIBS     := -lmidlayer \
+			-lcmath \
+			-ldebugger
 
 SUBDIRS         := $(srctree)/kernel \
 			$(srctree)/lib
@@ -99,11 +104,11 @@ INCLUDE_DIRS    := -I$(fullsrctree)/include/ \
 		   -I$(fullsrctree)/lib/include/ \
 		   -I$(fullsrctree)/kernel/include/
 
-export ARCH_LIBS STATIC_LIBS DYNAMIC_LIBS INCLUDE_DIRS
+export ARCH_LIBS STATIC_LIBS_PATH STATIC_LIBS DYNAMIC_LIBS_PATH DYNAMIC_LIBS INCLUDE_DIRS
 
 # 7.main compile
 simu:$(SUBDIRS)
-	$(CC) $(objects) -o $@ $(DYNAMIC_LIBS)
+	$(CC) $(objects) -o $@ $(DYNAMIC_LIBS_PATH) $(DYNAMIC_LIBS) $(STATIC_LIBS_PATH) $(STATIC_LIBS)
 	mv $@ $(BUILD_OUTPUT)
 
 ## build sub-dirs
