@@ -16,9 +16,17 @@
 #
 */
 #include <stdio.h>
+#include "c2xlayer.h"
+#include "cmath.h"
 #include "of.h"
 
-int poweron()
+int main(int argc, char* argv[])
 {
+        printf("hello word!!\n");
+        c2xlayer_function();
+        fp16_pt();
+        of();
+        of_dt();
+
         return 0;
 }
