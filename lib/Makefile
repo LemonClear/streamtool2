@@ -15,7 +15,7 @@
 #
 
 SUBDIRS         := ./cmath \
-		   ./midlayer \
+		   ./c2xlayer \
 		   ./of \
 		   ./debugger
 

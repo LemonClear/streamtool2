@@ -1,4 +1,3 @@
-/*
 #
 # Copyright LemonClear
 #
@@ -14,21 +13,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-*/
-#include<iostream>
-using namespace std;
 
-void function();
+SUBDIRS         := 
+source          := $(wildcard *.cpp)
+objects         := $(patsubst %.cpp,%.o,$(source))
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+## flags
+LFLAGS          := --shared
+TARGET          := libc2xlayer.so
 
-        void midlayer_function()
-        {
-                function();
-        }
+## main compile
+PHONY:_all
+_all:$(TARGET)
 
-#ifdef __cplusplus
-}
-#endif
+$(TARGET):$(objects) $(SUBDIRS)
+	$(CXX) $(LFLAGS) -o $@ $^ $(INCLUDE_DIRS)
+	mv $@ $(BUILD_OUTPUT)
+	mv $^ $(BUILD_OUTPUT_LIBOBJS)
+
+$(objects):%.o:%.cpp
+	$(CXX) -c $< -o $@ $(CXXFLAGS) $(INCLUDE_DIRS)
+
+$(SUBDIRS):trace
+	+$(MAKE) -C $@
+
+trace:
+	@echo 'bengin compile...... $(SUBDIRS)'
+
+
+clean:
+	rm -f $(objects)
+	rm -f $(TARGET)
+
+##
+.PHONY: $(PHONY)

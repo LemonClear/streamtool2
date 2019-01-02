@@ -92,7 +92,7 @@ STATIC_LIBS      := -lof
 
 DYNAMIC_LIBS_PATH:= -L$(srctree)/out/
 
-DYNAMIC_LIBS     := -lmidlayer \
+DYNAMIC_LIBS     := -lc2xlayer \
 		    -lcmath \
 		    -ldebugger
 

@@ -16,14 +16,14 @@
 #
 */
 #include <stdio.h>
-#include <midlayer.h>
+#include <c2xlayer.h>
 #include <cmath.h>
 #include <of.h>
 
 int main(int argc, char* argv[])
 {
         printf("hello word!!\n");
-        midlayer_function();
+        c2xlayer_function();
         fp16_pt();
         of();
         of_dt();

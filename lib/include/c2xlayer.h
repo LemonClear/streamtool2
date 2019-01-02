@@ -18,7 +18,7 @@
 #ifndef __MIDLAYER_H__
 #define __MIDLAYER_H__
 
-void midlayer_function();
+void c2xlayer_function();
 
 
 
