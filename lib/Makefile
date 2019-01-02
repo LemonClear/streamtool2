@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-SUBDIRS         := ./math \
+SUBDIRS         := ./cmath \
 		   ./midlayer \
 		   ./of \
 		   ./debugger

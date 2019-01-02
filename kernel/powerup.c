@@ -17,11 +17,13 @@
 */
 #include <stdio.h>
 #include <midlayer.h>
+#include <cmath.h>
 
 int main(int argc, char* argv[])
 {
         printf("hello word!!\n");
         midlayer_function();
+        fp16_pt();
 
         return 0;
 }

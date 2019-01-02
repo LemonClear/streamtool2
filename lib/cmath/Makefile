@@ -21,7 +21,7 @@ objects         := $(patsubst %.c,%.o,$(source))
 ## flags
 CFLAGS          += -fPIC
 LFLAGS          := --shared
-TARGET          := libmath.so
+TARGET          := libcmath.so
 
 ## main compile
 PHONY:_all

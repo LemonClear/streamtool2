@@ -15,3 +15,12 @@
 # limitations under the License.
 #
 */
+#ifndef __MATH_H__
+#define __MATH_H__
+
+void fp16_pt();
+
+
+
+
+#endif

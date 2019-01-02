@@ -15,11 +15,10 @@
 # limitations under the License.
 #
 */
-#ifndef __MATH_H__
-#define __MATH_H__
+#include <stdio.h>
 
-
-
-
-
-#endif
+void fp16_pt()
+{
+        int i = 0;
+        printf("My fp16 = %d\n", i);
+}
