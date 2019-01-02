@@ -18,6 +18,8 @@
 #ifndef __OF_H__
 #define __OF_H__
 
+void of();
+void of_dt();
 
 
 

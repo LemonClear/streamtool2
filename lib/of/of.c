@@ -15,3 +15,11 @@
 # limitations under the License.
 #
 */
+#include <stdio.h>
+
+void of()
+{
+        char* name = "of";
+
+        printf("My name = %s\n", name);
+}

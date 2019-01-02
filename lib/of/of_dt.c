@@ -15,3 +15,11 @@
 # limitations under the License.
 #
 */
+#include <stdio.h>
+
+void of_dt()
+{
+        char* name = "of_dt";
+
+        printf("My name = %s\n", name);
+}
