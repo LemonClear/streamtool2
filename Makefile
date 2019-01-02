@@ -93,8 +93,8 @@ STATIC_LIBS      := -lof
 DYNAMIC_LIBS_PATH:= -L$(srctree)/out/
 
 DYNAMIC_LIBS     := -lmidlayer \
-			-lcmath \
-			-ldebugger
+		    -lcmath \
+		    -ldebugger
 
 SUBDIRS         := $(srctree)/kernel \
 			$(srctree)/lib

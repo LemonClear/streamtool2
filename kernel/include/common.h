@@ -18,7 +18,22 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+/*device operation functions definition*/
+typedef struct device_ops {
+        void (*open)();
+        void (*read)();
+        void (*write)();
+        void (*tick_once)();
+}IP_ops;
 
+/*device ip definition*/
+typedef struct device {
+        const char* name;
+
+        IP_ops ops;
+}IP;
+
+/**/
 
 
 
