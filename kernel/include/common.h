@@ -18,11 +18,14 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+#include "type.h"
+
 /*device ip definition*/
 typedef struct registers {
         const char* name;
-        long
-}Regs;
+        address_t addr;
+        reg64_t value;
+}regs;
 
 /*device operation functions definition*/
 typedef struct device_ops {
