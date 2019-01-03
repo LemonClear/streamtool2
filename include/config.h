@@ -17,9 +17,24 @@
 */
 #ifndef __CONFIG_H__
 #define __CONFIG_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines simulator configurations. FIXME: will replaced by kconfig
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+/*core inside*/
+#define CTLP_REG_COUNT  200
+#define NCOP_REG_COUNT  200
+#define TCOP_REG_COUNT  200
+#define RAM_REG_COUNT   200
 
+/*chip inside*/
+#define CHIP_REG_COUNT  100
+#define NOC_REG_COUNT   100
+#define CHIP_REG_COUNT  100
+
+/*board inside*/
+#define BOARD_REG_COUNT 100
 
 
 #endif
