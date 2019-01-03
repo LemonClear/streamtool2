@@ -18,16 +18,21 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ * This file defines all kernel structures.
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #include "type.h"
+#include "config.h"
 
-/*device ip definition*/
+
+/*ip register*/
 typedef struct registers {
         const char* name;
         address_t addr;
         reg64_t value;
 }regs;
 
-/*device operation functions definition*/
+/*ip operation*/
 typedef struct device_ops {
         void (*open)();
         void (*read)();
@@ -35,7 +40,7 @@ typedef struct device_ops {
         void (*tick_once)();
 }ip_operations;
 
-/*device ip definition*/
+/*ip structure*/
 typedef struct device {
         const char* name;
 
