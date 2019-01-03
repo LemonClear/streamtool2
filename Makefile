@@ -97,7 +97,8 @@ DYNAMIC_LIBS     := -lc2xlayer \
 		    -ldebugger
 
 SUBDIRS         := $(srctree)/kernel \
-			$(srctree)/lib
+		   $(srctree)/lib \
+		   $(srctree)/configs
 
 INCLUDE_DIRS    := -I$(fullsrctree)/include/ \
 		   -I$(fullsrctree)/arch/include/ \
