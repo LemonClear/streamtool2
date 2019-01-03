@@ -19,6 +19,56 @@
 #define __LIBRARY_H__
 
 
+#include "cerr.h"
+
+
+/*same type*/
+#ifndef __same_type
+# define __same_type(a, b) __builtin_types_compatible_p(typeof(a), typeof(b))
+#endif
+
+
+/**
+ * offsetof - compute memer ofset of a struct
+ * @type:       the type of the container struct this is embedded in.
+ * @member:     the name of the member within the struct.
+ *
+ */
+#undef offsetof
+#ifdef __compiler_offsetof
+# define offsetof(TYPE, MEMBER)  __compiler_offsetof(TYPE, MEMBER)
+#else
+# define offsetof(TYPE, MEMBER)  ((size_t)&((TYPE *)0)->MEMBER)
+#endif
+
+
+/**
+ * container_of - cast a member of a structure out to the containing structure
+ * @ptr:        the pointer to the member.
+ * @type:       the type of the container struct this is embedded in.
+ * @member:     the name of the member within the struct.
+ *
+ */
+#define container_of(ptr, type, member) ({                              \
+        void *__mptr = (void *)(ptr);                                   \
+        ((type *)(__mptr - offsetof(type, member))); })
+
+/**
+ * container_of_safe - cast a member of a structure out to the containing structure
+ * @ptr:        the pointer to the member.
+ * @type:       the type of the container struct this is embedded in.
+ * @member:     the name of the member within the struct.
+ *
+ * If IS_ERR_OR_NULL(ptr), ptr is returned unchanged.
+ */
+#define container_of_safe(ptr, type, member) ({                         \
+        void *__mptr = (void *)(ptr);                                   \
+        BUILD_BUG_ON_MSG(!__same_type(*(ptr), ((type *)0)->member) &&   \
+                        ┊!__same_type(*(ptr), void),                    \
+                        ┊"pointer type mismatch in container_of()");    \
+        IS_ERR_OR_NULL(__mptr) ? ERR_CAST(__mptr) :                     \
+                ((type *)(__mptr - offsetof(type, member))); })
+
 
 
 
