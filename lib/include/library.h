@@ -1,3 +1,4 @@
+/*
 #
 # Copyright LemonClear
 #
@@ -13,34 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-SUBDIRS         := ./cmath \
-		   ./c2xlayer \
-		   ./of \
-		   ./debugger \
-		   ./library
-
-source          := $(wildcard *.c)
-objects         := $(patsubst %.c,%.o,$(source))
+*/
+#ifndef __LIBRARY_H__
+#define __LIBRARY_H__
 
 
-## main compile
-PHONY:_all
-
-_all:$(objects) $(SUBDIRS)
-
-$(objects):%.o:%.c
-	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-	mv $@ $(BUILD_OUTPUT_LIBOBJS)
-
-$(SUBDIRS):trace
-	+$(MAKE) -C $@
-
-trace:
-	@echo 'bengin compile...... $(SUBDIRS)'
 
 
-clean:
-	rm -f $(objects)
 
-.PHONY: $(PHONY)
+#endif
