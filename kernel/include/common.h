@@ -27,17 +27,22 @@
 
 /*ip register*/
 typedef struct registers {
-        const char* name;
-        address_t addr;
-        reg64_t value;
+        const char* name;        //register name
+        address_t addr;          //register address
+        reg64_t value;           //register value
 }regs;
 
 /*ip operation*/
 typedef struct device_ops {
-        void (*open)();
-        void (*read)();
-        void (*write)();
-        void (*tick_once)();
+        void (*init)();          //init
+        void (*deinit)();        //deinit
+        void (*read)();          //read
+        void (*write)();         //write
+        void (*set_reg)();       //set register
+        void (*get_reg)();       //get register
+        void (*clear_reg)();     //clear register
+        void (*cicle_arrive)();  //clock trigger
+        void (*dump)();          //debug
 }ip_operations;
 
 /*ip structure*/
