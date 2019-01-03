@@ -15,8 +15,13 @@
 # limitations under the License.
 #
 */
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all data types and masks
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 #ifndef __TYPE_H__
 #define __TYPE_H__
+
 
 /*address*/
 typedef unsigned long address_t; //32bit or 64bit according to cpu
@@ -43,7 +48,8 @@ typedef short int half; //16bit
 #define ARM_AMBA_WORD_MASK  0x00000000FFFFFFFF; //32bit
 #define ARM_AMBA_DWORD_MASK 0xFFFFFFFFFFFFFFFF; //64bit
 
-/**/
+/*riscv bus masks*/
+
 
 
 #endif
