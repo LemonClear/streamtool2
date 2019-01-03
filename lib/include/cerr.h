@@ -36,12 +36,12 @@ static inline long PTR_ERR(const void *ptr)
         return (long) ptr;
 }
 
-static inline bool IS_ERR(const void *ptr)
+static inline int IS_ERR(const void *ptr)
 {
         return IS_ERR_VALUE((unsigned long)ptr);
 }
 
-static inline bool IS_ERR_OR_NULL(const void *ptr)
+static inline int IS_ERR_OR_NULL(const void *ptr)
 {
         return unlikely(!ptr) || IS_ERR_VALUE((unsigned long)ptr);
 }

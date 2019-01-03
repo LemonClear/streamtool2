@@ -28,6 +28,49 @@
 #endif
 
 
+/*compile time warning and error*/
+#ifndef __compiletime_warning
+# define __compiletime_warning(message) __attribute__((__warning__(message)))
+#endif
+
+#ifndef __compiletime_error
+# define __compiletime_error(message) __attribute__((__error__(message)))
+#endif
+
+
+/**
+ * compiletime_assert - break build and emit msg if condition is false
+ * @condition: a compile-time constant condition to check
+ * @msg:       a message to emit if condition is false
+ *
+ * In tradition of POSIX assert, this macro will break the build if the
+ * supplied condition is *false*, emitting the supplied error message if the
+ * compiler has support to do so.
+ */
+#define __compiletime_assert(condition, msg, prefix, suffix)           \
+        do {                                                            \
+                extern void prefix ## suffix(void) __compiletime_error(msg); \
+                if (!(condition))                                       \
+                        prefix ## suffix();                             \
+        } while (0)
+
+#define _compiletime_assert(condition, msg, prefix, suffix) \
+        __compiletime_assert(condition, msg, prefix, suffix)
+
+#define compiletime_assert(condition, msg) \
+        _compiletime_assert(condition, msg, __compiletime_assert_, __LINE__)
+
+
+/**
+ * BUILD_BUG_ON_MSG - break compile if a condition is true & emit supplied
+ *                    error message.
+ * @condition: the condition which the compiler should know is false.
+ *
+ * See BUILD_BUG_ON for description.
+ */
+#define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+
+
 /**
  * offsetof - compute memer ofset of a struct
  * @type:       the type of the container struct this is embedded in.
@@ -51,7 +94,11 @@
  */
 #define container_of(ptr, type, member) ({                              \
         void *__mptr = (void *)(ptr);                                   \
+        BUILD_BUG_ON_MSG(!__same_type(*(ptr), ((type *)0)->member) &&   \
+                        ┊!__same_type(*(ptr), void),                    \
+                        ┊"pointer type mismatch in container_of()");    \
         ((type *)(__mptr - offsetof(type, member))); })
+
 
 /**
  * container_of_safe - cast a member of a structure out to the containing structure
@@ -68,7 +115,6 @@
                         ┊"pointer type mismatch in container_of()");    \
         IS_ERR_OR_NULL(__mptr) ? ERR_CAST(__mptr) :                     \
                 ((type *)(__mptr - offsetof(type, member))); })
-
 
 
 
