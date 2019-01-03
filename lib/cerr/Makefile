@@ -14,25 +14,24 @@
 # limitations under the License.
 #
 
-SUBDIRS         := ./cmath \
-		   ./c2xlayer \
-		   ./of \
-		   ./debugger \
-		   ./library \
-		   ./cerr
-
+SUBDIRS         := 
 source          := $(wildcard *.c)
 objects         := $(patsubst %.c,%.o,$(source))
 
+## flags
+TARGET          := liberr.a
 
 ## main compile
 PHONY:_all
+_all:$(TARGET)
 
-_all:$(objects) $(SUBDIRS)
+$(TARGET):$(objects) $(SUBDIRS)
+	$(AR) $(ARFLAG) -o $@ $^
+	mv $@ $(BUILD_OUTPUT)
+	mv $^ $(BUILD_OUTPUT_LIBOBJS)
 
 $(objects):%.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-	mv $@ $(BUILD_OUTPUT_LIBOBJS)
 
 $(SUBDIRS):trace
 	+$(MAKE) -C $@
@@ -43,5 +42,7 @@ trace:
 
 clean:
 	rm -f $(objects)
+	rm -f $(TARGET)
 
+##
 .PHONY: $(PHONY)
