@@ -16,6 +16,7 @@
 #
 */
 #include <stdio.h>
+#include "common.h"
 #include "c2xlayer.h"
 #include "cmath.h"
 #include "of.h"
