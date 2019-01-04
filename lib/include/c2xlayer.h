@@ -22,6 +22,9 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+#include "cerr.h"
+
+
 void c2xlayer_function();
 
 
