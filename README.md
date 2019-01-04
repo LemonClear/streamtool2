@@ -20,3 +20,19 @@ Readme:
 5. Static libxxx.a makefile refer to ./lib/of/Makefile
 6. 
 
+#################################
+
+Directorys:
+1. 3rdparty:      third-party IPs except controller inside core
+2. arch:          controller IP inside core
+3. configs:       simulator configurations
+4. Documentation: all simulator related documents
+5. dts:           device tree 
+6. include:       common definitions and user interface APIs
+7. kernel:        THE MAIN IMPLEMENTATIONS
+8. lib:           general dynamic.so and static.a lib functions
+9. scripts:       project scripts
+10. test:         test data and test case
+11. tools:        all useful tools
+12. ui:           simulator ui interface
+
