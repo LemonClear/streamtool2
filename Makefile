@@ -57,7 +57,11 @@ BUILD_OUTPUT_LIBOBJS  = $(BUILD_OUTPUT)/libs
 BUILD_OUTPUT_LIBOBJS := $(shell mkdir -p $(BUILD_OUTPUT_LIBOBJS) && cd $(BUILD_OUTPUT_LIBOBJS) && pwd)
 $(if $(BUILD_OUTPUT_LIBOBJS),, $(error failed to create output directory "$(BUILD_OUTPUT_LIBOBJS)"))
 
-export BUILD_OUTPUT BUILD_OUTPUT_LIBOBJS
+BUILD_OUTPUT_TOOLOBJS  = $(BUILD_OUTPUT)/tools
+BUILD_OUTPUT_TOOLOBJS := $(shell mkdir -p $(BUILD_OUTPUT_TOOLOBJS) && cd $(BUILD_OUTPUT_TOOLOBJS) && pwd)
+$(if $(BUILD_OUTPUT_TOOLOBJS),, $(error failed to create output directory "$(BUILD_OUTPUT_TOOLOBJS)"))
+
+export BUILD_OUTPUT BUILD_OUTPUT_LIBOBJS BUILD_OUTPUT_TOOLOBJS
 
 # 4.Make variables (CC, etc...)
 AS              = as
@@ -98,10 +102,12 @@ DYNAMIC_LIBS     := -lc2xlayer \
 
 SUBDIRS         := $(srctree)/kernel \
 		   $(srctree)/lib \
-		   $(srctree)/configs
+		   $(srctree)/configs \
+		   $(srctree)/tools
 
 INCLUDE_DIRS    := -I$(fullsrctree)/include/ \
 		   -I$(fullsrctree)/arch/include/ \
+		   -I$(fullsrctree)/3rdparty/include/ \
 		   -I$(fullsrctree)/lib/include/ \
 		   -I$(fullsrctree)/kernel/include/
 

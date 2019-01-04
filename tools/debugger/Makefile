@@ -30,7 +30,7 @@ _all:$(TARGET)
 $(TARGET):$(objects) $(SUBDIRS)
 	$(CC) $(LFLAGS) -o $@ $^ $(INCLUDE_DIRS)
 	mv $@ $(BUILD_OUTPUT)
-	mv $^ $(BUILD_OUTPUT_LIBOBJS)
+	mv $^ $(BUILD_OUTPUT_TOOLOBJS)
 
 $(objects):%.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)

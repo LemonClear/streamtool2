@@ -14,11 +14,7 @@
 # limitations under the License.
 #
 
-SUBDIRS         := ./cmath \
-		   ./c2xlayer \
-		   ./of \
-		   ./library \
-		   ./cerr
+SUBDIRS         := ./debugger
 
 source          := $(wildcard *.c)
 objects         := $(patsubst %.c,%.o,$(source))
@@ -31,7 +27,7 @@ _all:$(objects) $(SUBDIRS)
 
 $(objects):%.o:%.c
 	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-	mv $@ $(BUILD_OUTPUT_LIBOBJS)
+	mv $@ $(BUILD_OUTPUT_TOOLOBJS)
 
 $(SUBDIRS):trace
 	+$(MAKE) -C $@
