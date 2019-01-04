@@ -15,13 +15,15 @@
 # limitations under the License.
 #
 */
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#ifndef __COMPILER_H__
+#define __COMPILER_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This file defines this project versions
+ * This file defines all compiler related things, like gcc builtins
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+# define likely(x)      __builtin_expect(!!(x), 1)
+# define unlikely(x)    __builtin_expect(!!(x), 0)
 
 
 

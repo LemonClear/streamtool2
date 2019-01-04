@@ -15,12 +15,11 @@
 # limitations under the License.
 #
 */
-
+#ifndef __TYPE_H__
+#define __TYPE_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This file defines all data types and masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-#ifndef __TYPE_H__
-#define __TYPE_H__
 
 
 /*address*/

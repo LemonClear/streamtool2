@@ -17,6 +17,9 @@
 */
 #ifndef __INTERFACE_H__
 #define __INTERFACE_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all user interface APIs
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
 

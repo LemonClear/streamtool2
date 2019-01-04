@@ -17,6 +17,9 @@
 */
 #ifndef __LIBRARY_H__
 #define __LIBRARY_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all library functions
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
 #include "cerr.h"

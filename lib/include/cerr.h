@@ -15,12 +15,15 @@
 # limitations under the License.
 #
 */
-#ifndef __LIBRARY_H__
-#define __LIBRARY_H__
+#ifndef __CERR_H__
+#define __CERR_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all error processing things
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-# define likely(x)      __builtin_expect(!!(x), 1)
-# define unlikely(x)    __builtin_expect(!!(x), 0)
+#include "compiler.h"
+
 
 #define MAX_ERRNO       4095
 

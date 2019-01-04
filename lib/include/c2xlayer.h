@@ -15,8 +15,12 @@
 # limitations under the License.
 #
 */
-#ifndef __MIDLAYER_H__
-#define __MIDLAYER_H__
+#ifndef __C2XLAYER_H__
+#define __C2XLAYER_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all c to cpp transfer layer functions
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 void c2xlayer_function();
 

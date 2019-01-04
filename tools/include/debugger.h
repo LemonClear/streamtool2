@@ -17,6 +17,9 @@
 */
 #ifndef __DEBUGGER_H__
 #define __DEBUGGER_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all debugger things
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
 

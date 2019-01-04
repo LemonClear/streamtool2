@@ -17,10 +17,10 @@
 */
 #ifndef __CTLP_H__
 #define __CTLP_H__
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
- * This file defines all control and data processor register masks
+ * This file defines all control processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 /*contol register1 masks*/
 #define CTLP_CON1_MASK1 0x0000000F

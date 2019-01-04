@@ -17,10 +17,10 @@
 */
 #ifndef __NCOP_H__
 #define __NCOP_H__
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
- * This file defines all control and data processor register masks
+ * This file defines all neural co-processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 /*contol register1 masks*/
 #define NCOP_CON1_MASK1 0x0000000F

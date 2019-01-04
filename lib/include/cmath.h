@@ -15,8 +15,12 @@
 # limitations under the License.
 #
 */
-#ifndef __MATH_H__
-#define __MATH_H__
+#ifndef __CMATH_H__
+#define __CMATH_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all math fucntions
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 void fp16_pt();
 

@@ -17,10 +17,11 @@
 */
 #ifndef __COMMON_H__
 #define __COMMON_H__
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This file defines all kernel structures.
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
 #include "type.h"
 #include "config.h"
 

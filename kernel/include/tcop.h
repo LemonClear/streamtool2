@@ -17,10 +17,10 @@
 */
 #ifndef __TCOP_H__
 #define __TCOP_H__
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
- * This file defines all control and data processor register masks
+ * This file defines all transmition co-processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 /*contol register1 masks*/
 #define TCOP_CON1_MASK1 0x0000000F

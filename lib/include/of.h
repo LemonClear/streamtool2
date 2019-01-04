@@ -17,6 +17,10 @@
 */
 #ifndef __OF_H__
 #define __OF_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines of functions
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 void of();
 void of_dt();

@@ -17,10 +17,10 @@
 */
 #ifndef __NOC_H__
 #define __NOC_H__
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
- * This file defines all control and data processor register masks
+ * This file defines all noc matrix register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 
 /*contol register1 masks*/
 #define NOC_CON1_MASK1 0x0000000F
