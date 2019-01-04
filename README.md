@@ -7,7 +7,7 @@ Release Notes:
 1. init structure
 2. init Makefile base
 3. support compile .o .so (c/cpp) and linkage
-4. support compile .a
+4. support compile .a and linkage
 5. 
 
 #################################
