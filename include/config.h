@@ -28,14 +28,22 @@
 #define NCOP_REG_COUNT  200
 #define TCOP_REG_COUNT  200
 #define RAM_REG_COUNT   200
+#define SUB_IP_COUNT    6
 
 /*chip inside*/
 #define CHIP_REG_COUNT  100
 #define NOC_REG_COUNT   100
 #define CHIP_REG_COUNT  100
+#define SUB_CORE_COUNT  1024
 
 /*board inside*/
 #define BOARD_REG_COUNT 100
+#define SUB_CHIP_COUNT  2
+
+/*product inside*/
+#define SUB_BOARD_COUNT 2
+
+
 
 
 #endif
