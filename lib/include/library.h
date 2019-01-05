@@ -46,9 +46,6 @@
  * @condition: a compile-time constant condition to check
  * @msg:       a message to emit if condition is false
  *
- * In tradition of POSIX assert, this macro will break the build if the
- * supplied condition is *false*, emitting the supplied error message if the
- * compiler has support to do so.
  */
 #define __compiletime_assert(condition, msg, prefix, suffix)           \
         do {                                                            \
@@ -65,11 +62,10 @@
 
 
 /**
- * BUILD_BUG_ON_MSG - break compile if a condition is true & emit supplied
- *                    error message.
+ * BUILD_BUG_ON_MSG - break compile if a condition is true & emit supplied error
+ *                    message.
  * @condition: the condition which the compiler should know is false.
  *
- * See BUILD_BUG_ON for description.
  */
 #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
 
