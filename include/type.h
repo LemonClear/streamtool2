@@ -29,8 +29,17 @@ typedef unsigned long address_t; //32bit or 64bit according to cpu
 typedef unsigned long long reg64_t; //64bit
 typedef unsigned int       reg32_t; //32bit
 
-/*byte*/
-typedef unsigned char byte_t; //8bit
+/*unsinged 64,32,16,8*/
+typedef unsigned long long u64; //64bit
+typedef unsigned int       u32; //32bit
+typedef unsigned short int u16; //16bit
+typedef unsigned char      u8;  //8bit
+
+/*singed 64,32,16,8*/
+typedef long long s64; //64bit
+typedef int       s32; //32bit
+typedef short int s16; //16bit
+typedef char      s8;  //8bit
 
 /*fp16*/
 typedef short int half; //16bit
