@@ -25,17 +25,28 @@
 #include "cerr.h"
 
 
-/*same type*/
+/**
+ * __same_type - return true if a and b have the same type
+ *
+ */
 #ifndef __same_type
 # define __same_type(a, b) __builtin_types_compatible_p(typeof(a), typeof(b))
 #endif
 
 
-/*compile time warning and error*/
+/**
+ * __compiletime_warning - print warning message while compile time
+ *
+ */
 #ifndef __compiletime_warning
 # define __compiletime_warning(message) __attribute__((__warning__(message)))
 #endif
 
+
+/**
+ * __compiletime_error - print error while compile time
+ *
+ */
 #ifndef __compiletime_error
 # define __compiletime_error(message) __attribute__((__error__(message)))
 #endif
