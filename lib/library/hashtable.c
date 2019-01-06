@@ -174,8 +174,8 @@ void * findelement(const char *string, hashtable *table)
         }
 
         /*got element*/
-        if (likely(hashkey == table[hashid]->hashkey) ||
-                likely(strcmp(string, table[hashid]->string))) {
+        if (likely(hashkey == table[hashid]->hashkey) &&
+                likely(!strcmp(string, table[hashid]->string))) {
                 goto ret_element;
         }
 
