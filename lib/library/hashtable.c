@@ -43,7 +43,7 @@
 
 /**
  * gen_hashkey - generate hashkey from a string
- * @sring: a sring of charactors
+ * @string: a sring of charactors
  *
  */
 static int gen_hashkey(const char *string)
@@ -53,8 +53,8 @@ static int gen_hashkey(const char *string)
         const char* s = string;
 
         /*check params*/
-        if (!s)
-                goto ret;
+        if (unlikely(!s))
+                goto ret_hashkey;
 
         /*begin*/
         hashkey = 0;
@@ -63,7 +63,7 @@ static int gen_hashkey(const char *string)
         while (slength--)
                 hashkey += *s++;
 
-ret:
+ret_hashkey:
         return hashkey;
 }
 
@@ -81,31 +81,111 @@ static inline int hashfunc(int hashkey)
 
 /**
  * hashcore - find the right place for the element
- * @element: hashtable element
- * @hashkey: the element's hash key
- * @hashtable: pointer to hashtable
+ * @string: a sring of charactors
+ * @table: pointer to hashtable
  *
  */
-static int hashcore(void *element, int hashkey, hashtable *table)
+static int hashcore(const char *string, hashtable *table)
 {
+        int hashkey = -1;
         int hashid = -1;
+        int count = 0;
 
         /*check params*/
-        if (!element || !table)
-                goto ret;
+        if (unlikely(!string || !table)) {
+                printf("string or hashtable is NULL! %s,%s,%d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_hashid;
+        }
 
         /*being*/
+        hashkey = gen_hashkey(string)
+        if (-1 == hashkey) {
+                printf("generate hashkey fail! %s,%s,%d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_hashid;
+        }
+
         hashid = hashfunc(hashkey);
 
-        if (!(table[hashid]->element)) //NULL means empty
-                goto ret;
+        /*NULL means empty, got place!*/
+        if (likely(!(table[hashid]->element))) {
+                table[hashid]->hashkey = hashkey;
+                table[hashid]->string = string;
+                goto ret_hashid;
+        }
 
+        /*rehash: pseudo random detect to resovle conflicts*/
         do {
-                /*rehash: pseudo random detect to resovle conflicts*/
+                count++;
+
                 hashkey = hashid + hashkey%10 + 1;
                 hashid = hashfunc(hashkey);
         } while (table[hashid]->element);
 
-ret:
+        table[hashid]->hashkey = hashkey;
+        table[hashid]->string = string;
+
+
+        printf("DEBUG: hash conflicts count %d, IN %s,%s,%d\n",
+                        count, __FILE__, __func__, __LINE__);
+
+ret_hashid:
         return hashid;
 }
+
+
+/**
+ * findelement - find the element hashed
+ * @string: a sring of charactors
+ * @table: pointer to hashtable
+ *
+ */
+void * findelement(const char *string, hashtable *table)
+{
+        void *element = NULL;
+        int hashkey = -1;
+        int hashid = -1;
+        size_t slength = 0;
+        const char* s = string;
+
+        if (unlikely(!string || !table)) {
+                printf("string or hashtable is NULL! %s,%s,%d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_element;
+        }
+
+        /*begin*/
+        hashkey = gen_hashkey(string);
+        if (-1 == hashkey) {
+                printf("generate hashkey fail! %s,%s,%d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_element;
+        }
+
+        hashid = hashfunc(hashkey);
+        element = table[hashid]->element;
+
+        /*NULL means empty, miss!*/
+        if (unlikely(!element)) {
+                printf("MISS: element %s not hashed in table %p\n",
+                                sring, table);
+                goto ret_element;
+        }
+
+        /*got element*/
+        if (likely(hashkey == table[hashid]->hashkey) ||
+                likely(strcmp(string, table[hashid]->string))) {
+                goto ret_element;
+        }
+
+        /*resovle conflicts: rehash*/
+
+
+ret_element:
+        return element;
+}
+
+
+
+

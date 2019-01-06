@@ -61,6 +61,7 @@
 /* hashtable struct*/
 typedef struct hash_table {
         int hashkey;
+        const char *string;
         void *element;
 }hashtable;
 
