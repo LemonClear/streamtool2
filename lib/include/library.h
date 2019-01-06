@@ -58,5 +58,12 @@
                 ((type *)(__mptr - offsetof(type, member))); })
 
 
+/* hashtable struct*/
+typedef struct hash_table {
+        int hashkey;
+        void *element;
+}hashtable;
+
+
 
 #endif

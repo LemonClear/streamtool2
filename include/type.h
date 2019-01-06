@@ -44,6 +44,10 @@ typedef char      s8;  //8bit
 /*fp16*/
 typedef short int half; //16bit
 
+/*max 64 32*/
+#define MAX32_MASK 0xFFFFFFFF;         //32bit
+#define MAX64_MASK 0xFFFFFFFFFFFFFFFF; //64bit
+
 /*x86 masks*/
 #define BYTE_MASK  0x00000000000000FF; //8bit
 #define WORD_MASK  0x000000000000FFFF; //16bit
