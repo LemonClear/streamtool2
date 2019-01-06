@@ -80,6 +80,18 @@ static inline int hashfunc(int hashkey)
 
 
 /**
+ * hashrandom - get new hashkey by random compute the old hashid and hashkey
+ * @hashkey: old hashkey
+ * @hashid: old hashid
+ *
+ */
+static inline int hashrandom(int hashkey, int hashid)
+{
+        return (hashid + hashkey%10 + 1);
+}
+
+
+/**
  * hashcore - find the right place for the element
  * @string: a sring of charactors
  * @table: pointer to hashtable
@@ -119,7 +131,7 @@ static int hashcore(const char *string, hashtable *table)
         do {
                 count++;
 
-                hashkey = hashid + hashkey%10 + 1;
+                hashkey = hashrandom(hashkey, hashid);
                 hashid = hashfunc(hashkey);
         } while (table[hashid]->element);
 
@@ -146,6 +158,7 @@ void * findelement(const char *string, hashtable *table)
         void *element = NULL;
         int hashkey = -1;
         int hashid = -1;
+        int count = 0;
         size_t slength = 0;
         const char* s = string;
 
@@ -175,11 +188,28 @@ void * findelement(const char *string, hashtable *table)
 
         /*got element*/
         if (likely(hashkey == table[hashid]->hashkey) &&
-                likely(!strcmp(string, table[hashid]->string))) {
+                        likely(!strcmp(string, table[hashid]->string))) {
                 goto ret_element;
         }
 
         /*resovle conflicts: rehash*/
+        do {
+                count++;
+
+                hashkey = hashrandom(hashkey, hashid);
+                hashid = hashfunc(hashkey);
+                if (likely(hashkey == table[hashid]->hashkey) &&
+                                likely(!strcmp(string, table[hashid]->string))) {
+                        element = table[hashid]->element;
+
+                        printf("DEBUG: hash conflicts count %d, IN %s,%s,%d\n",
+                                        count, __FILE__, __func__, __LINE__);
+                        goto ret_element;
+                }
+
+                /*hashkey conflicts, miss!*/
+                element = NULL;
+        } while (table[hashid]->element);
 
 
 ret_element:
@@ -187,5 +217,19 @@ ret_element:
 }
 
 
+void dump_hashtable()
+{
 
+}
+
+
+void init_hashtable()
+{
+
+}
+
+void del_hashtable()
+{
+
+}
 
