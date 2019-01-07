@@ -121,6 +121,10 @@ int hashcore(const char *string, hashtable *table)
 
         hashid = hashfunc(hashkey);
 
+        /*FIXME:avoid hashkey == 0*/
+        if (unlikely(!hashkey))
+                goto do_rehash_core;
+
         /*NULL means empty, got place!*/
         if (likely(!(table[hashid].element))) {
                 table[hashid].hashkey = hashkey;
@@ -128,12 +132,17 @@ int hashcore(const char *string, hashtable *table)
                 goto ret_hashid;
         }
 
+do_rehash_core:
         /*rehash: pseudo random detect to resovle conflicts*/
         do {
                 count++;
 
                 hashkey = hashrandom(hashkey, hashid);
                 hashid = hashfunc(hashkey);
+
+                /*FIXME:avoid hashkey == 0*/
+                if (unlikely(!hashkey))
+                        continue;
         } while (table[hashid].element);
 
         table[hashid].hashkey = hashkey;
@@ -185,18 +194,29 @@ void * findelement(const char *string, hashtable *table)
                 goto ret_element;
         }
 
+        /*FIXME:avoid hashkey == 0*/
+        if (unlikely(!hashkey))
+                goto do_rehash_find;
+
         /*got element*/
         if (likely(hashkey == table[hashid].hashkey) &&
                         likely(!strcmp(string, table[hashid].string))) {
                 goto ret_element;
         }
 
+do_rehash_find:
         /*resovle conflicts: rehash*/
         do {
                 count++;
 
                 hashkey = hashrandom(hashkey, hashid);
                 hashid = hashfunc(hashkey);
+
+                /*FIXME:avoid hashkey == 0*/
+                if (unlikely(!hashkey))
+                        continue;
+
+                /*got*/
                 if (likely(hashkey == table[hashid].hashkey) &&
                                 likely(!strcmp(string, table[hashid].string))) {
                         element = table[hashid].element;
@@ -208,7 +228,7 @@ void * findelement(const char *string, hashtable *table)
 
                 /*hashkey conflicts, miss!*/
                 element = NULL;
-        } while (table[hashid].element);
+        } while (unlikely(table[hashid].element));
 
 
 ret_element:
@@ -238,7 +258,7 @@ void dump_hashtable(hashtable *table)
                 table[hashid].string = (!table[hashid].string) ?
                         ("NULL") : (table[hashid].string);
 
-                printf("INFO: hashid=%d, hashkey=%d, hashstring=%s, hashelement=%p\n",
+                printf("hashid=%d, hashkey=%d, hashstring=%s, hashelement=%p\n",
                                 hashid, table[hashid].hashkey,
                                 table[hashid].string, table[hashid].element);
 
@@ -254,12 +274,18 @@ ret_dump:
  * init_hashtable - init a hashtable
  *
  */
-hashtable *table init_hashtable()
+hashtable * init_hashtable()
 {
         hashtable *table = NULL;
 
         /*begin*/
         table = (hashtable *)malloc(HASHTABLE_MAXID * sizeof(hashtable));
+        if (!table) {
+                printf("hashtable init failed: malloc error! %s,%s,%d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
         memset((void *)table, 0, HASHTABLE_MAXID * sizeof(hashtable));
 
 ret_init:
@@ -275,8 +301,26 @@ ret_init:
 int del_hashtable(hashtable *table)
 {
         int delok = -1;
+        int hashid = -1;
+
+        if (!table) {
+                printf("the hashtable is absent!!\n");
+                goto ret_del;
+        }
+
+        /*begin*/
+        for (hashid = 0; hashid <= HASHTABLE_MAXID; hashid++) {
+                if (!table[hashid].hashkey)
+                        continue;
+
+                table[hashid].hashkey = 0;
+                table[hashid].string = NULL;
+                table[hashid].element = NULL;
+        }
+
+        delok = 0;
+        free(table);
 
 ret_del:
         return delok;
 }
-
