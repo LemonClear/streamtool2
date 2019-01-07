@@ -26,6 +26,17 @@
 #include "config.h"
 
 
+enum state {
+        IDLE,    //idle
+        INIT，   //init
+        RUN,     //run
+        READ,    //read
+        WRITE,   //write
+        CAL,     //calculate
+        INPUT,   //input
+        OUTPUT,  //output
+};
+
 /*ip register*/
 typedef struct registers {
         const char* name;        //register name
@@ -48,9 +59,17 @@ typedef struct device_ops {
 
 /*ip structure*/
 typedef struct device {
-        const char* name;
-
-        ip_operations ops;
+        const char* name;        //ip name
+        int id;                  //ip id
+        ip_operations ops;       //ip operation
+        struct **registers;      //ip register list
+        hashtable *name2reg;     //ip register hashtable1: name<->reg
+        hashtable *addr2reg;     //ip register hashtable2: addr<->reg
+        enum state status;       //ip state machine
+        struct ip *parent;       //ip parent
+        struct ip **subips;      //ip submodule
+        hashtable *name2subip;   //ip submodule hashtable1: name<->reg
+        hashtable *addr2subip;   //ip submodule hashtable2: addr<->reg
 }ip;
 
 /**/
