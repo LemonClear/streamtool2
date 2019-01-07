@@ -30,7 +30,7 @@
 typedef struct registers {
         const char* name;        //register name
         address_t addr;          //register address
-        reg64_t value;           //register value
+        reg32_t value;           //register value
 }regs;
 
 /*ip operation*/
