@@ -41,7 +41,7 @@ enum state {
 /*ip register*/
 typedef struct registers {
         const char* name;        //register name
-        address_t addr;          //register address
+        address_t address;       //register address
         reg32_t value;           //register value
 }regs;
 
@@ -62,12 +62,16 @@ typedef struct device_ops {
 typedef struct device {
         const char* name;        //ip name
         int id;                  //ip id
+        enum state status;       //ip state machine
+        address32_t address;     //ip address: first reg-addr or mem-addr
+
         ip_operations ops;       //ip operation
+
+        address32_t **memory;    //ip memory space
         struct regs **reglist;   //ip register list
-        address32_t *address;    //ip memory space
         hashtable *name2reg;     //ip register hashtable1: name<->reg
         hashtable *addr2reg;     //ip register hashtable2: addr<->reg
-        enum state status;       //ip state machine
+
         struct ip *parent;       //ip parent
         struct ip **subips;      //ip submodule
         hashtable *name2subip;   //ip submodule hashtable1: name<->reg
