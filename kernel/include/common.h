@@ -64,6 +64,7 @@ typedef struct device {
         int id;                  //ip id
         ip_operations ops;       //ip operation
         struct regs **reglist;   //ip register list
+        address32_t *address;    //ip memory space
         hashtable *name2reg;     //ip register hashtable1: name<->reg
         hashtable *addr2reg;     //ip register hashtable2: addr<->reg
         enum state status;       //ip state machine

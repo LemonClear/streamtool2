@@ -23,7 +23,9 @@
 
 
 /*address*/
-typedef unsigned long address_t; //32bit or 64bit according to cpu
+typedef unsigned long long address64_t; //64bit address
+typedef unsigned int  address32_t;      //32bit address
+typedef unsigned long address_t;        //32bit or 64bit according to cpu
 
 /*register*/
 typedef unsigned long long reg64_t; //64bit
