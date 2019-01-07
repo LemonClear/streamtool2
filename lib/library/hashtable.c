@@ -92,12 +92,12 @@ static inline int hashrandom(int hashkey, int hashid)
 
 
 /**
- * hashcore - find the right place for the element
+ * hashcore - hash an element to hashtable
  * @string: a sring of charactors
  * @table: pointer to hashtable
  *
  */
-static int hashcore(const char *string, hashtable *table)
+int hashcore(const char *string, hashtable *table)
 {
         int hashkey = -1;
         int hashid = -1;
@@ -111,7 +111,7 @@ static int hashcore(const char *string, hashtable *table)
         }
 
         /*being*/
-        hashkey = gen_hashkey(string)
+        hashkey = gen_hashkey(string);
         if (-1 == hashkey) {
                 printf("generate hashkey fail! %s,%s,%d\n",
                                 __FILE__, __func__, __LINE__);
@@ -121,9 +121,9 @@ static int hashcore(const char *string, hashtable *table)
         hashid = hashfunc(hashkey);
 
         /*NULL means empty, got place!*/
-        if (likely(!(table[hashid]->element))) {
-                table[hashid]->hashkey = hashkey;
-                table[hashid]->string = string;
+        if (likely(!(table[hashid].element))) {
+                table[hashid].hashkey = hashkey;
+                table[hashid].string = string;
                 goto ret_hashid;
         }
 
@@ -133,10 +133,10 @@ static int hashcore(const char *string, hashtable *table)
 
                 hashkey = hashrandom(hashkey, hashid);
                 hashid = hashfunc(hashkey);
-        } while (table[hashid]->element);
+        } while (table[hashid].element);
 
-        table[hashid]->hashkey = hashkey;
-        table[hashid]->string = string;
+        table[hashid].hashkey = hashkey;
+        table[hashid].string = string;
 
 
         printf("DEBUG: hash conflicts count %d, IN %s,%s,%d\n",
@@ -159,8 +159,6 @@ void * findelement(const char *string, hashtable *table)
         int hashkey = -1;
         int hashid = -1;
         int count = 0;
-        size_t slength = 0;
-        const char* s = string;
 
         if (unlikely(!string || !table)) {
                 printf("string or hashtable is NULL! %s,%s,%d\n",
@@ -177,18 +175,18 @@ void * findelement(const char *string, hashtable *table)
         }
 
         hashid = hashfunc(hashkey);
-        element = table[hashid]->element;
+        element = table[hashid].element;
 
         /*NULL means empty, miss!*/
         if (unlikely(!element)) {
                 printf("MISS: element %s not hashed in table %p\n",
-                                sring, table);
+                                string, table);
                 goto ret_element;
         }
 
         /*got element*/
-        if (likely(hashkey == table[hashid]->hashkey) &&
-                        likely(!strcmp(string, table[hashid]->string))) {
+        if (likely(hashkey == table[hashid].hashkey) &&
+                        likely(!strcmp(string, table[hashid].string))) {
                 goto ret_element;
         }
 
@@ -198,9 +196,9 @@ void * findelement(const char *string, hashtable *table)
 
                 hashkey = hashrandom(hashkey, hashid);
                 hashid = hashfunc(hashkey);
-                if (likely(hashkey == table[hashid]->hashkey) &&
-                                likely(!strcmp(string, table[hashid]->string))) {
-                        element = table[hashid]->element;
+                if (likely(hashkey == table[hashid].hashkey) &&
+                                likely(!strcmp(string, table[hashid].string))) {
+                        element = table[hashid].element;
 
                         printf("DEBUG: hash conflicts count %d, IN %s,%s,%d\n",
                                         count, __FILE__, __func__, __LINE__);
@@ -209,7 +207,7 @@ void * findelement(const char *string, hashtable *table)
 
                 /*hashkey conflicts, miss!*/
                 element = NULL;
-        } while (table[hashid]->element);
+        } while (table[hashid].element);
 
 
 ret_element:
@@ -217,19 +215,57 @@ ret_element:
 }
 
 
-void dump_hashtable()
+/**
+ * dump_hashtable - dump a hashtable
+ * @table: pointer to hashtable
+ *
+ */
+void dump_hashtable(hashtable *table)
 {
+        int hashid = -1;
 
+        if (unlikely(!table)) {
+                printf("hashtable is NULL! %s,%s,%d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_dump;
+        }
+
+        for (hashid = 0; hashid <= HASHTABLE_MAXID; hashid++) {
+                printf("==========DUMP HASHTABLE %p BEGIN==========\n", table);
+
+                table[hashid].string = (!table[hashid].string) ? ("NULL") : (table[hashid].string);
+                printf("INFO: hashid=%d, hashkey=%d, hashstring=%s,hashelement=%p\n",
+                                hashid, table[hashid].hashkey, table[hashid].string, table[hashid].element);
+
+                printf("==========DUMP HASHTABLE %p END============\n", table);
+        }
+
+ret_dump:
+        return;
 }
 
 
-void init_hashtable()
+/**
+ * init_hashtable - init a hashtable
+ * @table: pointer to hashtable
+ *
+ */
+void init_hashtable(hashtable *table)
 {
 
+ret_init:
+        return;
 }
 
-void del_hashtable()
+
+/**
+ * del_hashtable - delete a hashtable
+ * @table: pointer to hashtable
+ *
+ */
+void del_hashtable(hashtable *table)
 {
 
+ret_del:
+        return;
 }
-
