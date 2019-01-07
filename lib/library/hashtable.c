@@ -17,6 +17,7 @@
 */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "type.h"
 #include "cerr.h"
 #include "compiler.h"
@@ -230,12 +231,16 @@ void dump_hashtable(hashtable *table)
                 goto ret_dump;
         }
 
+        /*begin*/
         for (hashid = 0; hashid <= HASHTABLE_MAXID; hashid++) {
                 printf("==========DUMP HASHTABLE %p BEGIN==========\n", table);
 
-                table[hashid].string = (!table[hashid].string) ? ("NULL") : (table[hashid].string);
-                printf("INFO: hashid=%d, hashkey=%d, hashstring=%s,hashelement=%p\n",
-                                hashid, table[hashid].hashkey, table[hashid].string, table[hashid].element);
+                table[hashid].string = (!table[hashid].string) ?
+                        ("NULL") : (table[hashid].string);
+
+                printf("INFO: hashid=%d, hashkey=%d, hashstring=%s, hashelement=%p\n",
+                                hashid, table[hashid].hashkey,
+                                table[hashid].string, table[hashid].element);
 
                 printf("==========DUMP HASHTABLE %p END============\n", table);
         }
@@ -247,14 +252,18 @@ ret_dump:
 
 /**
  * init_hashtable - init a hashtable
- * @table: pointer to hashtable
  *
  */
-void init_hashtable(hashtable *table)
+hashtable *table init_hashtable()
 {
+        hashtable *table = NULL;
+
+        /*begin*/
+        table = (hashtable *)malloc(HASHTABLE_MAXID * sizeof(hashtable));
+        memset((void *)table, 0, HASHTABLE_MAXID * sizeof(hashtable));
 
 ret_init:
-        return;
+        return table;
 }
 
 
@@ -263,9 +272,11 @@ ret_init:
  * @table: pointer to hashtable
  *
  */
-void del_hashtable(hashtable *table)
+int del_hashtable(hashtable *table)
 {
+        int delok = -1;
 
 ret_del:
-        return;
+        return delok;
 }
+
