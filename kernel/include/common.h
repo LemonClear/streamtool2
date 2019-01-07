@@ -24,11 +24,12 @@
 
 #include "type.h"
 #include "config.h"
+#include "library.h"
 
 
 enum state {
         IDLE,    //idle
-        INIT，   //init
+        INIT,    //init
         RUN,     //run
         READ,    //read
         WRITE,   //write
@@ -62,7 +63,7 @@ typedef struct device {
         const char* name;        //ip name
         int id;                  //ip id
         ip_operations ops;       //ip operation
-        struct **registers;      //ip register list
+        struct regs **reglist;   //ip register list
         hashtable *name2reg;     //ip register hashtable1: name<->reg
         hashtable *addr2reg;     //ip register hashtable2: addr<->reg
         enum state status;       //ip state machine
