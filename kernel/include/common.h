@@ -29,9 +29,10 @@
 
 /*state machine*/
 enum state {
-        IDLE,    //idle
         INIT,    //init
         RUN,     //run
+        IDLE,    //idle
+        OFF,     //off
         READ,    //read
         WRITE,   //write
         CAL,     //calculate

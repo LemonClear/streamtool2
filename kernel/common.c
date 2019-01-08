@@ -28,9 +28,11 @@
 /**
  * global variants
  * @this_product: the whole product entrance struct
+ * @global_run:   the whole product is running, if !0
  *
  */
 ip *this_product = NULL;
+int global_run = 0;
 
 
 /**
@@ -141,7 +143,6 @@ static int initialization(int argc, char *argv[], param *params)
                 goto ret_init;
         }
 
-
         /*end*/
         printf("INFO: SIMULATOR initialization END!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
@@ -166,7 +167,7 @@ int main(int argc, char *argv[])
         printf("INFO: SIMULATOR execution START!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        /*simulator parameters*/
+        /*1.alloc simulator parameter struct*/
         params = (void *)malloc(sizeof(param));
         if (unlikely(!params)) {
                 printf("ERR: params malloc failed! %s, %s, %d\n",
@@ -175,7 +176,7 @@ int main(int argc, char *argv[])
         }
         memset((void *)params, 0, sizeof(param));
 
-        /*1.init*/
+        /*2.init*/
         ret = initialization(argc, argv, params);
         if (unlikely(-1 == ret)) {
                 printf("ERR: simulator initialization failed! %s, %s, %d\n",
@@ -183,10 +184,15 @@ int main(int argc, char *argv[])
                 goto ret_main;
         }
 
-        /*2.poweron*/
+        /*3.poweron*/
         poweron(this_product);
 
-        /*3.poweroff*/
+        /*4.poweridle*/
+        while (global_run) {
+                poweridle(this_product);
+        }
+
+        /*5.poweroff*/
         poweroff(this_product);
 
         /*end*/
