@@ -50,6 +50,7 @@ typedef struct registers {
 typedef struct device_ops {
         void (*poweron)();       //poweron
         void (*poweroff)();      //poweroff
+        void (*idle)();          //idle
         void (*init)();          //init
         void (*deinit)();        //deinit
         void (*read)();          //read
