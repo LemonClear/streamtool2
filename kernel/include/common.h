@@ -78,7 +78,10 @@ typedef struct device {
         hashtable *addr2subip;   //ip submodule hashtable2: addr<->reg
 }ip;
 
-/**/
+/*parameters*/
+typedef struct parameter {
+        int id;
+}param;
 
 
 
