@@ -41,3 +41,31 @@ Directorys:
 11. tools:        all useful tools
 12. ui:           simulator ui interface
 
+#################################
+
+Base Struct:
+product————board_array————board————chip_array————chip————core_array————core
+        |              |                      |                      |
+        |              |                      |                      |
+        |              |                      |                      |
+        |              |                      |                      |
+        |              |                      |                    ————core
+        |              |                      |
+        |              |                      |
+        |              |                     ————chip
+        |              |                      |
+        |              |                      |
+        |              |                      |
+        |              |                      |
+        |             ————board
+        |
+        |
+        |
+        |
+       ————power————
+        |
+        |
+        |
+        |
+       ————clock————
+
