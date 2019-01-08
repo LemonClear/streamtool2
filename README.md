@@ -23,7 +23,7 @@ Readme:
 #################################
 
 Directorys:
-1. 3rdparty:      third-party IPs except controller inside core
+1. vendor:        vendor IPs except controller inside core
 2. arch:          controller IP inside core
 3. configs:       simulator configurations
 4. Documentation: all simulator related documents

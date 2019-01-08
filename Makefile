@@ -107,7 +107,7 @@ SUBDIRS         := $(srctree)/kernel \
 
 INCLUDE_DIRS    := -I$(fullsrctree)/include/ \
 		   -I$(fullsrctree)/arch/include/ \
-		   -I$(fullsrctree)/3rdparty/include/ \
+		   -I$(fullsrctree)/vendor/include/ \
 		   -I$(fullsrctree)/lib/include/ \
 		   -I$(fullsrctree)/kernel/include/ \
 		   -I$(fullsrctree)/tools/include/
