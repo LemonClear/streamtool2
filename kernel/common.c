@@ -79,7 +79,7 @@ static int parse_commandline(int argc, char *argv[], param *params)
         int ret = -1;
 
         if (unlikely(!params)) {
-                printf("WARN: param struct absent, please check! %s, %s, %d\n",
+                printf("ERR: param struct absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_commandline;
         }
@@ -116,6 +116,12 @@ static int initialization(int argc, char *argv[], param *params)
         printf("INFO: SIMULATOR initialization START!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
+        if (unlikely(!params)) {
+                printf("ERR: param struct absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
         /*1.parse config files*/
         ret = parse_configs(path, params);
         if (unlikely(-1 == ret)) {
@@ -142,6 +148,8 @@ static int initialization(int argc, char *argv[], param *params)
                 ret = -1;
                 goto ret_init;
         }
+        //FIXME:
+
 
         /*end*/
         printf("INFO: SIMULATOR initialization END!!!!! %s, %s, %d\n",

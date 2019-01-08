@@ -29,20 +29,20 @@
 
 /*state machine*/
 enum state {
-        INIT,    //init
-        RUN,     //run
-        IDLE,    //idle
-        OFF,     //off
-        READ,    //read
-        WRITE,   //write
-        CAL,     //calculate
-        INPUT,   //input
-        OUTPUT,  //output
+        OFF = 0,     //off
+        INIT = 1,    //init
+        RUN = 2,     //run
+        IDLE = 3,    //idle
+        READ = 4,    //read
+        WRITE = 5,   //write
+        CAL = 6,     //calculate
+        INPUT = 7,   //input
+        OUTPUT = 8,  //output
 };
 
 /*ip register*/
 typedef struct registers {
-        const char* name;        //register name
+        const char *name;        //register name
         address_t address;       //register address
         reg32_t value;           //register value
 }regs;
@@ -65,7 +65,7 @@ typedef struct device_ops {
 
 /*ip structure*/
 typedef struct device {
-        const char* name;        //ip name
+        const char *name;        //ip name
         int id;                  //ip id
         enum state status;       //ip state machine
         address32_t address;     //ip address: first reg-addr or mem-addr
@@ -73,19 +73,22 @@ typedef struct device {
         ip_operations ops;       //ip operation
 
         address32_t **memory;    //ip memory space
-        struct regs **reglist;   //ip register list
-        hashtable *name2reg;     //ip register hashtable1: name<->reg
-        hashtable *addr2reg;     //ip register hashtable2: addr<->reg
 
-        struct ip *parent;       //ip parent
-        struct ip **subips;      //ip submodule
-        hashtable *name2subip;   //ip submodule hashtable1: name<->reg
-        hashtable *addr2subip;   //ip submodule hashtable2: addr<->reg
+        regs **reglist;   //ip register list
+        hashtable *name2reg;     //ip register hashtable1: name->reg
+        hashtable *addr2reg;     //ip register hashtable2: addr->reg
+
+        ip *parent;       //ip parent
+
+        ip **subips;      //ip submodule
+        hashtable *name2subip;   //ip submodule hashtable1: name->subip
+        hashtable *addr2subip;   //ip submodule hashtable2: addr->subip
 }ip;
 
 /*parameters*/
 typedef struct parameter {
         int id;
+        //FIXME: add more
 }param;
 
 
