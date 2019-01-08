@@ -319,8 +319,10 @@ int del_hashtable(hashtable *table)
         }
 
         delok = 0;
-        free(table);
 
 ret_del:
+        if (table)
+                free(table);
+
         return delok;
 }
