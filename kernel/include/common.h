@@ -27,6 +27,7 @@
 #include "library.h"
 
 
+/*state machine*/
 enum state {
         IDLE,    //idle
         INIT,    //init
@@ -84,6 +85,11 @@ typedef struct device {
 typedef struct parameter {
         int id;
 }param;
+
+
+/*function definitions*/
+int poweron(ip *product);
+int poweroff(ip *product);
 
 
 #endif

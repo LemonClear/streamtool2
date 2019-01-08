@@ -16,9 +16,35 @@
 #
 */
 #include <stdio.h>
-#include "of.h"
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include "common.h"
 
-int poweron()
+
+/**
+ * poweron - power on the product
+ * @product: pointer to the product
+ *
+ */
+int poweron(ip *product)
 {
-        return 0;
+        int ret = -1;
+
+ret_poweron:
+        return ret;
+}
+
+
+/**
+ * poweroff - power off the product
+ * @product: pointer to the product
+ *
+ */
+int poweroff(ip *product)
+{
+        int ret = -1;
+
+ret_poweroff:
+        return ret;
 }
