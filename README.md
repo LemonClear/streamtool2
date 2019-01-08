@@ -44,28 +44,3 @@ Directorys:
 #################################
 
 Base Struct:
-product————board_array————board————chip_array————chip————core_array————core
-        |              |                      |                      |
-        |              |                      |                      |
-        |              |                      |                      |
-        |              |                      |                      |
-        |              |                      |                    ————core
-        |              |                      |
-        |              |                      |
-        |              |                     ————chip
-        |              |                      |
-        |              |                      |
-        |              |                      |
-        |              |                      |
-        |             ————board
-        |
-        |
-        |
-        |
-       ————power————
-        |
-        |
-        |
-        |
-       ————clock————
-
