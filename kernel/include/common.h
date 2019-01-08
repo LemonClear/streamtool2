@@ -47,6 +47,8 @@ typedef struct registers {
 
 /*ip operation*/
 typedef struct device_ops {
+        void (*poweron)();       //poweron
+        void (*poweroff)();      //poweroff
         void (*init)();          //init
         void (*deinit)();        //deinit
         void (*read)();          //read
@@ -82,7 +84,6 @@ typedef struct device {
 typedef struct parameter {
         int id;
 }param;
-
 
 
 #endif

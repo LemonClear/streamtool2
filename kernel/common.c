@@ -133,6 +133,13 @@ static int initialization(int argc, char *argv[], param *params)
         }
 
         /*3.init product from top*/
+        this_product = (ip *)malloc(sizeof(ip));
+        if (!this_product) {
+                printf("ERR: init product failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                ret = -1;
+                goto ret_init;
+        }
 
 
         /*end*/
