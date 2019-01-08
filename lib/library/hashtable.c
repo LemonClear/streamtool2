@@ -113,7 +113,7 @@ int hashcore(const char *string, hashtable *table)
 
         /*being*/
         hashkey = gen_hashkey(string);
-        if (-1 == hashkey) {
+        if (unlikely(-1 == hashkey)) {
                 printf("generate hashkey fail! %s,%s,%d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_hashid;
@@ -178,7 +178,7 @@ void * findelement(const char *string, hashtable *table)
 
         /*begin*/
         hashkey = gen_hashkey(string);
-        if (-1 == hashkey) {
+        if (unlikely(-1 == hashkey)) {
                 printf("generate hashkey fail! %s,%s,%d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_element;
@@ -280,7 +280,7 @@ hashtable * init_hashtable()
 
         /*begin*/
         table = (hashtable *)malloc(HASHTABLE_MAXID * sizeof(hashtable));
-        if (!table) {
+        if (unlikely(!table)) {
                 printf("hashtable init failed: malloc error! %s,%s,%d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
@@ -303,14 +303,14 @@ int del_hashtable(hashtable *table)
         int delok = -1;
         int hashid = -1;
 
-        if (!table) {
+        if (unlikely(!table)) {
                 printf("the hashtable is absent!!\n");
                 goto ret_del;
         }
 
         /*begin*/
         for (hashid = 0; hashid <= HASHTABLE_MAXID; hashid++) {
-                if (!table[hashid].hashkey)
+                if (unlikely(!table[hashid].hashkey))
                         continue;
 
                 table[hashid].hashkey = 0;
