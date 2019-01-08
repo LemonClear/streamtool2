@@ -228,7 +228,7 @@ do_rehash_find:
                 /*hashkey conflicts, miss!*/
                 element = NULL;
                 printf("MISS: element %s not hashed in table %p\n", string, table);
-        } while (unlikely(table[hashid].element));
+        } while (table[hashid].element);
 
 
 ret_element:
