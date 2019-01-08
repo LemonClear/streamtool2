@@ -91,7 +91,7 @@ ret_sleep:
 
 
 /**
- * powerrun - product enter sleep
+ * powerrun - product main run
  * @product: pointer to the product
  *
  */
