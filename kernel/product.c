@@ -32,6 +32,8 @@
 int product_init(ip *product, param *params)
 {
         int ret = -1;
+        printf("product init\n");
+        //FIXME: todo...
 
 ret_init:
         return ret;
