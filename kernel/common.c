@@ -133,7 +133,7 @@ static ip * initialization(int argc, char *argv[])
         /*parse command line*/
         if (unlikely(argc > 1) && unlikely(argv[1])) {
                 ret = parse_commandline(argc, argv, params);
-                if(unlikely(-1 == ret)) {
+                if (unlikely(-1 == ret)) {
                         printf("WARN: ignore command lines! %s, %s, %d\n",
                                         __FILE__, __func__, __LINE__);
                 }
@@ -160,16 +160,16 @@ static ip * initialization(int argc, char *argv[])
         printf("INFO: SIMULATOR initialization END!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        if(likely(params))
+        if (likely(params))
                 free(params);
 
         return product;
 
 ret_init_err:
-        if(likely(params))
+        if (likely(params))
                 free(params);
 
-        if(likely(product)) {
+        if (likely(product)) {
                 free(product);
                 product = NULL;
         }

@@ -23,6 +23,12 @@
 #include "of.h"
 
 
+/**
+ * product_init - init product
+ * @product:    pointer to the product
+ * @params:     init parameters
+ *
+ */
 int product_init(ip *product, param *params)
 {
         int ret = -1;

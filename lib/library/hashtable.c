@@ -143,6 +143,7 @@ do_rehash_core:
                 /*FIXME:avoid hashkey == 0*/
                 if (unlikely(!hashkey))
                         continue;
+
         } while (table[hashid].element);
 
         table[hashid].hashkey = hashkey;
@@ -228,6 +229,7 @@ do_rehash_find:
                 /*hashkey conflicts, miss!*/
                 element = NULL;
                 printf("MISS: element %s not hashed in table %p\n", string, table);
+
         } while (table[hashid].element);
 
 
