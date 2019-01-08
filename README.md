@@ -8,7 +8,11 @@ Release Notes:
 2. init Makefile base
 3. support compile .o .so (c/cpp) and linkage
 4. support compile .a and linkage
-5. 
+5. add make and make clean
+6. add cerr and compiler process
+7. add ip struct definition
+8. add parse config file and parse command line
+9. 
 
 #################################
 
@@ -18,7 +22,8 @@ Readme:
 3. Dynamic libxxx.so, should use "make install" after "make", unistall use "make unistall"
 4. Dynamic libxxx.so makefile refer to ./lib/cmath/Makefile
 5. Static libxxx.a makefile refer to ./lib/of/Makefile
-6. 
+6. Use "make" to compile and link, use "make clean" to remove "out/" directories
+7. 
 
 #################################
 
