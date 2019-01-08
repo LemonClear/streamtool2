@@ -30,14 +30,16 @@
 /*state machine*/
 enum state {
         OFF = 0,     //off
-        INIT = 1,    //init
-        RUN = 2,     //run
-        IDLE = 3,    //idle
-        READ = 4,    //read
-        WRITE = 5,   //write
-        CAL = 6,     //calculate
-        INPUT = 7,   //input
-        OUTPUT = 8,  //output
+        INIT,        //init
+        RUN,         //run
+        IDLE,        //idle
+        SLEEP,       //sleep
+        WAKEUP,      //wakeup
+        READ,        //read
+        WRITE,       //write
+        CAL,         //calculate
+        INPUT,       //input
+        OUTPUT,      //output
 };
 
 /*ip register*/
@@ -52,6 +54,8 @@ typedef struct device_ops {
         void (*poweron)();       //poweron
         void (*poweroff)();      //poweroff
         void (*idle)();          //idle
+        void (*sleep)();         //sleep
+        void (*wakeup)();        //wakeup
         void (*init)();          //init
         void (*deinit)();        //deinit
         void (*read)();          //read
@@ -78,9 +82,9 @@ typedef struct device {
         hashtable *name2reg;     //ip register hashtable1: name->reg
         hashtable *addr2reg;     //ip register hashtable2: addr->reg
 
-        ip *parent;       //ip parent
+        struct ip *parent;       //ip parent
 
-        ip **subips;      //ip submodule
+        struct ip **subips;      //ip submodule
         hashtable *name2subip;   //ip submodule hashtable1: name->subip
         hashtable *addr2subip;   //ip submodule hashtable2: addr->subip
 }ip;
@@ -92,9 +96,15 @@ typedef struct parameter {
 }param;
 
 
-/*function definitions*/
+/*power: function definitions*/
 int poweron(ip *product);
 int poweroff(ip *product);
+int poweridle(ip *product);
+int powersleep(ip *product);
+int powerrun(ip *product);
+
+/*product: function definitions*/
+int product_init(ip *product, param *params);
 
 
 #endif

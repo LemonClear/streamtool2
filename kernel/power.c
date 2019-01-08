@@ -30,7 +30,9 @@
 int poweron(ip *product)
 {
         int ret = -1;
-        printf("poweron!\n");
+        printf("power on!\n");
+
+        //FIXME: todo...
 
 ret_on:
         return ret;
@@ -45,7 +47,9 @@ ret_on:
 int poweroff(ip *product)
 {
         int ret = -1;
-        printf("poweroff!\n");
+        printf("power off!\n");
+
+        //FIXME: todo...
 
 ret_off:
         return ret;
@@ -53,7 +57,7 @@ ret_off:
 
 
 /**
- * poweroff - power off the product
+ * poweridle - product enter idle
  * @product: pointer to the product
  *
  */
@@ -62,6 +66,42 @@ int poweridle(ip *product)
         int ret = -1;
         printf("power idle\n");
 
+        //FIXME: todo...
+
 ret_idle:
+        return ret;
+}
+
+
+/**
+ * powersleep - product enter sleep
+ * @product: pointer to the product
+ *
+ */
+int powersleep(ip *product)
+{
+        int ret = -1;
+        printf("power sleep\n");
+
+        //FIXME: todo...
+
+ret_sleep:
+        return ret;
+}
+
+
+/**
+ * powerrun - product enter sleep
+ * @product: pointer to the product
+ *
+ */
+int powerrun(ip *product)
+{
+        int ret = -1;
+        printf("power run\n");
+
+        //FIXME: todo...
+
+ret_run:
         return ret;
 }

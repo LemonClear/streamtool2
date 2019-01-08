@@ -15,3 +15,18 @@
 # limitations under the License.
 #
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include "common.h"
+#include "of.h"
+
+
+int product_init(ip *product, param *params)
+{
+        int ret = -1;
+
+ret_init:
+        return ret;
+}
