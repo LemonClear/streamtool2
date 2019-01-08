@@ -30,6 +30,7 @@
 int poweron(ip *product)
 {
         int ret = -1;
+        printf("poweron!\n");
 
 ret_poweron:
         return ret;
@@ -44,6 +45,7 @@ ret_poweron:
 int poweroff(ip *product)
 {
         int ret = -1;
+        printf("poweroff!\n");
 
 ret_poweroff:
         return ret;

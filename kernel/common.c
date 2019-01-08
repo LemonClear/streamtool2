@@ -184,11 +184,10 @@ int main(int argc, char *argv[])
         }
 
         /*2.poweron*/
-        c2xlayer_function(); //FIXME:
-        //poweron(this_product);
+        poweron(this_product);
 
         /*3.poweroff*/
-        //poweroff(this_product);
+        poweroff(this_product);
 
         /*end*/
         printf("INFO: SIMULATOR execution END!!!!! %s, %s, %d\n",
