@@ -43,12 +43,9 @@ Directorys:
 
 #################################
 
-Base Struct:
+Relation Structure:
 1. simulator {product}
-2. product {boardarrary, boardlink, clock, power}
-3. boardarrary {board}
-4. board {chiparray, chiplink, ddr, fifobuf, maincpu, pcie}
-5. chiparray {chip}
-6. chip {corearray, noc}
-7. corearray {core}
-8. core {ctlP, ncoP, tcoP, ram}
+2. product {board, boardlink, clock, power}
+3. board {chip, chiplink, ddr, fifobuf, maincpu, pcie}
+4. chip {core, noc}
+5. core {ctlP, ncoP, tcoP, ram}
