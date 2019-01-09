@@ -61,7 +61,7 @@ ret_poweron:
  *
  * FIXME: to be replace by dt
  */
-static void init(ip *product)
+static int initself(ip *product)
 {
         int ret = -1;
         char *config = "./product.reg";
@@ -69,12 +69,12 @@ static void init(ip *product)
         if (unlikely(!product)) {
                 printf("ERR: product absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_init;
+                goto ret_initself;
         }
 
         //FIXME: todo...
 
-ret_init:
+ret_initself:
         return ret;
 }
 
@@ -105,7 +105,7 @@ ret_tick:
  */
 static const ip_operations product_ops = {
         .poweron = poweron,
-        .init = init,
+        .init = initself,
         .tick_arrive = tickon,
 };
 
@@ -140,7 +140,7 @@ int product_init(ip *product, param *params)
         //FIXME: todo...
         /*init submodules*/
         /*alloc*/
-        product->subips = (ip *)malloc(params->board_count * sizeof(ip *));
+        product->subips = (ip **)malloc(params->board_count * sizeof(ip *));
         if (unlikely(!product->subips)) {
 
         }

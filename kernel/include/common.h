@@ -77,7 +77,7 @@ typedef struct device {
         enum state status;       //ip state machine
         address32_t address;     //ip address: first reg-addr or mem-addr
 
-        ip_operations *ops;      //ip operation
+        const ip_operations *ops;//ip operation
 
         address32_t **memory;    //ip memory space
 
@@ -133,7 +133,7 @@ int product_init(ip *product, param *params);
 int product_run(ip *product);
 
 /*board*/
-int board_init(ip *product, param *params);
+int board_init(ip *board, param *params);
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *
