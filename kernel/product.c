@@ -34,15 +34,68 @@ enum state global_state = OFF;
 u64 tick_counter = 0;
 int all_phase_done = 0;
 
-#if 0
+
 /**
- * tick_arrive - one clock cycle
+ * poweron - product poweron
  * @product:   self pointer
  *
  */
-static void power_on(ip *product)
+static void poweron(ip *product)
 {
-        if (!product)
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_poweron;
+        }
+
+        //FIXME: todo...
+
+ret_poweron:
+        return;
+}
+
+
+/**
+ * init - init product self
+ * @product:   self pointer
+ *
+ * FIXME: to be replace by dt
+ */
+static void init(ip *product)
+{
+        int ret = -1;
+        char *config = "./product.reg";
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
+        //FIXME: todo...
+
+ret_init:
+        return ret;
+}
+
+
+/**
+ * tickon - one tick trigger
+ * @product:   self pointer
+ *
+ */
+static void tickon(ip *product)
+{
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_tick;
+        }
+
+        //FIXME: todo...
+
+ret_tick:
+        return;
 }
 
 
@@ -51,26 +104,68 @@ static void power_on(ip *product)
  *
  */
 static const ip_operations product_ops = {
-        .poweron = power_on,
+        .poweron = poweron,
         .init = init,
-        .tick_arrive = tick_arrive,
+        .tick_arrive = tickon,
 };
-#endif
+
 
 /**
- * product_init - init product
+ * product_init - init product with params
  * @product:   pointer to the product
  * @params:    init parameters
  *
+ * FIXME: most inits move to self->ops->init according to dt, except ops
  */
 int product_init(ip *product, param *params)
 {
         int ret = -1;
+        int sub = -1;
 
         /*begin*/
-        printf("product init\n");
-        //FIXME: todo...
+        printf("INFO: product init start!!!!! %s, %s, %d\n",
+                        __FILE__, __func__, __LINE__);
 
+        /*init ops*/
+        product->ops = &product_ops;
+
+        /*init regs*/
+        ret = product->ops->init(product);
+        if (unlikely(ret)) {
+                printf("ERR: product init failed, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
+        //FIXME: todo...
+        /*init submodules*/
+        /*alloc*/
+        product->subips = (ip *)malloc(params->board_count * sizeof(ip *));
+        if (unlikely(!product->subips)) {
+
+        }
+        memset((void *)product->subips, 0, params->board_count * sizeof(ip *));
+
+        for (sub = 0; sub < params->board_count; sub++) {
+                /*alloc*/
+                (product->subips)[sub] = (ip *)malloc(sizeof(ip));
+                if (unlikely(!(product->subips)[sub])) {
+
+                }
+                memset((void *)(product->subips)[sub], 0, sizeof(ip));
+
+                /*init*/
+                ret = board_init((product->subips)[sub], params);
+                if (unlikely(ret)) {
+
+                }
+
+                /*hash*/
+        }
+
+
+        printf("INFO: product init end!!!!! %s, %s, %d\n",
+                        __FILE__, __func__, __LINE__);
 
 ret_init:
         return ret;
@@ -106,7 +201,7 @@ int product_run(ip *product)
 
 running:
         /*run*/
-        if (RUN == global_state) {
+        if (likely(RUN == global_state)) {
                 ret = clock_run(product); //clock start
                 if (unlikely(ret)) {
                         printf("ERR: clock run failed! %s, %s, %d\n",
