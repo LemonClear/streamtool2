@@ -59,7 +59,7 @@ typedef struct device_ops {
         void (*idle)();          //idle
         void (*sleep)();         //sleep
         void (*wakeup)();        //wakeup
-        void (*init)();          //init
+        int  (*init)();          //init
         void (*deinit)();        //deinit
         void (*read)();          //read
         void (*write)();         //write
@@ -86,6 +86,11 @@ typedef struct device {
         hashtable *addr2reg;     //ip register hashtable2: addr->reg
 
         struct ip *parent;       //ip parent
+        //FIXME: more? less?
+        struct ip *east;         //ip east connected ip
+        struct ip *west;         //ip west connected ip
+        struct ip *sourth;       //ip sourth connected ip
+        struct ip *north;        //ip north connected ip
 
         struct ip **subips;      //ip submodule
         hashtable *name2subip;   //ip submodule hashtable1: name->subip
@@ -94,7 +99,12 @@ typedef struct device {
 
 /*parameter*/
 typedef struct parameter {
-        int id;
+        int board_count;
+        int boardlink_count;
+        int chip_count;
+        int chiplink_count;
+        int core_count;
+        int noc_count;
         //FIXME: add more
 }param;
 
