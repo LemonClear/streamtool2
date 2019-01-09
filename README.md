@@ -44,10 +44,11 @@ Directorys:
 #################################
 
 Base Struct:
-product
-|
-board_arrary--------clock--------power
-|
-board<----boardlink---->board
-|
-
+1. simulator {product}
+2. product {boardarrary, boardlink, clock, power}
+3. boardarrary {board}
+4. board {chiparray, chiplink, ddr, fifobuf, maincpu, pcie}
+5. chiparray {chip}
+6. chip {corearray, noc}
+7. corearray {core}
+8. core {ctlP, ncoP, tcoP, ram}
