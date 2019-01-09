@@ -40,10 +40,21 @@ int clock_run(ip *product)
                 goto ret_clockrun;
         }
 
-        //FIXME: todo...
         /*run according to clock*/
         while (1) {
+                /*tick counter increase*/
                 tick_counter++;
+
+                //FIXME:
+                product->ops->tick_arrive(product);
+
+                if (likely(!all_phase_done))
+                        continue;
+
+                /*go to idle*/
+                global_state = IDLE;
+                ret = 0;
+                break;
         }
 
 ret_clockrun:
