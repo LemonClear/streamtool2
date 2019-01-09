@@ -23,11 +23,11 @@
 
 
 /**
- * poweron - power on the product
+ * power_on - power on the product
  * @product: pointer to the product
  *
  */
-int poweron(ip *product)
+int power_on(ip *product)
 {
         int ret = -1;
         printf("power on!\n");
@@ -40,11 +40,11 @@ ret_on:
 
 
 /**
- * poweroff - power off the product
+ * power_off - power off the product
  * @product: pointer to the product
  *
  */
-int poweroff(ip *product)
+int power_off(ip *product)
 {
         int ret = -1;
         printf("power off!\n");
@@ -57,11 +57,11 @@ ret_off:
 
 
 /**
- * poweridle - product enter idle
+ * power_idle - product enter idle
  * @product: pointer to the product
  *
  */
-int poweridle(ip *product)
+int power_idle(ip *product)
 {
         int ret = -1;
         printf("power idle\n");
@@ -74,11 +74,11 @@ ret_idle:
 
 
 /**
- * powersleep - product enter sleep
+ * power_sleep - product enter sleep
  * @product: pointer to the product
  *
  */
-int powersleep(ip *product)
+int power_sleep(ip *product)
 {
         int ret = -1;
         printf("power sleep\n");

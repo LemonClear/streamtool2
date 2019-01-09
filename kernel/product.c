@@ -70,7 +70,7 @@ int product_run(ip *product)
         }
 
         /*power on*/
-        ret = poweron(product); //power start
+        ret = power_on(product); //power start
         if (unlikely(ret)) {
                 printf("ERR: power on failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -93,7 +93,7 @@ running:
 
         /*idle*/
         while (IDLE == global_state) {
-                ret = poweridle(product); //internal clock wakeup
+                ret = power_idle(product); //internal clock wakeup
                 if (unlikely(ret)) {
                         printf("ERR: power idle failed! %s, %s, %d\n",
                                         __FILE__, __func__, __LINE__);
@@ -106,7 +106,7 @@ running:
 
         /*sleep*/
         while (SLEEP == global_state) {
-                ret = powersleep(product); //outer clock wakeup
+                ret = power_sleep(product); //outer clock wakeup
                 if (unlikely(ret)) {
                         printf("ERR: power sleep failed! %s, %s, %d\n",
                                         __FILE__, __func__, __LINE__);
@@ -118,7 +118,7 @@ running:
         }
 
         /*power off*/
-        poweroff(product);
+        power_off(product);
 
 ret_run:
         return ret;
