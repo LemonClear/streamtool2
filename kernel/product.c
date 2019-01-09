@@ -40,8 +40,11 @@ enum state global_state = OFF;
 int product_init(ip *product, param *params)
 {
         int ret = -1;
+
+        /*begin*/
         printf("product init\n");
         //FIXME: todo...
+
 
 ret_init:
         return ret;
@@ -50,16 +53,23 @@ ret_init:
 
 /**
  * product_run - run this product
- * @product:    pointer to the product
+ * @product:     pointer to the product
  *
  */
 int product_run(ip *product)
 {
         int ret = -1;
 
+        /*begin*/
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_run;
+        }
+
         /*power on*/
-        ret = poweron(product);
-        if (unlikely(-1 == ret)) {
+        ret = poweron(product); //power start
+        if (unlikely(ret)) {
                 printf("ERR: power on failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_run;
@@ -70,10 +80,10 @@ int product_run(ip *product)
 
 running:
         /*run*/
-        while (RUN == global_state) {
-                ret = powerrun(product);
-                if (unlikely(-1 == ret)) {
-                        printf("ERR: power run failed! %s, %s, %d\n",
+        if (RUN == global_state) {
+                ret = clock_run(product); //clock start
+                if (unlikely(ret)) {
+                        printf("ERR: clock run failed! %s, %s, %d\n",
                                         __FILE__, __func__, __LINE__);
                         goto ret_run;
                 }
@@ -81,9 +91,8 @@ running:
 
         /*idle*/
         while (IDLE == global_state) {
-                //no clock, need clock wakeup
-                ret = poweridle(product);
-                if (unlikely(-1 == ret)) {
+                ret = poweridle(product); //internal clock wakeup
+                if (unlikely(ret)) {
                         printf("ERR: power idle failed! %s, %s, %d\n",
                                         __FILE__, __func__, __LINE__);
                         goto ret_run;
@@ -95,9 +104,8 @@ running:
 
         /*sleep*/
         while (SLEEP == global_state) {
-                //no power no clock, need outside clock wakeup
-                ret = powersleep(product);
-                if (unlikely(-1 == ret)) {
+                ret = powersleep(product); //outer clock wakeup
+                if (unlikely(ret)) {
                         printf("ERR: power sleep failed! %s, %s, %d\n",
                                         __FILE__, __func__, __LINE__);
                         goto ret_run;
@@ -106,9 +114,6 @@ running:
                 if (unlikely(RUN == global_state))
                         goto running;
         }
-
-        /*done*/
-        ret = 0;
 
         /*power off*/
         poweroff(product);

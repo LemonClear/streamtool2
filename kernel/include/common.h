@@ -27,6 +27,9 @@
 #include "library.h"
 
 
+/* * * * * * * * * * * * * * * * * * * * * * * *
+ * struct declare
+ * * * * * * * * * * * * * * * * * * * * * * * */
 /*state machine*/
 enum state {
         OFF = 0,     //off
@@ -67,7 +70,7 @@ typedef struct device_ops {
         void (*dump)();          //debug
 }ip_operations;
 
-/*ip structure*/
+/*ip*/
 typedef struct device {
         const char *name;        //ip name
         int id;                  //ip id
@@ -89,23 +92,35 @@ typedef struct device {
         hashtable *addr2subip;   //ip submodule hashtable2: addr->subip
 }ip;
 
-/*parameters*/
+/*parameter*/
 typedef struct parameter {
         int id;
         //FIXME: add more
 }param;
 
+/*simulator*/
+typedef struct simulator {
+        param *params;
+        ip *product;
+}simu;
 
-/*power: function definitions*/
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * *
+ * function declare
+ * * * * * * * * * * * * * * * * * * * * * * * */
+/*power*/
 int poweron(ip *product);
 int poweroff(ip *product);
 int poweridle(ip *product);
 int powersleep(ip *product);
-int powerrun(ip *product);
 
-/*product: function definitions*/
+/*product*/
 int product_init(ip *product, param *params);
 int product_run(ip *product);
+
+/*clock*/
+int clock_run(ip *product);
 
 
 #endif

@@ -88,20 +88,3 @@ int powersleep(ip *product)
 ret_sleep:
         return ret;
 }
-
-
-/**
- * powerrun - product main run
- * @product: pointer to the product
- *
- */
-int powerrun(ip *product)
-{
-        int ret = -1;
-        printf("power run\n");
-
-        //FIXME: todo...
-
-ret_run:
-        return ret;
-}

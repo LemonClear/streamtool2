@@ -15,3 +15,33 @@
 # limitations under the License.
 #
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include "common.h"
+#include "of.h"
+
+
+/**
+ * clock_run - start clock
+ * @product: pointer to product
+ *
+ */
+int clock_run(ip *product)
+{
+        int ret = -1;
+
+        /*begin*/
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_clockrun;
+        }
+
+        //FIXME: todo...
+
+ret_clockrun:
+        return ret;
+}

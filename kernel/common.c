@@ -24,9 +24,9 @@
 
 
 /**
- * parse_configs - parse the config files
+ * parse_configs - parse the config file
  * @path:       config file path
- * @params:     parameter struct
+ * @params:     param struct
  *
  * FIXME: to be replaced by dt
  */
@@ -48,7 +48,7 @@ static int parse_configs(char *path, param *params)
         }
 
         /*begin*/
-        //FIXME: getline();
+        //FIXME: getline(stream);
 
 ret_configs:
         return ret;
@@ -56,149 +56,192 @@ ret_configs:
 
 
 /**
- * parse_commandline - parse the commandline parameters
- * @argc:       commandline strings count
- * @argv:       commanline strings
+ * parse_commands - parse the command line
+ * @argc:       strings count
+ * @argv:       strings
  * @params:     parameter struct
  *
  */
-static int parse_commandline(int argc, char *argv[], param *params)
+static int parse_commands(int argc, char *argv[], param *params)
 {
         int ret = -1;
 
         if (unlikely(!params)) {
                 printf("ERR: param struct absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_commandline;
+                goto ret_commands;
         }
 
         if (unlikely(argc < 2) || unlikely(!argv[1])) {
                 printf("WARN: no command line params, use default! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_commandline;
+                goto ret_commands;
         }
 
         /*begin*/
         //FIXME: todo...
 
 
-ret_commandline:
+ret_commands:
         return ret;
 }
 
 
 /**
- * initialization - simulator init
- * @argc:       command line parameter counts
- * @argv:       command line parameters
+ * simu_alloc - alloc simulator memory
+ *
+ */
+static simu * simu_alloc()
+{
+        simu *simulator = NULL;
+
+        /*simu*/
+        simulator = (void *)malloc(sizeof(simu));
+        if (unlikely(!simulator)) {
+                printf("ERR: malloc simu struct failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_simu;
+        }
+        memset((void *)simulator, 0, sizeof(simu));
+
+        /*param*/
+        simulator->params = (void *)malloc(sizeof(param));
+        if (unlikely(!simulator->params)) {
+                printf("ERR: malloc param struct failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_simu;
+        }
+        memset((void *)(simulator->params), 0, sizeof(param));
+
+        /*product*/
+        simulator->product = (ip *)malloc(sizeof(ip));
+        if (unlikely(!simulator->product)) {
+                printf("ERR: malloc product struct failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_simu;
+        }
+        memset((void *)(simulator->product), 0, sizeof(ip));
+
+        return simulator;
+
+ret_simu:
+        simulator = NULL;
+        return simulator;
+}
+
+
+/**
+ * simu_init - init simulator
+ * @argc: command line parameter counts
+ * @argv: command line parameters
+ * @simulator: pointer to the simulator
  *
  * FIXME: demo.config need to be dynamic or further no-need
  */
-static ip * initialization(int argc, char *argv[])
+static int simu_init(int argc, char *argv[], simu *simulator)
 {
         int ret = -1;
         char *path = "./demo.defconfig";
-        param *params = NULL;
-        ip *product = NULL;
 
         /*begin*/
-        printf("INFO: SIMULATOR initialization START!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
-
-        /*alloc: param struct*/
-        params = (void *)malloc(sizeof(param));
-        if (unlikely(!params)) {
-                printf("ERR: malloc param struct failed! %s, %s, %d\n",
+        if (unlikely(!simulator)) {
+                printf("ERR: simulator struct absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_init_err;
+                goto ret_init;
         }
-        memset((void *)params, 0, sizeof(param));
 
-        /*parse: config files*/
-        ret = parse_configs(path, params);
-        if (unlikely(-1 == ret)) {
+        /*parse: config file*/
+        ret = parse_configs(path, simulator->params);
+        if (unlikely(ret)) {
                 printf("ERR: parse config file failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_init_err;
+                goto ret_init;
         }
 
         /*parse: command line*/
-        if (unlikely(argc > 1) && unlikely(argv[1])) {
-                ret = parse_commandline(argc, argv, params);
-                if (unlikely(-1 == ret)) {
-                        printf("WARN: ignore command lines! %s, %s, %d\n",
-                                        __FILE__, __func__, __LINE__);
-                }
-        }
-
-        /*alloc: product struct*/
-        product = (ip *)malloc(sizeof(ip));
-        if (unlikely(!product)) {
-                printf("ERR: malloc product struct failed! %s, %s, %d\n",
+        ret = parse_commands(argc, argv, simulator->params);
+        if (unlikely(ret)) {
+                printf("WARN: ignore command lines! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_init_err;
         }
-        memset((void *)product, 0, sizeof(ip));
 
-        /*product init*/
-        ret = product_init(product, params);
-        if (unlikely(-1 == ret)) {
+        /*init: the whole product*/
+        ret = product_init(simulator->product, simulator->params);
+        if (unlikely(ret)) {
                 printf("ERR: product init failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_init_err;
         }
 
-        /*end*/
-        printf("INFO: SIMULATOR initialization END!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+ret_init:
+        return ret;
+}
 
-        if (likely(params))
-                free(params);
 
-        return product;
+/**
+ * simu_run - run simulator
+ * @simulator:  pointer to the simulator
+ *
+ */
+static int simu_run(simu *simulator)
+{
+        int ret = -1;
 
-ret_init_err:
-        if (likely(params))
-                free(params);
-
-        if (likely(product)) {
-                free(product);
+        /*begin*/
+        if (unlikely(!simulator)) {
+                printf("ERR: simulator struct absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_run;
         }
 
-        product = NULL;
-        return product;
+        /*run*/
+        ret = product_run(simulator->product);
+        if (unlikely(ret)) {
+                printf("ERR: product run failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+        }
+
+ret_run:
+        return ret;
 }
 
 
 /**
  * main - the simulator MAIN entrace
- * @argc:       command line parameter counts
- * @argv:       command line parameters
+ * @argc:   command line parameter counts
+ * @argv:   command line parameters
  *
  */
 int main(int argc, char *argv[])
 {
         int ret = -1;
-        ip *this_product = NULL;
+        simu *simulator = NULL;
 
         /*begin*/
         printf("INFO: SIMULATOR execution START!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        /*product init*/
-        this_product = initialization(argc, argv);
-        if (unlikely(!this_product)) {
-                printf("ERR: simulator initialization failed! %s, %s, %d\n",
+        /*create*/
+        simulator = simu_alloc();
+        if (unlikely(!simulator)) {
+                printf("ERR: simulator create failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_main_err;
+                goto ret_main;
         }
 
-        /*product run*/
-        ret = product_run(this_product);
+        /*init*/
+        ret = simu_init(argc, argv, simulator);
         if (unlikely(ret)) {
-                printf("ERR: product run failed! %s, %s, %d\n",
+                printf("ERR: simulator init failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_main_err;
+                goto ret_main;
+        }
+
+        /*run*/
+        ret = simu_run(simulator);
+        if (unlikely(ret)) {
+                printf("ERR: simulator run failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_main;
         }
 
         /*end*/
@@ -207,6 +250,6 @@ int main(int argc, char *argv[])
 
         exit(EXIT_SUCCESS);
 
-ret_main_err:
+ret_main:
         exit(EXIT_FAILURE);
 }
