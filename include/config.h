@@ -19,7 +19,7 @@
 #define __CONFIG_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This file defines simulator configurations.
- * FIXME: will replaced by kconfig
+ * FIXME: will replaced by kconfig and dt
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 

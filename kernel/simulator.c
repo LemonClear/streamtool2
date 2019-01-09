@@ -28,7 +28,7 @@
  * @path:       config file path
  * @params:     param struct
  *
- * FIXME: to be replaced by dt
+ * FIXME: to be replaced by kconfig/kbuild
  */
 static int parse_configs(char *path, param *params)
 {
