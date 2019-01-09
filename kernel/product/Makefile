@@ -14,11 +14,7 @@
 # limitations under the License.
 #
 
-SUBDIRS         := ./product \
-		   ./board \
-		   ./chip \
-		   ./core
-
+SUBDIRS         := 
 source          := $(wildcard *.c)
 objects         := $(patsubst %.c,%.o,$(source))
 
