@@ -66,7 +66,7 @@ typedef struct device_ops {
         void (*set_reg)();       //set register
         void (*get_reg)();       //get register
         void (*clear_reg)();     //clear register
-        void (*cicle_arrive)();  //clock trigger
+        void (*tick_arrive)();   //clock trigger
         void (*dump)();          //debug
 }ip_operations;
 
@@ -77,11 +77,11 @@ typedef struct device {
         enum state status;       //ip state machine
         address32_t address;     //ip address: first reg-addr or mem-addr
 
-        ip_operations ops;       //ip operation
+        ip_operations *ops;      //ip operation
 
         address32_t **memory;    //ip memory space
 
-        regs **reglist;   //ip register list
+        regs **reglist;          //ip register list
         hashtable *name2reg;     //ip register hashtable1: name->reg
         hashtable *addr2reg;     //ip register hashtable2: addr->reg
 
@@ -129,6 +129,7 @@ int clock_run(ip *product);
  * * * * * * * * * * * * * * * * * * * * * * * */
 extern enum state global_state;  //the whole product run state-machine
 extern u64 tick_counter;         //the tick counts from the beginning
+extern int all_phase_done;       //all phase process ok
 
 
 #endif
