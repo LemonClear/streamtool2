@@ -125,13 +125,15 @@ int power_off(ip *product);
 int power_idle(ip *product);
 int power_sleep(ip *product);
 
+/*clock*/
+int clock_run(ip *product);
+
 /*product*/
 int product_init(ip *product, param *params);
 int product_run(ip *product);
 
-/*clock*/
-int clock_run(ip *product);
-
+/*board*/
+int board_init(ip *product, param *params);
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *

@@ -15,3 +15,25 @@
 # limitations under the License.
 #
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include "common.h"
+#include "of.h"
+
+
+/**
+ * board_init - init board with params
+ * @product:   pointer to the product
+ * @params:    init parameters
+ *
+ * FIXME: most inits move to self->ops->init according to dt, except ops
+ */
+int board_init(ip *product, param *params)
+{
+        int ret = -1;
+
+ret_init:
+        return ret;
+}
