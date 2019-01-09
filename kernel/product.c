@@ -25,18 +25,42 @@
 
 /**
  * global variants
- * @global_state:   the whole product run state-machine
- * @tick_counter:   the tick counts from the beginning
+ * @global_state:    the whole product run state-machine
+ * @tick_counter:    the tick counts from the beginning
+ * @all_phase_done:  all phase process ok
  *
  */
 enum state global_state = OFF;
 u64 tick_counter = 0;
+int all_phase_done = 0;
+
+#if 0
+/**
+ * tick_arrive - one clock cycle
+ * @product:   self pointer
+ *
+ */
+static void power_on(ip *product)
+{
+        if (!product)
+}
 
 
 /**
+ * ops structure
+ *
+ */
+static const ip_operations product_ops = {
+        .poweron = power_on,
+        .init = init,
+        .tick_arrive = tick_arrive,
+};
+#endif
+
+/**
  * product_init - init product
- * @product:    pointer to the product
- * @params:     init parameters
+ * @product:   pointer to the product
+ * @params:    init parameters
  *
  */
 int product_init(ip *product, param *params)
