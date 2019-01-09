@@ -25,6 +25,31 @@
 
 
 /**
+ * clock_wakeup - typical clock to wakeup product from idle
+ * @product: pointer to product
+ *
+ */
+int clock_wakeup(ip *product)
+{
+        int ret = -1;
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, wakeup failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_wakeup;
+        }
+
+        /*go to run*/
+        global_state = RUN;
+        all_phase_done = 0;
+        ret = 0;
+
+ret_wakeup:
+        return ret;
+}
+
+
+/**
  * clock_run - start clock
  * @product: pointer to product
  *
@@ -35,7 +60,7 @@ int clock_run(ip *product)
 
         /*begin*/
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
+                printf("ERR: product absent, run failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_clockrun;
         }
@@ -45,7 +70,6 @@ int clock_run(ip *product)
                 /*tick counter increase*/
                 tick_counter++;
 
-                //FIXME:
                 product->ops->tick_arrive(product);
 
                 if (likely(!all_phase_done))
