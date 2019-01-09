@@ -24,14 +24,6 @@
 
 
 /**
- * global variants
- * @global_state:   the whole product run state-machine
- *
- */
-enum state global_state = OFF;
-
-
-/**
  * parse_configs - parse the config files
  * @path:       config file path
  * @params:     parameter struct
@@ -113,7 +105,7 @@ static ip * initialization(int argc, char *argv[])
         printf("INFO: SIMULATOR initialization START!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        /*alloc param struct*/
+        /*alloc: param struct*/
         params = (void *)malloc(sizeof(param));
         if (unlikely(!params)) {
                 printf("ERR: malloc param struct failed! %s, %s, %d\n",
@@ -122,7 +114,7 @@ static ip * initialization(int argc, char *argv[])
         }
         memset((void *)params, 0, sizeof(param));
 
-        /*parse config files*/
+        /*parse: config files*/
         ret = parse_configs(path, params);
         if (unlikely(-1 == ret)) {
                 printf("ERR: parse config file failed! %s, %s, %d\n",
@@ -130,7 +122,7 @@ static ip * initialization(int argc, char *argv[])
                 goto ret_init_err;
         }
 
-        /*parse command line*/
+        /*parse: command line*/
         if (unlikely(argc > 1) && unlikely(argv[1])) {
                 ret = parse_commandline(argc, argv, params);
                 if (unlikely(-1 == ret)) {
@@ -139,7 +131,7 @@ static ip * initialization(int argc, char *argv[])
                 }
         }
 
-        /*alloc product struct*/
+        /*alloc: product struct*/
         product = (ip *)malloc(sizeof(ip));
         if (unlikely(!product)) {
                 printf("ERR: malloc product struct failed! %s, %s, %d\n",
@@ -148,7 +140,7 @@ static ip * initialization(int argc, char *argv[])
         }
         memset((void *)product, 0, sizeof(ip));
 
-        /*init product from top*/
+        /*product init*/
         ret = product_init(product, params);
         if (unlikely(-1 == ret)) {
                 printf("ERR: product init failed! %s, %s, %d\n",
@@ -171,9 +163,9 @@ ret_init_err:
 
         if (likely(product)) {
                 free(product);
-                product = NULL;
         }
 
+        product = NULL;
         return product;
 }
 
@@ -193,7 +185,7 @@ int main(int argc, char *argv[])
         printf("INFO: SIMULATOR execution START!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        /*1.product init*/
+        /*product init*/
         this_product = initialization(argc, argv);
         if (unlikely(!this_product)) {
                 printf("ERR: simulator initialization failed! %s, %s, %d\n",
@@ -201,57 +193,13 @@ int main(int argc, char *argv[])
                 goto ret_main_err;
         }
 
-        /*2.power on*/
-        ret = poweron(this_product);
-        if (unlikely(-1 == ret)) {
-                printf("ERR: power on failed! %s, %s, %d\n",
+        /*product run*/
+        ret = product_run(this_product);
+        if (unlikely(ret)) {
+                printf("ERR: product run failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_main_err;
         }
-
-        global_state = RUN;
-
-running:
-        /*3.power run*/
-        while (RUN == global_state) {
-                ret = powerrun(this_product);
-                if (unlikely(-1 == ret)) {
-                        printf("ERR: power run failed! %s, %s, %d\n",
-                                        __FILE__, __func__, __LINE__);
-                        goto ret_main_err;
-                }
-        }
-
-        /*4.power idle*/
-        while (IDLE == global_state) {
-                //no clock, need clock wakeup
-                ret = poweridle(this_product);
-                if (unlikely(-1 == ret)) {
-                        printf("ERR: power idle failed! %s, %s, %d\n",
-                                        __FILE__, __func__, __LINE__);
-                        goto ret_main_err;
-                }
-
-                if (unlikely(RUN == global_state))
-                        goto running;
-        }
-
-        /*5.power sleep*/
-        while (SLEEP == global_state) {
-                //no power no clock, need outside clock wakeup
-                ret = powersleep(this_product);
-                if (unlikely(-1 == ret)) {
-                        printf("ERR: power sleep failed! %s, %s, %d\n",
-                                        __FILE__, __func__, __LINE__);
-                        goto ret_main_err;
-                }
-
-                if (unlikely(RUN == global_state))
-                        goto running;
-        }
-
-        /*6.power off*/
-        poweroff(this_product);
 
         /*end*/
         printf("INFO: SIMULATOR execution END!!!!! %s, %s, %d\n",

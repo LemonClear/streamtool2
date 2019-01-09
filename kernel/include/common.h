@@ -105,6 +105,7 @@ int powerrun(ip *product);
 
 /*product: function definitions*/
 int product_init(ip *product, param *params);
+int product_run(ip *product);
 
 
 #endif

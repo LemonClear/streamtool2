@@ -44,3 +44,10 @@ Directorys:
 #################################
 
 Base Struct:
+product
+|
+board_arrary--------clock--------power
+|
+board<----boardlink---->board
+|
+
