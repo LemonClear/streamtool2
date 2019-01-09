@@ -26,9 +26,11 @@
 /**
  * global variants
  * @global_state:   the whole product run state-machine
+ * @tick_counter:   the tick counts from the beginning
  *
  */
 enum state global_state = OFF;
+u64 tick_counter = 0;
 
 
 /**

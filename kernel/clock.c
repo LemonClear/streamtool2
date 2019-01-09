@@ -41,6 +41,10 @@ int clock_run(ip *product)
         }
 
         //FIXME: todo...
+        /*run according to clock*/
+        while (1) {
+                tick_counter++;
+        }
 
 ret_clockrun:
         return ret;

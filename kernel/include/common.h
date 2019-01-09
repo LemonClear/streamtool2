@@ -110,10 +110,10 @@ typedef struct simulator {
  * function declare
  * * * * * * * * * * * * * * * * * * * * * * * */
 /*power*/
-int poweron(ip *product);
-int poweroff(ip *product);
-int poweridle(ip *product);
-int powersleep(ip *product);
+int power_on(ip *product);
+int power_off(ip *product);
+int power_idle(ip *product);
+int power_sleep(ip *product);
 
 /*product*/
 int product_init(ip *product, param *params);
@@ -121,6 +121,14 @@ int product_run(ip *product);
 
 /*clock*/
 int clock_run(ip *product);
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * *
+ * global variants declare
+ * * * * * * * * * * * * * * * * * * * * * * * */
+extern enum state global_state;  //the whole product run state-machine
+extern u64 tick_counter;         //the tick counts from the beginning
 
 
 #endif
