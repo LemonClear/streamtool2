@@ -96,7 +96,7 @@ static simu * simu_alloc()
         simu *simulator = NULL;
 
         /*simu*/
-        simulator = (void *)malloc(sizeof(simu));
+        simulator = malloc(sizeof(simu));
         if (unlikely(!simulator)) {
                 printf("ERR: malloc simu struct failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -105,7 +105,7 @@ static simu * simu_alloc()
         memset((void *)simulator, 0, sizeof(simu));
 
         /*param*/
-        simulator->params = (void *)malloc(sizeof(param));
+        simulator->params = malloc(sizeof(param));
         if (unlikely(!simulator->params)) {
                 printf("ERR: malloc param struct failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -114,7 +114,7 @@ static simu * simu_alloc()
         memset((void *)(simulator->params), 0, sizeof(param));
 
         /*product*/
-        simulator->product = (ip *)malloc(sizeof(ip));
+        simulator->product = malloc(sizeof(ip));
         if (unlikely(!simulator->product)) {
                 printf("ERR: malloc product struct failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);

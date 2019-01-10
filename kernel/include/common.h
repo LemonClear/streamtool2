@@ -72,29 +72,29 @@ typedef struct device_ops {
 
 /*ip*/
 typedef struct device {
-        const char *name;        //ip name
-        int id;                  //ip id
-        enum state status;       //ip state machine
-        address32_t address;     //ip address: first reg-addr or mem-addr
+        const char *name;        //name
+        int id;                  //id
+        enum state status;       //state machine
+        address32_t address;     //address: first reg-addr or mem-addr
 
-        const ip_operations *ops;//ip operation
+        const ip_operations *ops;//operation
 
-        address32_t **memory;    //ip memory space
+        address32_t **memory;    //memory space
 
-        regs **reglist;          //ip register list
-        hashtable *name2reg;     //ip register hashtable1: name->reg
-        hashtable *addr2reg;     //ip register hashtable2: addr->reg
+        regs **reglist;          //register list
+        hashtable *name2reg;     //register hashtable1: name->reg
+        hashtable *addr2reg;     //register hashtable2: addr->reg
 
-        struct ip *parent;       //ip parent
+        struct device *parent;   //parent
         //FIXME: more? less?
-        struct ip *east;         //ip east connected ip
-        struct ip *west;         //ip west connected ip
-        struct ip *sourth;       //ip sourth connected ip
-        struct ip *north;        //ip north connected ip
+        struct device *east;     //east connected ip
+        struct device *west;     //west connected ip
+        struct device *sourth;   //sourth connected ip
+        struct device *north;    //north connected ip
 
-        struct ip **subips;      //ip submodule
-        hashtable *name2subip;   //ip submodule hashtable1: name->subip
-        hashtable *addr2subip;   //ip submodule hashtable2: addr->subip
+        struct device **subips;  //submodule
+        hashtable *name2subip;   //submodule hashtable1: name->subip
+        hashtable *addr2subip;   //submodule hashtable2: addr->subip
 }ip;
 
 /*parameter*/

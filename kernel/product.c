@@ -72,7 +72,7 @@ static int initself(ip *product)
                 goto ret_initself;
         }
 
-        //FIXME: todo...
+        //FIXME: todo... init registers
 
 ret_initself:
         return ret;
@@ -140,7 +140,7 @@ int product_init(ip *product, param *params)
         //FIXME: todo...
         /*init submodules*/
         /*alloc*/
-        product->subips = (ip **)malloc(params->board_count * sizeof(ip *));
+        product->subips = malloc(params->board_count * sizeof(ip *));
         if (unlikely(!product->subips)) {
 
         }
@@ -148,7 +148,7 @@ int product_init(ip *product, param *params)
 
         for (sub = 0; sub < params->board_count; sub++) {
                 /*alloc*/
-                (product->subips)[sub] = (ip *)malloc(sizeof(ip));
+                (product->subips)[sub] = malloc(sizeof(ip));
                 if (unlikely(!(product->subips)[sub])) {
 
                 }

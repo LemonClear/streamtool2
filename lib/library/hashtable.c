@@ -281,7 +281,7 @@ hashtable * init_hashtable()
         hashtable *table = NULL;
 
         /*begin*/
-        table = (hashtable *)malloc(HASHTABLE_MAXID * sizeof(hashtable));
+        table = malloc(HASHTABLE_MAXID * sizeof(hashtable));
         if (unlikely(!table)) {
                 printf("hashtable init failed: malloc error! %s,%s,%d\n",
                                 __FILE__, __func__, __LINE__);
