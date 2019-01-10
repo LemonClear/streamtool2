@@ -111,58 +111,253 @@ static const ip_operations product_ops = {
 
 
 /**
+ * parse_regconfig - parse reg config file xxx.reg
+ * @reglist:   pointer to reglist
+ *
+ * FIXME: to be replace by dt
+ */
+static int parse_regconfig(regs **reglist)
+{
+        int ret = -1;
+        char *config = "./product.reg";
+
+ret_reg:
+        return ret;
+}
+
+
+/**
+ * product_alloc - alloc product elements
+ * @product:   pointer to product
+ * @params:    init parameters
+ *
+ */
+static int product_alloc(ip *product, param *params)
+{
+        int ret = -1;
+        int id = -1;
+
+        /*memory: FIXME: no need in product level*/
+        product->memory = malloc(params->ram_count * sizeof(address32_t *));
+        if (unlikely(!product->memory)) {
+                printf("ERR: alloc product memory failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+        memset((void *)product->memory, 0, params->ram_count * sizeof(address32_t *));
+
+        for (id = 0; id < params->ram_count; id++) {
+                product->memory[id] = malloc(params->ram_size); //here: memory[id]++ is 4bytes
+                if (unlikely(!product->memory[id])) {
+                        printf("ERR: alloc product mem%d failed! %s, %s, %d\n",
+                                        id, __FILE__, __func__, __LINE__);
+                        goto ret_alloc;
+                }
+        }
+
+        /*reg list*/
+        product->reglist = malloc(params->reg_count * sizeof(regs *));
+        if (unlikely(!product->reglist)) {
+                printf("ERR: alloc product reglist failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+        memset((void *)product->reglist, 0, params->reg_count * sizeof(regs *));
+
+        for (id = 0; id < params->reg_count; id++) {
+                product->reglist[id] = malloc(sizeof(regs));
+                if (unlikely(!product->reglist[id])) {
+                        printf("ERR: alloc product reg%d failed! %s, %s, %d\n",
+                                        id, __FILE__, __func__, __LINE__);
+                        goto ret_alloc;
+                }
+                memset((void *)product->reglist[id], 0, sizeof(regs));
+        }
+
+        /*reg hastable*/
+        product->name2reg = init_hashtable();
+        if (unlikely(!product->name2reg)) {
+                printf("ERR: alloc product reg hashtable failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+
+        product->addr2reg = init_hashtable();
+        if (unlikely(!product->addr2reg)) {
+                printf("ERR: alloc product reg hashtable failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+
+        /*subip list*/
+        product->subips = malloc(params->board_count * sizeof(ip *));
+        if (unlikely(!product->subips)) {
+                printf("ERR: product alloc subip array failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+        memset((void *)product->subips, 0, params->board_count * sizeof(ip *));
+
+        for (id = 0; id < params->board_count; id++) {
+                product->subips[id] = malloc(sizeof(ip));
+                if (unlikely(!product->subips[id])) {
+                        printf("ERR: alloc product subip%d failed! %s, %s, %d\n",
+                                        id, __FILE__, __func__, __LINE__);
+                        goto ret_alloc;
+                }
+                memset((void *)product->subips[id], 0, sizeof(ip));
+        }
+
+        /*subips hastable*/
+        product->name2subip = init_hashtable();
+        if (unlikely(!product->name2subip)) {
+                printf("ERR: alloc product subip hashtable failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+
+        product->addr2subip = init_hashtable();
+        if (unlikely(!product->addr2subip)) {
+                printf("ERR: alloc product subip hashtable failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+
+        ret = 0;
+
+ret_alloc:
+        return ret;
+}
+
+
+/**
  * product_init - init product with params
- * @product:   pointer to the product
+ * @product:   pointer to product
+ * @id:        product id
  * @params:    init parameters
  *
  * FIXME: most inits move to self->ops->init according to dt, except ops
  */
-int product_init(ip *product, param *params)
+int product_init(ip *product, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
+        char addr2str[32] = {0};
 
         /*begin*/
         printf("INFO: product init start!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        /*init ops*/
-        product->ops = &product_ops;
-
-        /*init regs*/
-        ret = product->ops->init(product);
+        /*alloc*/
+        ret = product_alloc(product, params);
         if (unlikely(ret)) {
-                printf("ERR: product init failed, please check! %s, %s, %d\n",
+                printf("ERR: product alloc elements failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
 
-        //FIXME: todo...
-        /*init submodules*/
-        /*alloc*/
-        product->subips = malloc(params->board_count * sizeof(ip *));
-        if (unlikely(!product->subips)) {
+        /*name*/
+        sprintf(product->name, "product%d", id);
 
+        /*id*/
+        product->id = id;
+
+        /*state machine*/
+        product->status = OFF;
+
+        /*address*/
+        //FIXME: no need temporally
+
+        /*ops*/
+        product->ops = &product_ops;
+
+        /*memory*/
+        //FIXME: no need on product level
+
+        /*reg list*/
+        ret = parse_regconfig(product->reglist);
+        if (unlikely(ret)) {
+                printf("ERR: product reglist init failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
         }
-        memset((void *)product->subips, 0, params->board_count * sizeof(ip *));
 
-        for (sub = 0; sub < params->board_count; sub++) {
-                /*alloc*/
-                (product->subips)[sub] = malloc(sizeof(ip));
-                if (unlikely(!(product->subips)[sub])) {
+        /*reg hashtable*/
+        for (sub = 0; sub < params->reg_count; sub++) {
+                /*bypass empty reglist elements*/
+                if (unlikely(!strcmp(product->reglist[sub]->name, "")))
+                        continue;
 
-                }
-                memset((void *)(product->subips)[sub], 0, sizeof(ip));
-
-                /*init*/
-                ret = board_init((product->subips)[sub], params);
+                /*table name2reg*/
+                ret = insert_hashtable(product->reglist[sub]->name,
+                                (void *)product->reglist[sub],
+                                product->name2reg);
                 if (unlikely(ret)) {
-
+                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
+                                        sub, product->reglist[sub]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_init;
                 }
 
-                /*hash*/
+                /*table addr2reg*/
+                sprintf(addr2str, "%p", (void *)product->reglist[sub]->address);
+                ret = insert_hashtable(addr2str, (void *)product->reglist[sub], product->addr2reg);
+                if (unlikely(ret)) {
+                        printf("ERR: hash reg%d:%p to addr2reg table failed! %s, %s, %d\n",
+                                        sub, (void *)product->reglist[sub]->address,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
         }
 
+        /*parent*/
+        product->parent = NULL;
+
+        /*connected*/
+        product->east = NULL;
+        product->west = NULL;
+        product->sourth = NULL;
+        product->north = NULL;
+
+        /*subips*/
+        for (sub = 0; sub < params->board_count; sub++) {
+                /*call subips init function*/
+                ret = board_init(product->subips[sub], sub, params);
+                if (unlikely(ret)) {
+                        printf("ERR: board%d init failed! %s, %s, %d\n",
+                                        sub, __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+        }
+
+        /*subips hashtable*/
+        for (sub = 0; sub < params->board_count; sub++) {
+                /*bypass empty subip elements*/
+                if (unlikely(!strcmp(product->subips[sub]->name, "")))
+                        continue;
+
+                /*table name2subip*/
+                ret = insert_hashtable(product->subips[sub]->name,
+                                (void *)product->subips[sub],
+                                product->name2subip);
+                if (unlikely(ret)) {
+                        printf("ERR: hash board%d:%s to name2subip table failed! %s, %s, %d\n",
+                                        sub, product->subips[sub]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+
+                /*table addr2subip*/
+                sprintf(addr2str, "%p", (void *)product->subips[sub]->address);
+                ret = insert_hashtable(addr2str, (void *)product->subips[sub],
+                                product->addr2subip);
+                if (unlikely(ret)) {
+                        printf("ERR: hash board%d:%p to addr2subip table failed! %s, %s, %d\n",
+                                        sub, (void *)product->subips[sub]->address,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+        }
 
         printf("INFO: product init end!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
