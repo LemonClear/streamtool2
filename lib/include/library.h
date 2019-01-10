@@ -66,5 +66,12 @@ typedef struct hash_table {
 }hashtable;
 
 
+/* hashtable functions*/
+hashtable * init_hashtable();
+int hashcore(const char *string, hashtable *table);
+void * lookfor_hashtable(const char *string, hashtable *table);
+void dump_hashtable(hashtable *table);
+int del_hashtable(hashtable *table);
+
 
 #endif

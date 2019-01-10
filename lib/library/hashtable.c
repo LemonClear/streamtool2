@@ -159,12 +159,12 @@ ret_hashid:
 
 
 /**
- * findelement - find the element hashed
+ * lookfor_hashtable - find the element hashed
  * @string: a sring of charactors
  * @table: pointer to hashtable
  *
  */
-void * findelement(const char *string, hashtable *table)
+void * lookfor_hashtable(const char *string, hashtable *table)
 {
         void *element = NULL;
         int hashkey = -1;

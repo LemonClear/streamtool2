@@ -72,7 +72,7 @@ typedef struct device_ops {
 
 /*ip*/
 typedef struct device {
-        const char *name;        //name
+        char *name;              //name
         int id;                  //id
         enum state status;       //state machine
         address32_t address;     //address: first reg-addr or mem-addr
@@ -129,11 +129,11 @@ int power_sleep(ip *product);
 int clock_run(ip *product);
 
 /*product*/
-int product_init(ip *product, param *params);
+int product_init(ip *product, int id, param *params);
 int product_run(ip *product);
 
 /*board*/
-int board_init(ip *board, param *params);
+int board_init(ip *board, int id, param *params);
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *

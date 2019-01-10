@@ -26,11 +26,12 @@
 /**
  * board_init - init board with params
  * @product:   pointer to the product
+ * @id:        device id
  * @params:    init parameters
  *
  * FIXME: most inits move to self->ops->init according to dt, except ops
  */
-int board_init(ip *product, param *params)
+int board_init(ip *product, int id, param *params)
 {
         int ret = -1;
 
