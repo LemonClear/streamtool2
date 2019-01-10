@@ -93,12 +93,12 @@ static inline int hashrandom(int hashkey, int hashid)
 
 
 /**
- * hashcore - hash an element to hashtable
+ * hashcore - get a place in hashtable for element
  * @string: a sring of charactors
  * @table: pointer to hashtable
  *
  */
-int hashcore(const char *string, hashtable *table)
+static int hashcore(const char *string, hashtable *table)
 {
         int hashkey = -1;
         int hashid = -1;
@@ -155,6 +155,40 @@ do_rehash_core:
 
 ret_hashid:
         return hashid;
+}
+
+
+/**
+ * insert_hashtable - insert element to hash
+ * @string: a sring of charactors
+ * @element: element to be hashed
+ * @table: pointer to hashtable
+ *
+ */
+int insert_hashtable(const char *string, void *element, hashtable *table)
+{
+        int ret = -1;
+        int hashid = -1;
+
+        if (unlikely(!string) || unlikely(!element) || unlikely(!table)) {
+                printf("some paramters absent! string=%p, element=%p, table=%p! %s,%s,%d\n",
+                                string, element, table, __FILE__, __func__, __LINE__);
+                goto ret_insert;
+        }
+
+        hashid = hashcore(string, table);
+        if (unlikely(-1 == hashid)) {
+                printf("get hashid fail! %s,%s,%d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_insert;
+        }
+
+        table[hashid].element = element;
+
+        ret = 0;
+
+ret_insert:
+        return ret;
 }
 
 
