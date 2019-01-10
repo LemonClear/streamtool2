@@ -48,7 +48,7 @@ enum state {
 /*ip register*/
 typedef struct registers {
         char name[64];           //register name
-        address_t address;       //register address
+        address32_t address;     //register address
         reg32_t value;           //register value
 }regs;
 

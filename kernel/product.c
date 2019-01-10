@@ -300,11 +300,11 @@ int product_init(ip *product, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "%p", (void *)product->reglist[sub]->address);
+                sprintf(addr2str, "0x%x", product->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)product->reglist[sub], product->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%p to addr2reg table failed! %s, %s, %d\n",
-                                        sub, (void *)product->reglist[sub]->address,
+                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
+                                        sub, product->reglist[sub]->address,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
@@ -348,12 +348,12 @@ int product_init(ip *product, int id, param *params)
                 }
 
                 /*table addr2subip*/
-                sprintf(addr2str, "%p", (void *)product->subips[sub]->address);
+                sprintf(addr2str, "0x%x", product->subips[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)product->subips[sub],
                                 product->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash board%d:%p to addr2subip table failed! %s, %s, %d\n",
-                                        sub, (void *)product->subips[sub]->address,
+                        printf("ERR: hash board%d:0x%x to addr2subip table failed! %s, %s, %d\n",
+                                        sub, product->subips[sub]->address,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
