@@ -92,7 +92,9 @@ ARCH_LIBS        :=
 
 STATIC_LIBS_PATH := -L$(srctree)/out/
 
-STATIC_LIBS      := -lof
+STATIC_LIBS      := -lof \
+		    -llibrary \
+		    -lcerr
 
 DYNAMIC_LIBS_PATH:= -L$(srctree)/out/
 

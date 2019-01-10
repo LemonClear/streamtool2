@@ -19,7 +19,7 @@ source          := $(wildcard *.c)
 objects         := $(patsubst %.c,%.o,$(source))
 
 ## flags
-TARGET          := liberr.a
+TARGET          := libcerr.a
 
 ## main compile
 PHONY:_all
