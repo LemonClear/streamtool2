@@ -12,7 +12,8 @@ Release Notes:
 6. add cerr and compiler process
 7. add ip struct definition
 8. add parse config file and parse command line
-9. 
+9. add product init
+10.
 
 #################################
 
