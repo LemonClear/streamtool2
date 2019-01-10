@@ -47,7 +47,7 @@ enum state {
 
 /*ip register*/
 typedef struct registers {
-        const char *name;        //register name
+        char name[64];           //register name
         address_t address;       //register address
         reg32_t value;           //register value
 }regs;
@@ -72,7 +72,7 @@ typedef struct device_ops {
 
 /*ip*/
 typedef struct device {
-        char *name;              //name
+        char name[64];           //name
         int id;                  //id
         enum state status;       //state machine
         address32_t address;     //address: first reg-addr or mem-addr
@@ -105,6 +105,9 @@ typedef struct parameter {
         int chiplink_count;
         int core_count;
         int noc_count;
+        int ram_count;
+        int ram_size;
+        int reg_count;
         //FIXME: add more
 }param;
 
