@@ -30,11 +30,18 @@
 int power_on(ip *product)
 {
         int ret = -1;
-        printf("power on!\n");
+
+        printf("INFO: Power On !!\n");
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_power_on;
+        }
 
         //FIXME: todo...
 
-ret_on:
+ret_power_on:
         return ret;
 }
 
@@ -47,11 +54,17 @@ ret_on:
 int power_off(ip *product)
 {
         int ret = -1;
-        printf("power off!\n");
+        printf("INFO: Power Off !!\n");
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_power_off;
+        }
 
         //FIXME: todo...
 
-ret_off:
+ret_power_off:
         return ret;
 }
 
@@ -64,11 +77,17 @@ ret_off:
 int power_idle(ip *product)
 {
         int ret = -1;
-        printf("power idle\n");
+        printf("INFO: Power Idle !!\n");
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_power_idle;
+        }
 
         //FIXME: todo...
 
-ret_idle:
+ret_power_idle:
         return ret;
 }
 
@@ -81,10 +100,16 @@ ret_idle:
 int power_sleep(ip *product)
 {
         int ret = -1;
-        printf("power sleep\n");
+        printf("INFO: Power Sleep\n");
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_power_sleep;
+        }
 
         //FIXME: todo...
 
-ret_sleep:
+ret_power_sleep:
         return ret;
 }

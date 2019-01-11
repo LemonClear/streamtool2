@@ -39,8 +39,12 @@ int clock_wakeup(ip *product)
                 goto ret_wakeup;
         }
 
-        /*go to run*/
+        /*tick trigger product actions*/
+        product->ops->wakeup(product);
+
+        /*change state machine*/
         global_state = RUN;
+
         all_phase_done = 0;
         ret = 0;
 
@@ -62,7 +66,7 @@ int clock_run(ip *product)
         if (unlikely(!product)) {
                 printf("ERR: product absent, run failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_clockrun;
+                goto ret_run;
         }
 
         /*run according to clock*/
@@ -70,17 +74,19 @@ int clock_run(ip *product)
                 /*tick counter increase*/
                 tick_counter++;
 
-                product->ops->tick_arrive(product);
+                /*tick trigger product actions*/
+                product->ops->tickarrive(product);
 
                 if (likely(!all_phase_done))
                         continue;
 
-                /*go to idle*/
+                /*change state machine*/
                 global_state = IDLE;
+
                 ret = 0;
                 break;
         }
 
-ret_clockrun:
+ret_run:
         return ret;
 }

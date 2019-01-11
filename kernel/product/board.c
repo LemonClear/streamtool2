@@ -35,6 +35,13 @@ int board_init(ip *product, int id, param *params)
 {
         int ret = -1;
 
+        /*begin*/
+        if (unlikely(!product) || unlikely(!params)) {
+                printf("ERR: product or params is absent! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
 ret_init:
         return ret;
 }

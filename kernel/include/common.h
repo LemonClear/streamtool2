@@ -63,10 +63,10 @@ typedef struct device_ops {
         void (*deinit)();        //deinit
         void (*read)();          //read
         void (*write)();         //write
-        void (*set_reg)();       //set register
-        void (*get_reg)();       //get register
-        void (*clear_reg)();     //clear register
-        void (*tick_arrive)();   //clock trigger
+        void (*setreg)();        //set register
+        void (*getreg)();        //get register
+        void (*clearreg)();      //clear register
+        void (*tickarrive)();    //clock trigger
         void (*dump)();          //debug
 }ip_operations;
 

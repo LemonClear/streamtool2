@@ -36,63 +36,224 @@ int all_phase_done = 0;
 
 
 /**
- * poweron - product poweron
- * @product:   self pointer
+ * on - product power on
+ * @product:   product pointer
  *
  */
-static void poweron(ip *product)
+static void on(ip *product)
 {
+        int id = 0;
+
         if (unlikely(!product)) {
                 printf("ERR: product absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_poweron;
+                goto ret_on;
         }
 
-        //FIXME: todo...
+        /*product level do first*/
+        //FIXME:...
 
-ret_poweron:
+        /*power on subips second*/
+        while (product->subips[id]) {
+                /*each subip*/
+                product->subips[id]->ops->poweron(product->subips[id]);
+
+                id++;
+        }
+
+        /*change state machine third*/
+        product->status = RUN;
+
+        printf("INFO: product:%s power on!!!!! %s, %s, %d\n",
+                        product->name, __FILE__, __func__, __LINE__);
+
+ret_on:
         return;
 }
 
 
 /**
- * init - init product self
- * @product:   self pointer
+ * off - product power off
+ * @product:   product pointer
  *
- * FIXME: to be replace by dt
  */
-static int initself(ip *product)
+static void off(ip *product)
 {
-        int ret = -1;
-        char *config = "./product.reg";
+        int id = 0;
 
         if (unlikely(!product)) {
                 printf("ERR: product absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_initself;
+                goto ret_off;
         }
 
-        //FIXME: todo... init registers
+        /*power off subips first*/
+        while (product->subips[id]) {
+                /*each subip*/
+                product->subips[id]->ops->poweroff(product->subips[id]);
 
-ret_initself:
-        return ret;
+                id++;
+        }
+
+        /*product level do second*/
+        //FIXME:...
+
+        /*change state machine third*/
+        product->status = OFF;
+
+        printf("INFO: product:%s power off!!!!! %s, %s, %d\n",
+                        product->name, __FILE__, __func__, __LINE__);
+
+ret_off:
+        return;
 }
 
 
 /**
- * tickon - one tick trigger
+ * idle - product idle
+ * @product:   product pointer
+ *
+ */
+static void idle(ip *product)
+{
+        int id = 0;
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_idle;
+        }
+
+        /*idle subips first*/
+        while (product->subips[id]) {
+                /*each subip*/
+                product->subips[id]->ops->idle(product->subips[id]);
+
+                id++;
+        }
+
+        /*product level do second*/
+        //FIXME:...
+
+        /*change state machine third*/
+        product->status = IDLE;
+
+        printf("INFO: product:%s idle!!!!! %s, %s, %d\n",
+                        product->name, __FILE__, __func__, __LINE__);
+
+ret_idle:
+        return;
+}
+
+
+/**
+ * sleep - product sleep
+ * @product:   product pointer
+ *
+ */
+static void sleep(ip *product)
+{
+        int id = 0;
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_sleep;
+        }
+
+        /*sleep subips first*/
+        while (product->subips[id]) {
+                /*each subip*/
+                product->subips[id]->ops->sleep(product->subips[id]);
+
+                id++;
+        }
+
+        /*product level do second*/
+        //FIXME:...
+
+        /*change state machine third*/
+        product->status = SLEEP;
+
+        printf("INFO: product:%s sleep!!!!! %s, %s, %d\n",
+                        product->name, __FILE__, __func__, __LINE__);
+
+ret_sleep:
+        return;
+}
+
+
+/**
+ * wakeup - product wakeup
+ * @product:   product pointer
+ *
+ */
+static void wakeup(ip *product)
+{
+        int id = 0;
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_wakeup;
+        }
+
+        /*product level do first*/
+        //FIXME:...
+
+        /*wakeup subips second*/
+        while (product->subips[id]) {
+                /*each subip*/
+                product->subips[id]->ops->wakeup(product->subips[id]);
+
+                id++;
+        }
+
+        /*change state machine third*/
+        product->status = RUN;
+
+        printf("INFO: product:%s wakeup!!!!! %s, %s, %d\n",
+                        product->name, __FILE__, __func__, __LINE__);
+
+ret_wakeup:
+        return;
+}
+
+
+/**
+ * tick - one tick trigger
  * @product:   self pointer
  *
  */
-static void tickon(ip *product)
+static void tick(ip *product)
 {
+        int id = 0;
+
         if (unlikely(!product)) {
                 printf("ERR: product absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_tick;
         }
 
-        //FIXME: todo...
+        /*begin*/
+        printf("INFO: product:%s tick:%llu come!!!!! %s, %s, %d\n",
+                        product->name, tick_counter, __FILE__, __func__, __LINE__);
+
+        /*product level do first*/
+        //FIXME:...
+
+
+        /*tick trigger subips second*/
+        while (product->subips[id]) {
+                /*each subip*/
+                product->subips[id]->ops->tickarrive(product->subips[id]);
+
+                id++;
+        }
+
+        /*done*/
+        printf("INFO: product:%s tick:%llu done!!!!! %s, %s, %d\n",
+                        product->name, tick_counter, __FILE__, __func__, __LINE__);
 
 ret_tick:
         return;
@@ -100,13 +261,52 @@ ret_tick:
 
 
 /**
+ * dump - product dump informations
+ * @product:   product pointer
+ *
+ */
+static void dump(ip *product)
+{
+        int id = 0;
+
+        printf("DEBUG: ========== product:%s dump start !!!!! ==========\n",
+                        product->name);
+
+        if (unlikely(!product)) {
+                printf("ERR: product absent, dump failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_dump;
+        }
+
+        /*dump product elements first*/
+        //FIXME:...
+
+        /*dump subips second*/
+        while (product->subips[id]) {
+                /*each subip*/
+                product->subips[id]->ops->dump(product->subips[id]);
+
+                id++;
+        }
+
+        printf("DEBUG: ========== product:%s dump end !!!!! ==========\n",
+                        product->name);
+
+ret_dump:
+        return;
+}
+/**
  * ops structure
  *
  */
 static const ip_operations product_ops = {
-        .poweron = poweron,
-        .init = initself,
-        .tick_arrive = tickon,
+        .poweron = on,
+        .poweroff = off,
+        .idle = idle,
+        .sleep = sleep,
+        .wakeup = wakeup,
+        .tickarrive = tick,
+        .dump = dump,
 };
 
 
@@ -121,7 +321,15 @@ static int parse_regconfig(regs **reglist)
         int ret = -1;
         char *config = "./product.reg";
 
-ret_reg:
+        if (unlikely(!reglist)) {
+                printf("ERR: product reglist absent! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_config;
+        }
+
+        //FIXME: todo...
+
+ret_config:
         return ret;
 }
 
@@ -247,6 +455,12 @@ int product_init(ip *product, int id, param *params)
         /*begin*/
         printf("INFO: product init start!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
+
+        if (unlikely(!product) || unlikely(!params)) {
+                printf("ERR: product or params is absent! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
 
         /*alloc*/
         ret = product_alloc(product, params);
