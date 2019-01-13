@@ -398,15 +398,18 @@ static int product_alloc(ip *product, param *params)
         }
 
         /*subip list*/
-        product->subips = malloc(params->board_count * sizeof(ip *));
+        product->subips = malloc((params->board_count +
+                                params->boardlink_count) * sizeof(ip *));
         if (unlikely(!product->subips)) {
                 printf("ERR: product alloc subip array failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)product->subips, 0, params->board_count * sizeof(ip *));
+        memset((void *)product->subips, 0, (params->board_count +
+                                params->boardlink_count) * sizeof(ip *));
 
-        for (id = 0; id < params->board_count; id++) {
+        for (id = 0; id < (params->board_count +
+                                params->boardlink_count); id++) {
                 product->subips[id] = malloc(sizeof(ip));
                 if (unlikely(!product->subips[id])) {
                         printf("ERR: alloc product subip%d failed! %s, %s, %d\n",
@@ -534,8 +537,19 @@ int product_init(ip *product, int id, param *params)
         product->north = NULL;
 
         /*subips*/
-        for (sub = 0; sub < params->board_count; sub++) {
-                /*call subips init function*/
+        for (sub = 0; sub < params->boardlink_count; sub++) {
+                /*call subip:boardlink init function*/
+                ret = boardlink_init(product->subips[sub], sub, params);
+                if (unlikely(ret)) {
+                        printf("ERR: boardlink%d init failed! %s, %s, %d\n",
+                                        sub, __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+        }
+
+        for (sub = params->boardlink_count; sub < (params->board_count +
+                                params->boardlink_count); sub++) {
+                /*call subip:board init function*/
                 ret = board_init(product->subips[sub], sub, params);
                 if (unlikely(ret)) {
                         printf("ERR: board%d init failed! %s, %s, %d\n",
@@ -545,7 +559,8 @@ int product_init(ip *product, int id, param *params)
         }
 
         /*subips hashtable*/
-        for (sub = 0; sub < params->board_count; sub++) {
+        for (sub = 0; sub < (params->board_count +
+                                params->boardlink_count); sub++) {
                 /*bypass empty subip elements*/
                 if (unlikely(!strcmp(product->subips[sub]->name, "")))
                         continue;
@@ -555,8 +570,8 @@ int product_init(ip *product, int id, param *params)
                                 (void *)product->subips[sub],
                                 product->name2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash board%d:%s to name2subip table failed! %s, %s, %d\n",
-                                        sub, product->subips[sub]->name,
+                        printf("ERR: hash %s to name2subip table failed! %s, %s, %d\n",
+                                        product->subips[sub]->name,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
@@ -566,7 +581,7 @@ int product_init(ip *product, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)product->subips[sub],
                                 product->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash board%d:0x%x to addr2subip table failed! %s, %s, %d\n",
+                        printf("ERR: hash board/boardlink%d:0x%x to addr2subip table failed! %s, %s, %d\n",
                                         sub, product->subips[sub]->address,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;

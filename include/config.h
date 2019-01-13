@@ -43,6 +43,7 @@
 
 /*product inside*/
 #define SUB_BOARD_COUNT 2
+#define SUB_BOARDLINK_COUNT 1
 
 
 
