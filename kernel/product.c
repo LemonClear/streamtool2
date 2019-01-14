@@ -345,7 +345,9 @@ static int product_alloc(ip *product, param *params)
         int ret = -1;
         int id = -1;
 
-        /*memory: FIXME: no need in product level*/
+        /*memory*/
+        //FIXME: DO NOTHING!!!
+        //NO NEED on product level!!!
         product->memory = malloc(params->ram_count * sizeof(address32_t *));
         if (unlikely(!product->memory)) {
                 printf("ERR: alloc product memory failed! %s, %s, %d\n",
