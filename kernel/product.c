@@ -488,7 +488,8 @@ int product_init(ip *father, ip *product, int id, param *params)
         product->ops = &product_ops;
 
         /*memory*/
-        //FIXME: no need on product level
+        //FIXME: DO NOTHING!!!
+        //NO NEED on product level!!!
 
         /*reg list*/
         ret = parse_regconfig(product->reglist);
