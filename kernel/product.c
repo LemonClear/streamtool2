@@ -536,7 +536,7 @@ int product_init(ip *product, int id, param *params)
         product->sourth = NULL;
         product->north = NULL;
 
-        /*subips*/
+        /*subips: boardlink first*/
         for (sub = 0; sub < params->boardlink_count; sub++) {
                 /*call subip:boardlink init function*/
                 ret = boardlink_init(product->subips[sub], sub, params);
@@ -546,7 +546,7 @@ int product_init(ip *product, int id, param *params)
                         goto ret_init;
                 }
         }
-
+        /*subips: board second*/
         for (sub = params->boardlink_count; sub < (params->board_count +
                                 params->boardlink_count); sub++) {
                 /*call subip:board init function*/
@@ -558,7 +558,7 @@ int product_init(ip *product, int id, param *params)
                 }
         }
 
-        /*subips hashtable*/
+        /*subips: hashtable*/
         for (sub = 0; sub < (params->board_count +
                                 params->boardlink_count); sub++) {
                 /*bypass empty subip elements*/
