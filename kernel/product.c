@@ -51,7 +51,7 @@ static void on(ip *product)
         }
 
         /*product level do first*/
-        //FIXME:...
+        //FIXME: todo...
 
         /*power on subips second*/
         while (product->subips[id]) {
@@ -96,7 +96,7 @@ static void off(ip *product)
         }
 
         /*product level do second*/
-        //FIXME:...
+        //FIXME: todo...
 
         /*change state machine third*/
         product->status = OFF;
@@ -133,7 +133,7 @@ static void idle(ip *product)
         }
 
         /*product level do second*/
-        //FIXME:...
+        //FIXME: todo...
 
         /*change state machine third*/
         product->status = IDLE;
@@ -170,7 +170,7 @@ static void sleep(ip *product)
         }
 
         /*product level do second*/
-        //FIXME:...
+        //FIXME: todo...
 
         /*change state machine third*/
         product->status = SLEEP;
@@ -199,7 +199,7 @@ static void wakeup(ip *product)
         }
 
         /*product level do first*/
-        //FIXME:...
+        //FIXME: todo...
 
         /*wakeup subips second*/
         while (product->subips[id]) {
@@ -240,7 +240,7 @@ static void tick(ip *product)
                         product->name, tick_counter, __FILE__, __func__, __LINE__);
 
         /*product level do first*/
-        //FIXME:...
+        //FIXME: todo...
 
 
         /*tick trigger subips second*/
