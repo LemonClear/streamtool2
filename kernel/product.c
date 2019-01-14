@@ -550,8 +550,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                 }
         }
         /*subips: board second*/
-        for (sub = params->boardlink_count; sub < (params->board_count +
-                                params->boardlink_count); sub++) {
+        for (; sub < (params->board_count + params->boardlink_count); sub++) {
                 /*call subip:board init function*/
                 ret = board_init(product, product->subips[sub], sub, params);
                 if (unlikely(ret)) {
