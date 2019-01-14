@@ -350,6 +350,11 @@ static int board_alloc(ip *board, param *params)
         //NO NEED on board level!!!
 
         /*reg list*/
+        if (!params->reg_count) { //FIXME: should separate ips reg count
+                printf("INFO: board have no reg!!! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+        }
+
         board->reglist = malloc(params->reg_count * sizeof(regs *));
         if (unlikely(!board->reglist)) {
                 printf("ERR: alloc board reglist failed! %s, %s, %d\n",
@@ -518,8 +523,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         }
 
         /*address*/
-        //FIXME: board->reglist[0] maybe NULL
-        board->address = board->reglist[0]->address;
+        board->address = board->reglist;
 
         /*parent*/
         board->parent = father;

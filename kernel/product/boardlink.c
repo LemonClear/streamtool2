@@ -328,6 +328,11 @@ static int boardlink_alloc(ip *boardlink, param *params)
         //NO NEED on boardlink level!!!
 
         /*reg list*/
+        if (!params->reg_count) { //FIXME: should separate ips reg counts
+                printf("INFO: boardlink have no reg!!! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+        }
+
         boardlink->reglist = malloc(params->reg_count * sizeof(regs *));
         if (unlikely(!boardlink->reglist)) {
                 printf("ERR: alloc boardlink reglist failed! %s, %s, %d\n",
@@ -461,7 +466,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
         }
 
         /*address*/
-        boardlink->address = boardlink->reglist[0]->address;
+        boardlink->address = boardlink->reglist;
 
         /*parent*/
         boardlink->parent = father;

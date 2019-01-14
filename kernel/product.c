@@ -366,6 +366,11 @@ static int product_alloc(ip *product, param *params)
         }
 
         /*reg list*/
+        if (!params->reg_count) { //FIXME: should separate ips reg count
+                printf("INFO: product have no reg!!! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+        }
+
         product->reglist = malloc(params->reg_count * sizeof(regs *));
         if (unlikely(!product->reglist)) {
                 printf("ERR: alloc product reglist failed! %s, %s, %d\n",
@@ -528,7 +533,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         }
 
         /*address*/
-        product->address = product->reglist[0]->address;
+        product->address = product->reglist;
 
         /*parent*/
         product->parent = father;
