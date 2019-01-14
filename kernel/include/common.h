@@ -99,12 +99,16 @@ typedef struct device {
 
 /*parameter*/
 typedef struct parameter {
-        int board_count;
         int boardlink_count;
-        int chip_count;
+        int board_count;
         int chiplink_count;
-        int core_count;
+        int chip_count;
+        int ddr_count;
+        int fifobuf_count;
+        int pcie_count;
+        int maincpu_count;
         int noc_count;
+        int core_count;
         int ram_count;
         int ram_size;
         int reg_count;
