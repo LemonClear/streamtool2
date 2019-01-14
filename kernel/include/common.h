@@ -137,23 +137,18 @@ int product_run(ip *product);
 
 /*boardlink*/
 int boardlink_init(ip *father, ip *product, int id, param *params);
-int boardlink_run(ip *product);
 
 /*board*/
 int board_init(ip *father, ip *board, int id, param *params);
-int board_run(ip *product);
 
 /*chiplink*/
 int chiplink_init(ip *father, ip *board, int id, param *params);
-int chiplink_run(ip *product);
 
 /*chip*/
 int chip_init(ip *father, ip *board, int id, param *params);
-int chip_run(ip *product);
 
 /*core*/
 int core_init(ip *father, ip *board, int id, param *params);
-int core_run(ip *product);
 
 
 
