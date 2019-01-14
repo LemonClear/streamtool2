@@ -166,7 +166,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         }
 
         /*init: the whole product*/
-        ret = product_init(simulator->product, 0, simulator->params);
+        ret = product_init(NULL, simulator->product, 0, simulator->params);
         if (unlikely(ret)) {
                 printf("ERR: product init failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
