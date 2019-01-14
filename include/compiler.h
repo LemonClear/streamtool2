@@ -22,6 +22,8 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+#include "type.h"
+
 /**
  * likely unlikely - gcc built in
  *
@@ -96,7 +98,7 @@
 #ifdef __compiler_offsetof
 # define offsetof(TYPE, MEMBER)  __compiler_offsetof(TYPE, MEMBER)
 #else
-# define offsetof(TYPE, MEMBER)  ((size_t)&((TYPE *)0)->MEMBER)
+# define offsetof(TYPE, MEMBER)  ((address_t)&((TYPE *)0)->MEMBER)
 #endif
 
 
