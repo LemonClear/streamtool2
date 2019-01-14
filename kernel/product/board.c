@@ -25,22 +25,24 @@
 
 /**
  * board_init - init board with params
- * @product:   pointer to the product
- * @id:        device id
- * @params:    init parameters
+ * @board:   pointer to the board
+ * @id:      device id
+ * @params:  init parameters
  *
- * FIXME: most inits move to self->ops->init according to dt, except ops
  */
-int board_init(ip *product, int id, param *params)
+int board_init(ip *board, int id, param *params)
 {
         int ret = -1;
 
         /*begin*/
-        if (unlikely(!product) || unlikely(!params)) {
-                printf("ERR: product or params is absent! %s, %s, %d\n",
+        if (unlikely(!board) || unlikely(!params)) {
+                printf("ERR: ip or params is absent! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
+
+        /*name*/
+        sprintf(board->name, "board%d", id);
 
 ret_init:
         return ret;

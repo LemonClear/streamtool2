@@ -15,3 +15,35 @@
 # limitations under the License.
 #
 */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include "common.h"
+#include "of.h"
+
+
+/**
+ * boardlink_init - init boardlink with params
+ * @board:   pointer to the product
+ * @id:      device id
+ * @params:  init parameters
+ *
+ */
+int boardlink_init(ip *boardlink, int id, param *params)
+{
+        int ret = -1;
+
+        /*begin*/
+        if (unlikely(!boardlink) || unlikely(!params)) {
+                printf("ERR: ip or params is absent! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
+        /*name*/
+        sprintf(boardlink->name, "boardlink%d", id);
+
+ret_init:
+        return ret;
+}

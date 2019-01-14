@@ -137,6 +137,7 @@ int product_run(ip *product);
 
 /*board*/
 int board_init(ip *board, int id, param *params);
+int boardlink_init(ip *product, int id, param *params);
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *
