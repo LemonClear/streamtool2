@@ -55,12 +55,8 @@ static void on(ip *boardlink)
         //Transparent Transmission temporally on this level
 
         /*power on subips second*/
-        while (boardlink->subips[id]) {
-                /*each subip*/
-                boardlink->subips[id]->ops->poweron(boardlink->subips[id]);
-
-                id++;
-        }
+        //FIXME: DO NOTHING!!!
+        //No subips
 
         /*change state machine third*/
         boardlink->status = RUN;
@@ -89,12 +85,8 @@ static void off(ip *boardlink)
         }
 
         /*power off subips first*/
-        while (boardlink->subips[id]) {
-                /*each subip*/
-                boardlink->subips[id]->ops->poweroff(boardlink->subips[id]);
-
-                id++;
-        }
+        //FIXME: DO NOTHING!!!
+        //No subips
 
         /*boardlink level do second*/
         //FIXME: DO NOTHING!!!
@@ -127,12 +119,8 @@ static void idle(ip *boardlink)
         }
 
         /*idle subips first*/
-        while (boardlink->subips[id]) {
-                /*each subip*/
-                boardlink->subips[id]->ops->idle(boardlink->subips[id]);
-
-                id++;
-        }
+        //FIXME: DO NOTHING!!!
+        //No subips
 
         /*boardlink level do second*/
         //FIXME: DO NOTHING!!!
@@ -165,12 +153,8 @@ static void sleep(ip *boardlink)
         }
 
         /*sleep subips first*/
-        while (boardlink->subips[id]) {
-                /*each subip*/
-                boardlink->subips[id]->ops->sleep(boardlink->subips[id]);
-
-                id++;
-        }
+        //FIXME: DO NOTHING!!!
+        //No subips
 
         /*boardlink level do second*/
         //FIXME: DO NOTHING!!!
@@ -207,12 +191,8 @@ static void wakeup(ip *boardlink)
         //Transparent Transmission temporally on this level
 
         /*wakeup subips second*/
-        while (boardlink->subips[id]) {
-                /*each subip*/
-                boardlink->subips[id]->ops->wakeup(boardlink->subips[id]);
-
-                id++;
-        }
+        //FIXME: DO NOTHING!!!
+        //No subips
 
         /*change state machine third*/
         boardlink->status = RUN;
@@ -250,12 +230,8 @@ static void tick(ip *boardlink)
 
 
         /*tick trigger subips second*/
-        while (boardlink->subips[id]) {
-                /*each subip*/
-                boardlink->subips[id]->ops->tickarrive(boardlink->subips[id]);
-
-                id++;
-        }
+        //FIXME: DO NOTHING!!!
+        //No subips
 
         /*done*/
         printf("INFO: boardlink:%s tick:%llu done!!!!! %s, %s, %d\n",
@@ -288,12 +264,8 @@ static void dump(ip *boardlink)
         //FIXME: todo...
 
         /*dump subips second*/
-        while (boardlink->subips[id]) {
-                /*each subip*/
-                boardlink->subips[id]->ops->dump(boardlink->subips[id]);
-
-                id++;
-        }
+        //FIXME: DO NOTHING!!!
+        //No subips
 
         printf("DEBUG: ========== boardlink:%s dump end !!!!! ==========\n",
                         boardlink->name);
@@ -391,11 +363,11 @@ static int boardlink_alloc(ip *boardlink, param *params)
 
         /*subips list*/
         //FIXME: DO NOTHING!!!
-        //NO NEED on boardlink level!!!
+        //No subips
 
         /*subips hastable*/
         //FIXME: DO NOTHING!!!
-        //NO NEED on boardlink level!!!
+        //No subips
 
         ret = 0;
 
@@ -502,11 +474,11 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
 
         /*subips*/
         //FIXME: DO NOTHING!!!
-        //NO NEED on boardlink level!!!
+        //No subips
 
         /*subips: hashtable*/
         //FIXME: DO NOTHING!!!
-        //NO NEED on boardlink level!!!
+        //No subips
 
         printf("INFO: boardlink init end!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
