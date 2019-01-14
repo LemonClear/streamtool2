@@ -447,7 +447,6 @@ ret_alloc:
  * @id:        product id
  * @params:    init parameters
  *
- * FIXME: most inits move to self->ops->init according to dt, except ops
  */
 int product_init(ip *product, int id, param *params)
 {
