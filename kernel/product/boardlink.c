@@ -24,25 +24,492 @@
 
 
 /**
- * boardlink_init - init boardlink with params
- * @board:   pointer to the product
- * @id:      device id
- * @params:  init parameters
+ * global variants
+ * @global_state:    the whole product state-machine
+ * @tick_counter:    the tick counts from the beginning
+ * @all_phase_done:  all phase process ok
  *
  */
-int boardlink_init(ip *boardlink, int id, param *params)
+extern enum state global_state;
+extern u64 tick_counter;
+extern int all_phase_done;
+
+
+/**
+ * on - boardlink power on
+ * @boardlink:   boardlink pointer
+ *
+ */
+static void on(ip *boardlink)
 {
-        int ret = -1;
+        int id = 0;
+
+        if (unlikely(!boardlink)) {
+                printf("ERR: boardlink absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_on;
+        }
+
+        /*boardlink level do first*/
+        //FIXME: DO NOTHING!!!
+        //Transparent Transmission temporally on this level
+
+        /*power on subips second*/
+        while (boardlink->subips[id]) {
+                /*each subip*/
+                boardlink->subips[id]->ops->poweron(boardlink->subips[id]);
+
+                id++;
+        }
+
+        /*change state machine third*/
+        boardlink->status = RUN;
+
+        printf("INFO: boardlink:%s power on!!!!! %s, %s, %d\n",
+                        boardlink->name, __FILE__, __func__, __LINE__);
+
+ret_on:
+        return;
+}
+
+
+/**
+ * off - boardlink power off
+ * @boardlink:   boardlink pointer
+ *
+ */
+static void off(ip *boardlink)
+{
+        int id = 0;
+
+        if (unlikely(!boardlink)) {
+                printf("ERR: boardlink absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_off;
+        }
+
+        /*power off subips first*/
+        while (boardlink->subips[id]) {
+                /*each subip*/
+                boardlink->subips[id]->ops->poweroff(boardlink->subips[id]);
+
+                id++;
+        }
+
+        /*boardlink level do second*/
+        //FIXME: DO NOTHING!!!
+        //Transparent Transmission temporally on this level
+
+        /*change state machine third*/
+        boardlink->status = OFF;
+
+        printf("INFO: boardlink:%s power off!!!!! %s, %s, %d\n",
+                        boardlink->name, __FILE__, __func__, __LINE__);
+
+ret_off:
+        return;
+}
+
+
+/**
+ * idle - boardlink idle
+ * @boardlink:   boardlink pointer
+ *
+ */
+static void idle(ip *boardlink)
+{
+        int id = 0;
+
+        if (unlikely(!boardlink)) {
+                printf("ERR: boardlink absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_idle;
+        }
+
+        /*idle subips first*/
+        while (boardlink->subips[id]) {
+                /*each subip*/
+                boardlink->subips[id]->ops->idle(boardlink->subips[id]);
+
+                id++;
+        }
+
+        /*boardlink level do second*/
+        //FIXME: DO NOTHING!!!
+        //Transparent Transmission temporally on this level
+
+        /*change state machine third*/
+        boardlink->status = IDLE;
+
+        printf("INFO: boardlink:%s idle!!!!! %s, %s, %d\n",
+                        boardlink->name, __FILE__, __func__, __LINE__);
+
+ret_idle:
+        return;
+}
+
+
+/**
+ * sleep - boardlink sleep
+ * @boardlink:   boardlink pointer
+ *
+ */
+static void sleep(ip *boardlink)
+{
+        int id = 0;
+
+        if (unlikely(!boardlink)) {
+                printf("ERR: boardlink absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_sleep;
+        }
+
+        /*sleep subips first*/
+        while (boardlink->subips[id]) {
+                /*each subip*/
+                boardlink->subips[id]->ops->sleep(boardlink->subips[id]);
+
+                id++;
+        }
+
+        /*boardlink level do second*/
+        //FIXME: DO NOTHING!!!
+        //Transparent Transmission temporally on this level
+
+        /*change state machine third*/
+        boardlink->status = SLEEP;
+
+        printf("INFO: boardlink:%s sleep!!!!! %s, %s, %d\n",
+                        boardlink->name, __FILE__, __func__, __LINE__);
+
+ret_sleep:
+        return;
+}
+
+
+/**
+ * wakeup - boardlink wakeup
+ * @boardlink:   boardlink pointer
+ *
+ */
+static void wakeup(ip *boardlink)
+{
+        int id = 0;
+
+        if (unlikely(!boardlink)) {
+                printf("ERR: boardlink absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_wakeup;
+        }
+
+        /*boardlink level do first*/
+        //FIXME: DO NOTHING!!!
+        //Transparent Transmission temporally on this level
+
+        /*wakeup subips second*/
+        while (boardlink->subips[id]) {
+                /*each subip*/
+                boardlink->subips[id]->ops->wakeup(boardlink->subips[id]);
+
+                id++;
+        }
+
+        /*change state machine third*/
+        boardlink->status = RUN;
+
+        printf("INFO: boardlink:%s wakeup!!!!! %s, %s, %d\n",
+                        boardlink->name, __FILE__, __func__, __LINE__);
+
+ret_wakeup:
+        return;
+}
+
+
+/**
+ * tick - one tick trigger
+ * @boardlink:   self pointer
+ *
+ */
+static void tick(ip *boardlink)
+{
+        int id = 0;
+
+        if (unlikely(!boardlink)) {
+                printf("ERR: boardlink absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_tick;
+        }
 
         /*begin*/
+        printf("INFO: boardlink:%s tick:%llu come!!!!! %s, %s, %d\n",
+                        boardlink->name, tick_counter, __FILE__, __func__, __LINE__);
+
+        /*boardlink level do first*/
+        //FIXME: DO NOTHING!!!
+        //Transparent Transmission temporally on this level
+
+
+        /*tick trigger subips second*/
+        while (boardlink->subips[id]) {
+                /*each subip*/
+                boardlink->subips[id]->ops->tickarrive(boardlink->subips[id]);
+
+                id++;
+        }
+
+        /*done*/
+        printf("INFO: boardlink:%s tick:%llu done!!!!! %s, %s, %d\n",
+                        boardlink->name, tick_counter, __FILE__, __func__, __LINE__);
+
+ret_tick:
+        return;
+}
+
+
+/**
+ * dump - boardlink dump informations
+ * @boardlink:   boardlink pointer
+ *
+ */
+static void dump(ip *boardlink)
+{
+        int id = 0;
+
+        printf("DEBUG: ========== boardlink:%s dump start !!!!! ==========\n",
+                        boardlink->name);
+
+        if (unlikely(!boardlink)) {
+                printf("ERR: boardlink absent, dump failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_dump;
+        }
+
+        /*dump boardlink elements first*/
+        //FIXME: todo...
+
+        /*dump subips second*/
+        while (boardlink->subips[id]) {
+                /*each subip*/
+                boardlink->subips[id]->ops->dump(boardlink->subips[id]);
+
+                id++;
+        }
+
+        printf("DEBUG: ========== boardlink:%s dump end !!!!! ==========\n",
+                        boardlink->name);
+
+ret_dump:
+        return;
+}
+/**
+ * ops structure
+ *
+ */
+static const ip_operations boardlink_ops = {
+        .poweron = on,
+        .poweroff = off,
+        .idle = idle,
+        .sleep = sleep,
+        .wakeup = wakeup,
+        .tickarrive = tick,
+        .dump = dump,
+};
+
+
+/**
+ * parse_regconfig - parse reg config file xxx.reg
+ * @reglist:   pointer to reglist
+ *
+ * FIXME: to be replace by dt
+ */
+static int parse_regconfig(regs **reglist)
+{
+        int ret = -1;
+        char *config = "./boardlink.reg";
+
+        if (unlikely(!reglist)) {
+                printf("ERR: boardlink reglist absent! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_config;
+        }
+
+        //FIXME: todo...
+
+ret_config:
+        return ret;
+}
+
+
+/**
+ * boardlink_alloc - alloc boardlink elements
+ * @boardlink: pointer to boardlink
+ * @params:    init parameters
+ *
+ */
+static int boardlink_alloc(ip *boardlink, param *params)
+{
+        int ret = -1;
+        int id = -1;
+
+        /*memory*/
+        //FIXME: DO NOTHING!!!
+        //NO NEED on boardlink level!!!
+
+        /*reg list*/
+        boardlink->reglist = malloc(params->reg_count * sizeof(regs *));
+        if (unlikely(!boardlink->reglist)) {
+                printf("ERR: alloc boardlink reglist failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+        memset((void *)boardlink->reglist, 0, params->reg_count * sizeof(regs *));
+
+        for (id = 0; id < params->reg_count; id++) {
+                boardlink->reglist[id] = malloc(sizeof(regs));
+                if (unlikely(!boardlink->reglist[id])) {
+                        printf("ERR: alloc boardlink reg%d failed! %s, %s, %d\n",
+                                        id, __FILE__, __func__, __LINE__);
+                        goto ret_alloc;
+                }
+                memset((void *)boardlink->reglist[id], 0, sizeof(regs));
+        }
+
+        /*reg hastable*/
+        boardlink->name2reg = init_hashtable();
+        if (unlikely(!boardlink->name2reg)) {
+                printf("ERR: alloc boardlink reg hashtable failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+
+        boardlink->addr2reg = init_hashtable();
+        if (unlikely(!boardlink->addr2reg)) {
+                printf("ERR: alloc boardlink reg hashtable failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_alloc;
+        }
+
+        /*subips list*/
+        //FIXME: DO NOTHING!!!
+        //NO NEED on boardlink level!!!
+
+        /*subips hastable*/
+        //FIXME: DO NOTHING!!!
+        //NO NEED on boardlink level!!!
+
+        ret = 0;
+
+ret_alloc:
+        return ret;
+}
+
+
+/**
+ * boardlink_init - init boardlink with params
+ * @father:    pointer to boardlink belongs to
+ * @boardlink: pointer to boardlink
+ * @id:        boardlink id
+ * @params:    init parameters
+ *
+ */
+int boardlink_init(ip *father, ip *boardlink, int id, param *params)
+{
+        int ret = -1;
+        int sub = -1;
+        char addr2str[32] = {0};
+
+        /*begin*/
+        printf("INFO: boardlink init start!!!!! %s, %s, %d\n",
+                        __FILE__, __func__, __LINE__);
+
         if (unlikely(!boardlink) || unlikely(!params)) {
                 printf("ERR: ip or params is absent! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
 
+        /*alloc*/
+        ret = boardlink_alloc(boardlink, params);
+        if (unlikely(ret)) {
+                printf("ERR: boardlink alloc elements failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
         /*name*/
         sprintf(boardlink->name, "boardlink%d", id);
+
+        /*id*/
+        boardlink->id = id;
+
+        /*state machine*/
+        boardlink->status = OFF;
+
+        /*ops*/
+        boardlink->ops = &boardlink_ops;
+
+        /*memory*/
+        //FIXME: DO NOTHING!!!
+        //NO NEED on boardlink level!!!
+
+        /*reg list*/
+        ret = parse_regconfig(boardlink->reglist);
+        if (unlikely(ret)) {
+                printf("ERR: boardlink reglist init failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_init;
+        }
+
+        /*reg hashtable*/
+        for (sub = 0; sub < params->reg_count; sub++) {
+                /*bypass empty reglist elements*/
+                if (unlikely(!strcmp(boardlink->reglist[sub]->name, "")))
+                        continue;
+
+                /*table name2reg*/
+                ret = insert_hashtable(boardlink->reglist[sub]->name,
+                                (void *)boardlink->reglist[sub],
+                                boardlink->name2reg);
+                if (unlikely(ret)) {
+                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
+                                        sub, boardlink->reglist[sub]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+
+                /*table addr2reg*/
+                sprintf(addr2str, "0x%x", boardlink->reglist[sub]->address);
+                ret = insert_hashtable(addr2str, (void *)boardlink->reglist[sub], boardlink->addr2reg);
+                if (unlikely(ret)) {
+                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
+                                        sub, boardlink->reglist[sub]->address,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+        }
+
+        /*address*/
+        boardlink->address = boardlink->reglist[0]->address;
+
+        /*parent*/
+        boardlink->parent = father;
+
+        /*connected*/
+        boardlink->east = NULL;
+        boardlink->west = NULL;
+        boardlink->sourth = NULL;
+        boardlink->north = NULL;
+
+        /*subips*/
+        //FIXME: DO NOTHING!!!
+        //NO NEED on boardlink level!!!
+
+        /*subips: hashtable*/
+        //FIXME: DO NOTHING!!!
+        //NO NEED on boardlink level!!!
+
+        printf("INFO: boardlink init end!!!!! %s, %s, %d\n",
+                        __FILE__, __func__, __LINE__);
 
 ret_init:
         return ret;

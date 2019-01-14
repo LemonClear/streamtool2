@@ -279,7 +279,7 @@ static void dump(ip *product)
         }
 
         /*dump product elements first*/
-        //FIXME:...
+        //FIXME: todo...
 
         /*dump subips second*/
         while (product->subips[id]) {
@@ -397,7 +397,7 @@ static int product_alloc(ip *product, param *params)
                 goto ret_alloc;
         }
 
-        /*subip list*/
+        /*subips list*/
         product->subips = malloc((params->board_count +
                                 params->boardlink_count) * sizeof(ip *));
         if (unlikely(!product->subips)) {
@@ -443,12 +443,13 @@ ret_alloc:
 
 /**
  * product_init - init product with params
+ * @father:    pointer to the product belongs to
  * @product:   pointer to product
  * @id:        product id
  * @params:    init parameters
  *
  */
-int product_init(ip *product, int id, param *params)
+int product_init(ip *father, ip *product, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
@@ -480,9 +481,6 @@ int product_init(ip *product, int id, param *params)
 
         /*state machine*/
         product->status = OFF;
-
-        /*address*/
-        //FIXME: no need temporally
 
         /*ops*/
         product->ops = &product_ops;
@@ -526,8 +524,11 @@ int product_init(ip *product, int id, param *params)
                 }
         }
 
+        /*address*/
+        product->address = product->reglist[0]->address;
+
         /*parent*/
-        product->parent = NULL;
+        product->parent = father;
 
         /*connected*/
         product->east = NULL;
@@ -538,7 +539,7 @@ int product_init(ip *product, int id, param *params)
         /*subips: boardlink first*/
         for (sub = 0; sub < params->boardlink_count; sub++) {
                 /*call subip:boardlink init function*/
-                ret = boardlink_init(product->subips[sub], sub, params);
+                ret = boardlink_init(product, product->subips[sub], sub, params);
                 if (unlikely(ret)) {
                         printf("ERR: boardlink%d init failed! %s, %s, %d\n",
                                         sub, __FILE__, __func__, __LINE__);
@@ -549,7 +550,7 @@ int product_init(ip *product, int id, param *params)
         for (sub = params->boardlink_count; sub < (params->board_count +
                                 params->boardlink_count); sub++) {
                 /*call subip:board init function*/
-                ret = board_init(product->subips[sub], sub, params);
+                ret = board_init(product, product->subips[sub], sub, params);
                 if (unlikely(ret)) {
                         printf("ERR: board%d init failed! %s, %s, %d\n",
                                         sub, __FILE__, __func__, __LINE__);
