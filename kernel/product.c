@@ -36,11 +36,11 @@ int all_phase_done = 0;
 
 
 /**
- * on - product power on
+ * __on - product power on
  * @product:   product pointer
  *
  */
-static void on(ip *product)
+static void __on(ip *product)
 {
         int id = 0;
 
@@ -73,11 +73,11 @@ ret_on:
 
 
 /**
- * off - product power off
+ * __off - product power off
  * @product:   product pointer
  *
  */
-static void off(ip *product)
+static void __off(ip *product)
 {
         int id = 0;
 
@@ -110,11 +110,11 @@ ret_off:
 
 
 /**
- * idle - product idle
+ * __idle - product idle
  * @product:   product pointer
  *
  */
-static void idle(ip *product)
+static void __idle(ip *product)
 {
         int id = 0;
 
@@ -147,11 +147,11 @@ ret_idle:
 
 
 /**
- * sleep - product sleep
+ * __sleep - product sleep
  * @product:   product pointer
  *
  */
-static void sleep(ip *product)
+static void __sleep(ip *product)
 {
         int id = 0;
 
@@ -184,11 +184,11 @@ ret_sleep:
 
 
 /**
- * wakeup - product wakeup
+ * __wakeup - product wakeup
  * @product:   product pointer
  *
  */
-static void wakeup(ip *product)
+static void __wakeup(ip *product)
 {
         int id = 0;
 
@@ -221,11 +221,11 @@ ret_wakeup:
 
 
 /**
- * tick - one tick trigger
+ * __tick - one tick trigger
  * @product:   self pointer
  *
  */
-static void tick(ip *product)
+static void __tick(ip *product)
 {
         int id = 0;
 
@@ -300,12 +300,12 @@ ret_dump:
  *
  */
 static const ip_operations product_ops = {
-        .poweron = on,
-        .poweroff = off,
-        .idle = idle,
-        .sleep = sleep,
-        .wakeup = wakeup,
-        .tickarrive = tick,
+        .poweron = __on,
+        .poweroff = __off,
+        .idle = __idle,
+        .sleep = __sleep,
+        .wakeup = __wakeup,
+        .tickarrive = __tick,
         .dump = dump,
 };
 

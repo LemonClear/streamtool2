@@ -36,11 +36,11 @@ extern int all_phase_done;
 
 
 /**
- * on - board power on
+ * __on - board power on
  * @board:   board pointer
  *
  */
-static void on(ip *board)
+static void __on(ip *board)
 {
         int id = 0;
 
@@ -73,11 +73,11 @@ ret_on:
 
 
 /**
- * off - board power off
+ * __off - board power off
  * @board:   board pointer
  *
  */
-static void off(ip *board)
+static void __off(ip *board)
 {
         int id = 0;
 
@@ -110,11 +110,11 @@ ret_off:
 
 
 /**
- * idle - board idle
+ * __idle - board idle
  * @board:   board pointer
  *
  */
-static void idle(ip *board)
+static void __idle(ip *board)
 {
         int id = 0;
 
@@ -147,11 +147,11 @@ ret_idle:
 
 
 /**
- * sleep - board sleep
+ * __sleep - board sleep
  * @board:   board pointer
  *
  */
-static void sleep(ip *board)
+static void __sleep(ip *board)
 {
         int id = 0;
 
@@ -184,11 +184,11 @@ ret_sleep:
 
 
 /**
- * wakeup - board wakeup
+ * __wakeup - board wakeup
  * @board:  board pointer
  *
  */
-static void wakeup(ip *board)
+static void __wakeup(ip *board)
 {
         int id = 0;
 
@@ -221,11 +221,11 @@ ret_wakeup:
 
 
 /**
- * tick - one tick trigger
+ * __tick - one tick trigger
  * @board:   self pointer
  *
  */
-static void tick(ip *board)
+static void __tick(ip *board)
 {
         int id = 0;
 
@@ -261,11 +261,11 @@ ret_tick:
 
 
 /**
- * dump - board dump informations
+ * __dump - board dump informations
  * @board:   board pointer
  *
  */
-static void dump(ip *board)
+static void __dump(ip *board)
 {
         int id = 0;
 
@@ -300,13 +300,13 @@ ret_dump:
  *
  */
 static const ip_operations board_ops = {
-        .poweron = on,
-        .poweroff = off,
-        .idle = idle,
-        .sleep = sleep,
-        .wakeup = wakeup,
-        .tickarrive = tick,
-        .dump = dump,
+        .poweron = __on,
+        .poweroff = __off,
+        .idle = __idle,
+        .sleep = __sleep,
+        .wakeup = __wakeup,
+        .tickarrive = __tick,
+        .dump = __dump,
 };
 
 

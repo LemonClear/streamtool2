@@ -36,11 +36,11 @@ extern int all_phase_done;
 
 
 /**
- * on - boardlink power on
+ * __on - boardlink power on
  * @boardlink:   boardlink pointer
  *
  */
-static void on(ip *boardlink)
+static void __on(ip *boardlink)
 {
         int id = 0;
 
@@ -70,11 +70,11 @@ ret_on:
 
 
 /**
- * off - boardlink power off
+ * __off - boardlink power off
  * @boardlink:   boardlink pointer
  *
  */
-static void off(ip *boardlink)
+static void __off(ip *boardlink)
 {
         int id = 0;
 
@@ -104,11 +104,11 @@ ret_off:
 
 
 /**
- * idle - boardlink idle
+ * __idle - boardlink idle
  * @boardlink:   boardlink pointer
  *
  */
-static void idle(ip *boardlink)
+static void __idle(ip *boardlink)
 {
         int id = 0;
 
@@ -138,11 +138,11 @@ ret_idle:
 
 
 /**
- * sleep - boardlink sleep
+ * __sleep - boardlink sleep
  * @boardlink:   boardlink pointer
  *
  */
-static void sleep(ip *boardlink)
+static void __sleep(ip *boardlink)
 {
         int id = 0;
 
@@ -172,11 +172,11 @@ ret_sleep:
 
 
 /**
- * wakeup - boardlink wakeup
+ * __wakeup - boardlink wakeup
  * @boardlink:   boardlink pointer
  *
  */
-static void wakeup(ip *boardlink)
+static void __wakeup(ip *boardlink)
 {
         int id = 0;
 
@@ -206,11 +206,11 @@ ret_wakeup:
 
 
 /**
- * tick - one tick trigger
+ * __tick - one tick trigger
  * @boardlink:   self pointer
  *
  */
-static void tick(ip *boardlink)
+static void __tick(ip *boardlink)
 {
         int id = 0;
 
@@ -243,11 +243,11 @@ ret_tick:
 
 
 /**
- * dump - boardlink dump informations
+ * __dump - boardlink dump informations
  * @boardlink:   boardlink pointer
  *
  */
-static void dump(ip *boardlink)
+static void __dump(ip *boardlink)
 {
         int id = 0;
 
@@ -278,13 +278,13 @@ ret_dump:
  *
  */
 static const ip_operations boardlink_ops = {
-        .poweron = on,
-        .poweroff = off,
-        .idle = idle,
-        .sleep = sleep,
-        .wakeup = wakeup,
-        .tickarrive = tick,
-        .dump = dump,
+        .poweron = __on,
+        .poweroff = __off,
+        .idle = __idle,
+        .sleep = __sleep,
+        .wakeup = __wakeup,
+        .tickarrive = __tick,
+        .dump = __dump,
 };
 
 
