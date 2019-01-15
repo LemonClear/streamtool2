@@ -506,6 +506,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         }
 
         /*address*/
+        //FIXME: according to reality
         chip->address = chip->reglist;
 
         /*parent*/

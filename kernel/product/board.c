@@ -512,6 +512,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         }
 
         /*address*/
+        //FIXME: according to reality
         board->address = board->reglist;
 
         /*parent*/

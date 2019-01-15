@@ -441,6 +441,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
         }
 
         /*address*/
+        //FIXME: according to reality
         boardlink->address = boardlink->reglist;
 
         /*parent*/

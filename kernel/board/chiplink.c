@@ -444,6 +444,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         }
 
         /*address*/
+        //FIXME: according to reality
         chiplink->address = chiplink->reglist;
 
         /*parent*/

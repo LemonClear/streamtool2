@@ -536,6 +536,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         }
 
         /*address*/
+        //FIXME: according to reality
         product->address = product->reglist;
 
         /*parent*/
