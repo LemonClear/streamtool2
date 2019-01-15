@@ -27,12 +27,14 @@
  * global variants
  * @global_state:    the whole product run state-machine
  * @tick_counter:    the tick counts from the beginning
- * @all_phase_done:  all phase process ok
+ * @step_counter:    the step counts from the beginning
+ * @all_step_done:   all step process ok
  *
  */
 enum state global_state = OFF;
 u64 tick_counter = 0;
-int all_phase_done = 0;
+u64 step_counter = 0;
+int all_step_done = 0;
 
 
 /**

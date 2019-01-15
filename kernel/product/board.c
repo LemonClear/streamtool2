@@ -24,18 +24,6 @@
 
 
 /**
- * global variants
- * @global_state:    the whole product run state-machine
- * @tick_counter:    the tick counts from the beginning
- * @all_phase_done:  all phase process ok
- *
- */
-extern enum state global_state;
-extern u64 tick_counter;
-extern int all_phase_done;
-
-
-/**
  * __on - board power on
  * @board:   board pointer
  *

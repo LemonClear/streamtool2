@@ -45,7 +45,7 @@ int clock_wakeup(ip *product)
         /*change state machine*/
         global_state = RUN;
 
-        all_phase_done = 0;
+        all_step_done = 0;
         ret = 0;
 
 ret_wakeup:
@@ -77,7 +77,7 @@ int clock_run(ip *product)
                 /*tick trigger product actions*/
                 product->ops->tickarrive(product);
 
-                if (likely(!all_phase_done))
+                if (likely(!all_step_done))
                         continue;
 
                 /*change state machine*/
