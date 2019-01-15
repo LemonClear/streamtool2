@@ -131,28 +131,28 @@ int power_on(ip *product);
 int power_off(ip *product);
 int power_idle(ip *product);
 int power_sleep(ip *product);
-
 /*clock*/
 int clock_run(ip *product);
-
 /*product*/
 int product_init(ip *father, ip *product, int id, param *params);
 int product_run(ip *product);
-
-/*boardlink*/
-int boardlink_init(ip *father, ip *product, int id, param *params);
-
 /*board*/
 int board_init(ip *father, ip *board, int id, param *params);
-
-/*chiplink*/
-int chiplink_init(ip *father, ip *board, int id, param *params);
-
+int boardlink_init(ip *father, ip *boardlink, int id, param *params);
+int ddr_init(ip *father, ip *ddr, int id, param *params);
+int fifobuf_init(ip *father, ip *fifobuf, int id, param *params);
+int pcie_init(ip *father, ip *pcie, int id, param *params);
+int maincpu_init(ip *father, ip *maincpu, int id, param *params);
 /*chip*/
-int chip_init(ip *father, ip *board, int id, param *params);
-
+int chip_init(ip *father, ip *chip, int id, param *params);
+int chiplink_init(ip *father, ip *chiplink, int id, param *params);
 /*core*/
-int core_init(ip *father, ip *board, int id, param *params);
+int core_init(ip *father, ip *core, int id, param *params);
+int noc_init(ip *father, ip *noc, int id, param *params);
+int cp_init(ip *father, ip *cp, int id, param *params);
+int np_init(ip *father, ip *np, int id, param *params);
+int tp_init(ip *father, ip *tp, int id, param *params);
+int ram_init(ip *father, ip *ram, int id, param *params);
 
 
 
