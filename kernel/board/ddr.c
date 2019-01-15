@@ -340,13 +340,13 @@ static int ddr_alloc(ip *ddr, param *params)
         }
 
         //Trick: malloc(0)!=NULL
-        ddr->reglist = malloc(params->reg_count * sizeof(regs *));
+        ddr->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
         if (unlikely(!ddr->reglist)) {
                 printf("ERR: alloc ddr reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)ddr->reglist, 0, params->reg_count * sizeof(regs *));
+        memset((void *)ddr->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
 
         for (id = 0; id < params->reg_count; id++) {
                 ddr->reglist[id] = malloc(sizeof(regs));

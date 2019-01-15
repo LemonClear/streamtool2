@@ -312,13 +312,13 @@ static int chiplink_alloc(ip *chiplink, param *params)
 
         //Trick: malloc(0)!=NULL, if have no reg,
         //the chiplink->reglist value can also mark as this ip's address
-        chiplink->reglist = malloc(params->reg_count * sizeof(regs *));
+        chiplink->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
         if (unlikely(!chiplink->reglist)) {
                 printf("ERR: alloc chiplink reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)chiplink->reglist, 0, params->reg_count * sizeof(regs *));
+        memset((void *)chiplink->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
 
         for (id = 0; id < params->reg_count; id++) {
                 chiplink->reglist[id] = malloc(sizeof(regs));

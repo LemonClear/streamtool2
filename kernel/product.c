@@ -348,24 +348,7 @@ static int product_alloc(ip *product, param *params)
         int id = -1;
 
         /*memory*/
-        //FIXME: DO NOTHING!!!
         //NO NEED on product level!!!
-        product->memory = malloc(params->ram_count * sizeof(address32_t *));
-        if (unlikely(!product->memory)) {
-                printf("ERR: alloc product memory failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
-                goto ret_alloc;
-        }
-        memset((void *)product->memory, 0, params->ram_count * sizeof(address32_t *));
-
-        for (id = 0; id < params->ram_count; id++) {
-                product->memory[id] = malloc(params->ram_size); //here: memory[id]++ is 4bytes
-                if (unlikely(!product->memory[id])) {
-                        printf("ERR: alloc product mem%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
-                        goto ret_alloc;
-                }
-        }
 
         /*reg list*/
         if (!params->reg_count) { //FIXME: should separate ips reg count
@@ -374,13 +357,13 @@ static int product_alloc(ip *product, param *params)
         }
 
         //Trick: malloc(0)!=NULL
-        product->reglist = malloc(params->reg_count * sizeof(regs *));
+        product->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
         if (unlikely(!product->reglist)) {
                 printf("ERR: alloc product reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)product->reglist, 0, params->reg_count * sizeof(regs *));
+        memset((void *)product->reglist, 0, (params->reg_count + 1 ) * sizeof(regs *));
 
         for (id = 0; id < params->reg_count; id++) {
                 product->reglist[id] = malloc(sizeof(regs));
@@ -409,14 +392,14 @@ static int product_alloc(ip *product, param *params)
 
         /*subips list*/
         product->subips = malloc((params->board_count +
-                                params->boardlink_count) * sizeof(ip *));
+                                params->boardlink_count + 1) * sizeof(ip *));
         if (unlikely(!product->subips)) {
                 printf("ERR: product alloc subip array failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
         memset((void *)product->subips, 0, (params->board_count +
-                                params->boardlink_count) * sizeof(ip *));
+                                params->boardlink_count + 1) * sizeof(ip *));
 
         for (id = 0; id < (params->board_count +
                                 params->boardlink_count); id++) {

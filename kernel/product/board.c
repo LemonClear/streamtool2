@@ -344,13 +344,13 @@ static int board_alloc(ip *board, param *params)
         }
 
         //Trick: malloc(0)!=NULL
-        board->reglist = malloc(params->reg_count * sizeof(regs *));
+        board->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
         if (unlikely(!board->reglist)) {
                 printf("ERR: alloc board reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)board->reglist, 0, params->reg_count * sizeof(regs *));
+        memset((void *)board->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
 
         for (id = 0; id < params->reg_count; id++) {
                 board->reglist[id] = malloc(sizeof(regs));
@@ -381,7 +381,7 @@ static int board_alloc(ip *board, param *params)
         board->subips = malloc((params->chip_count +
                                 params->chiplink_count + params->ddr_count +
                                 params->fifobuf_count + params->pcie_count +
-                                params->maincpu_count) * sizeof(ip *));
+                                params->maincpu_count + 1) * sizeof(ip *));
         if (unlikely(!board->subips)) {
                 printf("ERR: board alloc subip array failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -390,7 +390,7 @@ static int board_alloc(ip *board, param *params)
         memset((void *)board->subips, 0, (params->chip_count +
                                 params->chiplink_count + params->ddr_count +
                                 params->fifobuf_count + params->pcie_count +
-                                params->maincpu_count) * sizeof(ip *));
+                                params->maincpu_count + 1) * sizeof(ip *));
 
         for (id = 0; id < (params->chip_count +
                                 params->chiplink_count + params->ddr_count +

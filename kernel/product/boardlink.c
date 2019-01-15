@@ -308,13 +308,13 @@ static int boardlink_alloc(ip *boardlink, param *params)
         }
 
         //Trick: malloc(0)!=NULL
-        boardlink->reglist = malloc(params->reg_count * sizeof(regs *));
+        boardlink->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
         if (unlikely(!boardlink->reglist)) {
                 printf("ERR: alloc boardlink reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)boardlink->reglist, 0, params->reg_count * sizeof(regs *));
+        memset((void *)boardlink->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
 
         for (id = 0; id < params->reg_count; id++) {
                 boardlink->reglist[id] = malloc(sizeof(regs));

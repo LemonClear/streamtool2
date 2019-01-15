@@ -344,13 +344,13 @@ static int chip_alloc(ip *chip, param *params)
         }
 
         //Trick: malloc(0)!=NULL
-        chip->reglist = malloc(params->reg_count * sizeof(regs *));
+        chip->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
         if (unlikely(!chip->reglist)) {
                 printf("ERR: alloc chip reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)chip->reglist, 0, params->reg_count * sizeof(regs *));
+        memset((void *)chip->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
 
         for (id = 0; id < params->reg_count; id++) {
                 chip->reglist[id] = malloc(sizeof(regs));
@@ -379,14 +379,14 @@ static int chip_alloc(ip *chip, param *params)
 
         /*subips list*/
         chip->subips = malloc((params->core_count +
-                                params->noc_count) * sizeof(ip *));
+                                params->noc_count + 1) * sizeof(ip *));
         if (unlikely(!chip->subips)) {
                 printf("ERR: chip alloc subip array failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
         memset((void *)chip->subips, 0, (params->core_count +
-                                params->noc_count) * sizeof(ip *));
+                                params->noc_count + 1) * sizeof(ip *));
 
         for (id = 0; id < (params->core_count +
                                 params->noc_count); id++) {
