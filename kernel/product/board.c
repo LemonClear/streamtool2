@@ -61,7 +61,7 @@ static void on(ip *board)
                 id++;
         }
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         board->status = RUN;
 
         printf("INFO: board:%s power on!!!!! %s, %s, %d\n",
@@ -98,7 +98,7 @@ static void off(ip *board)
         /*board level do 2nd*/
         //FIXME: todo...
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         board->status = OFF;
 
         printf("INFO: board:%s power off!!!!! %s, %s, %d\n",
@@ -135,7 +135,7 @@ static void idle(ip *board)
         /*board level do 2nd*/
         //FIXME: todo...
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         board->status = IDLE;
 
         printf("INFO: board:%s idle!!!!! %s, %s, %d\n",
@@ -172,7 +172,7 @@ static void sleep(ip *board)
         /*board level do 2nd*/
         //FIXME: todo...
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         board->status = SLEEP;
 
         printf("INFO: board:%s sleep!!!!! %s, %s, %d\n",
@@ -209,7 +209,7 @@ static void wakeup(ip *board)
                 id++;
         }
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         board->status = RUN;
 
         printf("INFO: board:%s wakeup!!!!! %s, %s, %d\n",

@@ -58,7 +58,7 @@ static void on(ip *boardlink)
         //FIXME: DO NOTHING!!!
         //No subips
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         boardlink->status = RUN;
 
         printf("INFO: boardlink:%s power on!!!!! %s, %s, %d\n",
@@ -92,7 +92,7 @@ static void off(ip *boardlink)
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         boardlink->status = OFF;
 
         printf("INFO: boardlink:%s power off!!!!! %s, %s, %d\n",
@@ -126,7 +126,7 @@ static void idle(ip *boardlink)
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         boardlink->status = IDLE;
 
         printf("INFO: boardlink:%s idle!!!!! %s, %s, %d\n",
@@ -160,7 +160,7 @@ static void sleep(ip *boardlink)
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         boardlink->status = SLEEP;
 
         printf("INFO: boardlink:%s sleep!!!!! %s, %s, %d\n",
@@ -194,7 +194,7 @@ static void wakeup(ip *boardlink)
         //FIXME: DO NOTHING!!!
         //No subips
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         boardlink->status = RUN;
 
         printf("INFO: boardlink:%s wakeup!!!!! %s, %s, %d\n",

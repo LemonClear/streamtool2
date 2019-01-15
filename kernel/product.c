@@ -61,7 +61,7 @@ static void on(ip *product)
                 id++;
         }
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         product->status = RUN;
 
         printf("INFO: product:%s power on!!!!! %s, %s, %d\n",
@@ -98,7 +98,7 @@ static void off(ip *product)
         /*product level do 2nd*/
         //FIXME: todo...
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         product->status = OFF;
 
         printf("INFO: product:%s power off!!!!! %s, %s, %d\n",
@@ -135,7 +135,7 @@ static void idle(ip *product)
         /*product level do 2nd*/
         //FIXME: todo...
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         product->status = IDLE;
 
         printf("INFO: product:%s idle!!!!! %s, %s, %d\n",
@@ -172,7 +172,7 @@ static void sleep(ip *product)
         /*product level do 2nd*/
         //FIXME: todo...
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         product->status = SLEEP;
 
         printf("INFO: product:%s sleep!!!!! %s, %s, %d\n",
@@ -209,7 +209,7 @@ static void wakeup(ip *product)
                 id++;
         }
 
-        /*change state machine third*/
+        /*change state machine 3rd*/
         product->status = RUN;
 
         printf("INFO: product:%s wakeup!!!!! %s, %s, %d\n",
