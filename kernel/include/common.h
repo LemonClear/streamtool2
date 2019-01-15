@@ -75,7 +75,7 @@ typedef struct device {
         char name[64];           //name
         int id;                  //id
         enum state status;       //state machine
-        address32_t address;     //address: first reg-addr or mem-addr
+        address32_t address;     //lower32 of reglist, used as hash string
 
         const ip_operations *ops;//operation
 
