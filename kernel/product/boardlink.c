@@ -30,8 +30,6 @@
  */
 static void __on(ip *boardlink)
 {
-        int id = 0;
-
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -64,8 +62,6 @@ ret_on:
  */
 static void __off(ip *boardlink)
 {
-        int id = 0;
-
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -98,8 +94,6 @@ ret_off:
  */
 static void __idle(ip *boardlink)
 {
-        int id = 0;
-
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -132,8 +126,6 @@ ret_idle:
  */
 static void __sleep(ip *boardlink)
 {
-        int id = 0;
-
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -166,8 +158,6 @@ ret_sleep:
  */
 static void __wakeup(ip *boardlink)
 {
-        int id = 0;
-
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -200,8 +190,6 @@ ret_wakeup:
  */
 static void __tick(ip *boardlink)
 {
-        int id = 0;
-
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -237,8 +225,6 @@ ret_tick:
  */
 static void __dump(ip *boardlink)
 {
-        int id = 0;
-
         printf("DEBUG: ========== boardlink:%s dump start !!!!! ==========\n",
                         boardlink->name);
 

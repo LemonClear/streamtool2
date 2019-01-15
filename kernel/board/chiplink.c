@@ -31,8 +31,6 @@
  */
 static void __on(ip *chiplink)
 {
-        int id = 0;
-
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -64,8 +62,6 @@ ret_on:
  */
 static void __off(ip *chiplink)
 {
-        int id = 0;
-
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -97,8 +93,6 @@ ret_off:
  */
 static void __idle(ip *chiplink)
 {
-        int id = 0;
-
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -130,8 +124,6 @@ ret_idle:
  */
 static void __sleep(ip *chiplink)
 {
-        int id = 0;
-
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -163,8 +155,6 @@ ret_sleep:
  */
 static void __wakeup(ip *chiplink)
 {
-        int id = 0;
-
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -196,8 +186,6 @@ ret_wakeup:
  */
 static void __tick(ip *chiplink)
 {
-        int id = 0;
-
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -232,8 +220,6 @@ ret_tick:
  */
 static void __dump(ip *chiplink)
 {
-        int id = 0;
-
         printf("DEBUG: ========== chiplink:%s dump start !!!!! ==========\n",
                         chiplink->name);
 
