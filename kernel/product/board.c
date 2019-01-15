@@ -378,8 +378,8 @@ static int board_alloc(ip *board, param *params)
         }
 
         /*subips list*/
-        board->subips = malloc((params->chiplink_count +
-                                params->chip_count + params->ddr_count +
+        board->subips = malloc((params->chip_count +
+                                params->chiplink_count + params->ddr_count +
                                 params->fifobuf_count + params->pcie_count +
                                 params->maincpu_count) * sizeof(ip *));
         if (unlikely(!board->subips)) {
@@ -387,13 +387,13 @@ static int board_alloc(ip *board, param *params)
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)board->subips, 0, (params->chiplink_count +
-                                params->chip_count + params->ddr_count +
+        memset((void *)board->subips, 0, (params->chip_count +
+                                params->chiplink_count + params->ddr_count +
                                 params->fifobuf_count + params->pcie_count +
                                 params->maincpu_count) * sizeof(ip *));
 
-        for (id = 0; id < (params->chiplink_count +
-                                params->chip_count + params->ddr_count +
+        for (id = 0; id < (params->chip_count +
+                                params->chiplink_count + params->ddr_count +
                                 params->fifobuf_count + params->pcie_count +
                                 params->maincpu_count); id++) {
                 board->subips[id] = malloc(sizeof(ip));
@@ -523,18 +523,8 @@ int board_init(ip *father, ip *board, int id, param *params)
         board->sourth = NULL;
         board->north = NULL;
 
-        /*subips: chiplink 1st*/
-        for (sub = 0; sub < params->chiplink_count; sub++) {
-                /*call subip:chiplink init function*/
-                ret = chiplink_init(board, board->subips[sub], sub, params);
-                if (unlikely(ret)) {
-                        printf("ERR: subip%d-chiplink init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
-                        goto ret_init;
-                }
-        }
-        /*subips: chip 2nd*/
-        for (; sub < (params->chiplink_count + params->chip_count); sub++) {
+        /*subips: chip 1st*/
+        for (sub = 0; sub < params->chip_count; sub++) {
                 /*call subip:chip init function*/
                 ret = chip_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
@@ -543,8 +533,18 @@ int board_init(ip *father, ip *board, int id, param *params)
                         goto ret_init;
                 }
         }
+        /*subips: chiplink 2nd*/
+        for (; sub < (params->chip_count + params->chiplink_count); sub++) {
+                /*call subip:chiplink init function*/
+                ret = chiplink_init(board, board->subips[sub], sub, params);
+                if (unlikely(ret)) {
+                        printf("ERR: subip%d-chiplink init failed! %s, %s, %d\n",
+                                        sub, __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+        }
         /*subips: ddr 3rd*/
-        for (; sub < (params->chiplink_count + params->chip_count +
+        for (; sub < (params->chip_count + params->chiplink_count +
                                 params->ddr_count); sub++) {
                 /*call subip:ddr init function*/
                 ret = ddr_init(board, board->subips[sub], sub, params);
@@ -555,7 +555,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 }
         }
         /*subips: fifobuf 4th*/
-        for (; sub < (params->chiplink_count + params->chip_count +
+        for (; sub < (params->chip_count + params->chiplink_count +
                                 params->ddr_count + params->fifobuf_count); sub++) {
                 /*call subip:fifobuf init function*/
                 ret = fifobuf_init(board, board->subips[sub], sub, params);
@@ -566,7 +566,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 }
         }
         /*subips: pcie 5th*/
-        for (; sub < (params->chiplink_count + params->chip_count +
+        for (; sub < (params->chip_count + params->chiplink_count +
                                 params->ddr_count + params->fifobuf_count +
                                 params->pcie_count); sub++) {
                 /*call subip:pcie init function*/
@@ -578,7 +578,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 }
         }
         /*subips: maincpu 6th*/
-        for (; sub < (params->chiplink_count + params->chip_count +
+        for (; sub < (params->chip_count + params->chiplink_count +
                                 params->ddr_count + params->fifobuf_count +
                                 params->pcie_count + params->maincpu_count); sub++) {
                 /*call subip:maincpu init function*/
@@ -591,8 +591,8 @@ int board_init(ip *father, ip *board, int id, param *params)
         }
 
         /*subips: hashtable*/
-        for (sub = 0; sub < (params->chiplink_count +
-                                params->chip_count + params->ddr_count +
+        for (sub = 0; sub < (params->chip_count +
+                                params->chiplink_count + params->ddr_count +
                                 params->fifobuf_count + params->pcie_count +
                                 params->maincpu_count); sub++) {
                 /*bypass empty subip elements*/

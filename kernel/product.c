@@ -547,22 +547,22 @@ int product_init(ip *father, ip *product, int id, param *params)
         product->sourth = NULL;
         product->north = NULL;
 
-        /*subips: boardlink 1st*/
-        for (sub = 0; sub < params->boardlink_count; sub++) {
-                /*call subip:boardlink init function*/
-                ret = boardlink_init(product, product->subips[sub], sub, params);
-                if (unlikely(ret)) {
-                        printf("ERR: boardlink%d init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
-                        goto ret_init;
-                }
-        }
-        /*subips: board 2nd*/
-        for (; sub < (params->board_count + params->boardlink_count); sub++) {
+        /*subips: board 1st*/
+        for (sub = 0; sub < params->board_count; sub++) {
                 /*call subip:board init function*/
                 ret = board_init(product, product->subips[sub], sub, params);
                 if (unlikely(ret)) {
                         printf("ERR: board%d init failed! %s, %s, %d\n",
+                                        sub, __FILE__, __func__, __LINE__);
+                        goto ret_init;
+                }
+        }
+        /*subips: boardlink 2nd*/
+        for (; sub < (params->board_count + params->boardlink_count); sub++) {
+                /*call subip:boardlink init function*/
+                ret = boardlink_init(product, product->subips[sub], sub, params);
+                if (unlikely(ret)) {
+                        printf("ERR: boardlink%d init failed! %s, %s, %d\n",
                                         sub, __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
