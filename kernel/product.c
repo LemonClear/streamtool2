@@ -371,6 +371,7 @@ static int product_alloc(ip *product, param *params)
                                 __FILE__, __func__, __LINE__);
         }
 
+        //Trick: malloc(0)!=NULL
         product->reglist = malloc(params->reg_count * sizeof(regs *));
         if (unlikely(!product->reglist)) {
                 printf("ERR: alloc product reglist failed! %s, %s, %d\n",

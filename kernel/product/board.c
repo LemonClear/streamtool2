@@ -355,6 +355,7 @@ static int board_alloc(ip *board, param *params)
                                 __FILE__, __func__, __LINE__);
         }
 
+        //Trick: malloc(0)!=NULL
         board->reglist = malloc(params->reg_count * sizeof(regs *));
         if (unlikely(!board->reglist)) {
                 printf("ERR: alloc board reglist failed! %s, %s, %d\n",
