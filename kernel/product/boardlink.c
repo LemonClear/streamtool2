@@ -50,11 +50,11 @@ static void on(ip *boardlink)
                 goto ret_on;
         }
 
-        /*boardlink level do first*/
+        /*boardlink level do 1st*/
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
-        /*power on subips second*/
+        /*power on subips 2nd*/
         //FIXME: DO NOTHING!!!
         //No subips
 
@@ -84,11 +84,11 @@ static void off(ip *boardlink)
                 goto ret_off;
         }
 
-        /*power off subips first*/
+        /*power off subips 1st*/
         //FIXME: DO NOTHING!!!
         //No subips
 
-        /*boardlink level do second*/
+        /*boardlink level do 2nd*/
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
@@ -118,11 +118,11 @@ static void idle(ip *boardlink)
                 goto ret_idle;
         }
 
-        /*idle subips first*/
+        /*idle subips 1st*/
         //FIXME: DO NOTHING!!!
         //No subips
 
-        /*boardlink level do second*/
+        /*boardlink level do 2nd*/
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
@@ -152,11 +152,11 @@ static void sleep(ip *boardlink)
                 goto ret_sleep;
         }
 
-        /*sleep subips first*/
+        /*sleep subips 1st*/
         //FIXME: DO NOTHING!!!
         //No subips
 
-        /*boardlink level do second*/
+        /*boardlink level do 2nd*/
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
@@ -186,11 +186,11 @@ static void wakeup(ip *boardlink)
                 goto ret_wakeup;
         }
 
-        /*boardlink level do first*/
+        /*boardlink level do 1st*/
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
-        /*wakeup subips second*/
+        /*wakeup subips 2nd*/
         //FIXME: DO NOTHING!!!
         //No subips
 
@@ -224,12 +224,12 @@ static void tick(ip *boardlink)
         printf("INFO: boardlink:%s tick:%llu come!!!!! %s, %s, %d\n",
                         boardlink->name, tick_counter, __FILE__, __func__, __LINE__);
 
-        /*boardlink level do first*/
+        /*boardlink level do 1st*/
         //FIXME: DO NOTHING!!!
         //Transparent Transmission temporally on this level
 
 
-        /*tick trigger subips second*/
+        /*tick trigger subips 2nd*/
         //FIXME: DO NOTHING!!!
         //No subips
 
@@ -260,10 +260,10 @@ static void dump(ip *boardlink)
                 goto ret_dump;
         }
 
-        /*dump boardlink elements first*/
+        /*dump boardlink elements 1st*/
         //FIXME: todo...
 
-        /*dump subips second*/
+        /*dump subips 2nd*/
         //FIXME: DO NOTHING!!!
         //No subips
 

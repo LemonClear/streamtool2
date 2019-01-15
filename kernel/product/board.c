@@ -50,10 +50,10 @@ static void on(ip *board)
                 goto ret_on;
         }
 
-        /*board level do first*/
+        /*board level do 1st*/
         //FIXME: todo...
 
-        /*power on subips second*/
+        /*power on subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
                 board->subips[id]->ops->poweron(board->subips[id]);
@@ -87,7 +87,7 @@ static void off(ip *board)
                 goto ret_off;
         }
 
-        /*power off subips first*/
+        /*power off subips 1st*/
         while (board->subips[id]) {
                 /*each subip*/
                 board->subips[id]->ops->poweroff(board->subips[id]);
@@ -95,7 +95,7 @@ static void off(ip *board)
                 id++;
         }
 
-        /*board level do second*/
+        /*board level do 2nd*/
         //FIXME: todo...
 
         /*change state machine third*/
@@ -124,7 +124,7 @@ static void idle(ip *board)
                 goto ret_idle;
         }
 
-        /*idle subips first*/
+        /*idle subips 1st*/
         while (board->subips[id]) {
                 /*each subip*/
                 board->subips[id]->ops->idle(board->subips[id]);
@@ -132,7 +132,7 @@ static void idle(ip *board)
                 id++;
         }
 
-        /*board level do second*/
+        /*board level do 2nd*/
         //FIXME: todo...
 
         /*change state machine third*/
@@ -161,7 +161,7 @@ static void sleep(ip *board)
                 goto ret_sleep;
         }
 
-        /*sleep subips first*/
+        /*sleep subips 1st*/
         while (board->subips[id]) {
                 /*each subip*/
                 board->subips[id]->ops->sleep(board->subips[id]);
@@ -169,7 +169,7 @@ static void sleep(ip *board)
                 id++;
         }
 
-        /*board level do second*/
+        /*board level do 2nd*/
         //FIXME: todo...
 
         /*change state machine third*/
@@ -198,10 +198,10 @@ static void wakeup(ip *board)
                 goto ret_wakeup;
         }
 
-        /*board level do first*/
+        /*board level do 1st*/
         //FIXME: todo...
 
-        /*wakeup subips second*/
+        /*wakeup subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
                 board->subips[id]->ops->wakeup(board->subips[id]);
@@ -239,11 +239,11 @@ static void tick(ip *board)
         printf("INFO: board:%s tick:%llu come!!!!! %s, %s, %d\n",
                         board->name, tick_counter, __FILE__, __func__, __LINE__);
 
-        /*board level do first*/
+        /*board level do 1st*/
         //FIXME: todo...
 
 
-        /*tick trigger subips second*/
+        /*tick trigger subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
                 board->subips[id]->ops->tickarrive(board->subips[id]);
@@ -278,10 +278,10 @@ static void dump(ip *board)
                 goto ret_dump;
         }
 
-        /*dump board elements first*/
+        /*dump board elements 1st*/
         //FIXME: todo...
 
-        /*dump subips second*/
+        /*dump subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
                 board->subips[id]->ops->dump(board->subips[id]);

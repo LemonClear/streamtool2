@@ -50,10 +50,10 @@ static void on(ip *product)
                 goto ret_on;
         }
 
-        /*product level do first*/
+        /*product level do 1st*/
         //FIXME: todo...
 
-        /*power on subips second*/
+        /*power on subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
                 product->subips[id]->ops->poweron(product->subips[id]);
@@ -87,7 +87,7 @@ static void off(ip *product)
                 goto ret_off;
         }
 
-        /*power off subips first*/
+        /*power off subips 1st*/
         while (product->subips[id]) {
                 /*each subip*/
                 product->subips[id]->ops->poweroff(product->subips[id]);
@@ -95,7 +95,7 @@ static void off(ip *product)
                 id++;
         }
 
-        /*product level do second*/
+        /*product level do 2nd*/
         //FIXME: todo...
 
         /*change state machine third*/
@@ -124,7 +124,7 @@ static void idle(ip *product)
                 goto ret_idle;
         }
 
-        /*idle subips first*/
+        /*idle subips 1st*/
         while (product->subips[id]) {
                 /*each subip*/
                 product->subips[id]->ops->idle(product->subips[id]);
@@ -132,7 +132,7 @@ static void idle(ip *product)
                 id++;
         }
 
-        /*product level do second*/
+        /*product level do 2nd*/
         //FIXME: todo...
 
         /*change state machine third*/
@@ -161,7 +161,7 @@ static void sleep(ip *product)
                 goto ret_sleep;
         }
 
-        /*sleep subips first*/
+        /*sleep subips 1st*/
         while (product->subips[id]) {
                 /*each subip*/
                 product->subips[id]->ops->sleep(product->subips[id]);
@@ -169,7 +169,7 @@ static void sleep(ip *product)
                 id++;
         }
 
-        /*product level do second*/
+        /*product level do 2nd*/
         //FIXME: todo...
 
         /*change state machine third*/
@@ -198,10 +198,10 @@ static void wakeup(ip *product)
                 goto ret_wakeup;
         }
 
-        /*product level do first*/
+        /*product level do 1st*/
         //FIXME: todo...
 
-        /*wakeup subips second*/
+        /*wakeup subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
                 product->subips[id]->ops->wakeup(product->subips[id]);
@@ -239,11 +239,11 @@ static void tick(ip *product)
         printf("INFO: product:%s tick:%llu come!!!!! %s, %s, %d\n",
                         product->name, tick_counter, __FILE__, __func__, __LINE__);
 
-        /*product level do first*/
+        /*product level do 1st*/
         //FIXME: todo...
 
 
-        /*tick trigger subips second*/
+        /*tick trigger subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
                 product->subips[id]->ops->tickarrive(product->subips[id]);
@@ -278,10 +278,10 @@ static void dump(ip *product)
                 goto ret_dump;
         }
 
-        /*dump product elements first*/
+        /*dump product elements 1st*/
         //FIXME: todo...
 
-        /*dump subips second*/
+        /*dump subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
                 product->subips[id]->ops->dump(product->subips[id]);
@@ -545,7 +545,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         product->sourth = NULL;
         product->north = NULL;
 
-        /*subips: boardlink first*/
+        /*subips: boardlink 1st*/
         for (sub = 0; sub < params->boardlink_count; sub++) {
                 /*call subip:boardlink init function*/
                 ret = boardlink_init(product, product->subips[sub], sub, params);
@@ -555,7 +555,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                         goto ret_init;
                 }
         }
-        /*subips: board second*/
+        /*subips: board 2nd*/
         for (; sub < (params->board_count + params->boardlink_count); sub++) {
                 /*call subip:board init function*/
                 ret = board_init(product, product->subips[sub], sub, params);
