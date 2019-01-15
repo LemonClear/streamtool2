@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __TCOP_H__
-#define __TCOP_H__
+#ifndef __TP_H__
+#define __TP_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This file defines all transmition co-processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

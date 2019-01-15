@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __CTLP_H__
-#define __CTLP_H__
+#ifndef __CP_H__
+#define __CP_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This file defines all control processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
