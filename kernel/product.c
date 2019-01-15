@@ -263,11 +263,11 @@ ret_tick:
 
 
 /**
- * dump - product dump informations
+ * __dump - product dump informations
  * @product:   product pointer
  *
  */
-static void dump(ip *product)
+static void __dump(ip *product)
 {
         int id = 0;
 
@@ -308,7 +308,7 @@ static const ip_operations product_ops = {
         .sleep = __sleep,
         .wakeup = __wakeup,
         .tickarrive = __tick,
-        .dump = dump,
+        .dump = __dump,
 };
 
 
