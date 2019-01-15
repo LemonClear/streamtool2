@@ -104,6 +104,7 @@ typedef struct parameter {
         int chiplink_count;
         int chip_count;
         int ddr_count;
+        int ddr_size;
         int fifobuf_count;
         int pcie_count;
         int maincpu_count;
