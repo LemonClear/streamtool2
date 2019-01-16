@@ -380,7 +380,7 @@ static int board_alloc(ip *board, param *params)
         /*subips list*/
         board->subips = malloc((params->chip_count +
                                 params->chiplink_count + params->ddr_count +
-                                params->fifobuf_count + params->pcie_count +
+                                params->fifo_count + params->pcie_count +
                                 params->maincpu_count + 1) * sizeof(ip *));
         if (unlikely(!board->subips)) {
                 printf("ERR: board alloc subip array failed! %s, %s, %d\n",
@@ -389,12 +389,12 @@ static int board_alloc(ip *board, param *params)
         }
         memset((void *)board->subips, 0, (params->chip_count +
                                 params->chiplink_count + params->ddr_count +
-                                params->fifobuf_count + params->pcie_count +
+                                params->fifo_count + params->pcie_count +
                                 params->maincpu_count + 1) * sizeof(ip *));
 
         for (id = 0; id < (params->chip_count +
                                 params->chiplink_count + params->ddr_count +
-                                params->fifobuf_count + params->pcie_count +
+                                params->fifo_count + params->pcie_count +
                                 params->maincpu_count); id++) {
                 board->subips[id] = malloc(sizeof(ip));
                 if (unlikely(!board->subips[id])) {
@@ -555,20 +555,20 @@ int board_init(ip *father, ip *board, int id, param *params)
                         goto ret_init;
                 }
         }
-        /*subips: fifobuf 4th*/
+        /*subips: fifo 4th*/
         for (; sub < (params->chip_count + params->chiplink_count +
-                                params->ddr_count + params->fifobuf_count); sub++) {
-                /*call subip:fifobuf init function*/
-                ret = fifobuf_init(board, board->subips[sub], sub, params);
+                                params->ddr_count + params->fifo_count); sub++) {
+                /*call subip:fifo init function*/
+                ret = fifo_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-fifobuf init failed! %s, %s, %d\n",
+                        printf("ERR: subip%d-fifo init failed! %s, %s, %d\n",
                                         sub, __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
         }
         /*subips: pcie 5th*/
         for (; sub < (params->chip_count + params->chiplink_count +
-                                params->ddr_count + params->fifobuf_count +
+                                params->ddr_count + params->fifo_count +
                                 params->pcie_count); sub++) {
                 /*call subip:pcie init function*/
                 ret = pcie_init(board, board->subips[sub], sub, params);
@@ -580,7 +580,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         }
         /*subips: maincpu 6th*/
         for (; sub < (params->chip_count + params->chiplink_count +
-                                params->ddr_count + params->fifobuf_count +
+                                params->ddr_count + params->fifo_count +
                                 params->pcie_count + params->maincpu_count); sub++) {
                 /*call subip:maincpu init function*/
                 ret = maincpu_init(board, board->subips[sub], sub, params);
@@ -594,7 +594,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         /*subips: hashtable*/
         for (sub = 0; sub < (params->chip_count +
                                 params->chiplink_count + params->ddr_count +
-                                params->fifobuf_count + params->pcie_count +
+                                params->fifo_count + params->pcie_count +
                                 params->maincpu_count); sub++) {
                 /*bypass empty subip elements*/
                 if (unlikely(!strcmp(board->subips[sub]->name, "")))

@@ -105,7 +105,8 @@ typedef struct parameter {
         int chip_count;
         int ddr_count;
         int ddr_size;
-        int fifobuf_count;
+        int fifo_count;
+        int fifo_size;
         int pcie_count;
         int maincpu_count;
         int noc_count;
@@ -141,7 +142,7 @@ int product_run(ip *product);
 int board_init(ip *father, ip *board, int id, param *params);
 int boardlink_init(ip *father, ip *boardlink, int id, param *params);
 int ddr_init(ip *father, ip *ddr, int id, param *params);
-int fifobuf_init(ip *father, ip *fifobuf, int id, param *params);
+int fifo_init(ip *father, ip *fifo, int id, param *params);
 int pcie_init(ip *father, ip *pcie, int id, param *params);
 int maincpu_init(ip *father, ip *maincpu, int id, param *params);
 /*chip*/

@@ -47,6 +47,6 @@ Directorys:
 Relation Structure:
 1. simulator {product}
 2. product {board, boardlink, clock, power}
-3. board {chip, chiplink, ddr, fifobuf, maincpu, pcie}
+3. board {chip, chiplink, ddr, fifo, maincpu, pcie}
 4. chip {core, noc}
 5. core {ctlP, ncoP, tcoP, ram}
