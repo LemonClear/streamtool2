@@ -19,38 +19,41 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include "common.h"
 #include "of.h"
 
 
 /**
  * parse_configs - parse the config file
- * @path:       config file path
  * @params:     param struct
  *
  * FIXME: to be replaced by kconfig/kbuild
  */
-static int parse_configs(char *path, param *params)
+static int parse_configs(param *params)
 {
         int ret = -1;
         FILE *stream = NULL;
+        char *config = "./demo.defconfig";
 
         if (unlikely(!params)) {
                 printf("ERR: param struct absent! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
-                goto ret_configs;
-        }
-
-        if (unlikely(!path)) {
-                printf("ERR: the config file absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
-                goto ret_configs;
+                goto ret_config;
         }
 
         /*begin*/
+        if (unlikely(access(config, F_OK))) {
+                printf("INFO: config file %s absent! \
+                                use default no reg config! %s, %s, %d\n",
+                                config, __FILE__, __func__, __LINE__);
+                ret = 0;
+                goto ret_config;
+        }
+
         //FIXME: getline(stream);
 
-ret_configs:
+ret_config:
         return ret;
 }
 
@@ -141,7 +144,6 @@ ret_simu:
 static int simu_init(int argc, char *argv[], simu *simulator)
 {
         int ret = -1;
-        char *path = "./demo.defconfig";
 
         /*begin*/
         if (unlikely(!simulator)) {
@@ -151,7 +153,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         }
 
         /*parse: config file*/
-        ret = parse_configs(path, simulator->params);
+        ret = parse_configs(simulator->params);
         if (unlikely(ret)) {
                 printf("ERR: parse config file failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);

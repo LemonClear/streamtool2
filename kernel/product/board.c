@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <unistd.h>
 #include "common.h"
 #include "of.h"
 
@@ -314,6 +315,16 @@ static int parse_regconfig(regs **reglist)
                                 __FILE__, __func__, __LINE__);
                 goto ret_config;
         }
+
+        /*begin*/
+        if (unlikely(access(config, F_OK))) {
+                printf("INFO: config file %s absent! \
+                                use default no reg config! %s, %s, %d\n",
+                                config, __FILE__, __func__, __LINE__);
+                ret = 0;
+                goto ret_config;
+        }
+
 
         //FIXME: todo...
 
