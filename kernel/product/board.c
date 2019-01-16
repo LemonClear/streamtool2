@@ -483,8 +483,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         board->ops = &board_ops;
 
         /*memory*/
-        //FIXME: DO NOTHING!!!
-        //NO NEED on board level!!!
+        //NO need on board level!!!
 
         /*reg list*/
         ret = parse_regconfig(board->reglist);

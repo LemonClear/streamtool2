@@ -111,6 +111,9 @@ typedef struct parameter {
         int maincpu_count;
         int noc_count;
         int core_count;
+        int cp_count;
+        int np_count;
+        int tp_count;
         int ram_count;
         int ram_size;
         int reg_count;
