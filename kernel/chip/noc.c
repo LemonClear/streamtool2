@@ -151,24 +151,23 @@ ret_sleep:
  */
 static void __wakeup(ip *noc)
 {
-        if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
+        if (unlikely(!noc)) {
+                printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_wakeup;
         }
 
-        /*chiplink level do 1st*/
+        /*noc level do 1st*/
         //FIXME: todo...
 
         /*wakeup subips 2nd*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*change state machine 3rd*/
-        chiplink->status = RUN;
+        noc->status = RUN;
 
-        printf("INFO: chiplink:%s wakeup!!!!! %s, %s, %d\n",
-                        chiplink->name, __FILE__, __func__, __LINE__);
+        printf("INFO: noc:%s wakeup!!!!! %s, %s, %d\n",
+                        noc->name, __FILE__, __func__, __LINE__);
 
 ret_wakeup:
         return;
@@ -177,32 +176,31 @@ ret_wakeup:
 
 /**
  * __tick - one tick trigger
- * @chiplink:   self pointer
+ * @noc:    self pointer
  *
  */
-static void __tick(ip *chiplink)
+static void __tick(ip *noc)
 {
-        if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
+        if (unlikely(!noc)) {
+                printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: chiplink:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        chiplink->name, tick_counter, __FILE__, __func__, __LINE__);
+        printf("INFO: noc:%s tick:%llu come!!!!! %s, %s, %d\n",
+                        noc->name, tick_counter, __FILE__, __func__, __LINE__);
 
-        /*chiplink level do 1st*/
+        /*noc level do 1st*/
         //FIXME: todo...
 
 
         /*tick trigger subips 2nd*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*done*/
-        printf("INFO: chiplink:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        chiplink->name, tick_counter, __FILE__, __func__, __LINE__);
+        printf("INFO: noc:%s tick:%llu done!!!!! %s, %s, %d\n",
+                        noc->name, tick_counter, __FILE__, __func__, __LINE__);
 
 ret_tick:
         return;
@@ -210,30 +208,29 @@ ret_tick:
 
 
 /**
- * __dump - chiplink dump informations
- * @chiplink:  chiplink pointer
+ * __dump - noc dump informations
+ * @noc:  noc pointer
  *
  */
-static void __dump(ip *chiplink)
+static void __dump(ip *noc)
 {
-        printf("DEBUG: ========== chiplink:%s dump start !!!!! ==========\n",
-                        chiplink->name);
+        printf("DEBUG: ========== noc:%s dump start !!!!! ==========\n",
+                        noc->name);
 
-        if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, dump failed! %s, %s, %d\n",
+        if (unlikely(!noc)) {
+                printf("ERR: noc absent, dump failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_dump;
         }
 
-        /*dump chiplink elements 1st*/
+        /*dump noc elements 1st*/
         //FIXME: todo...
 
         /*dump subips 2nd*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
-        printf("DEBUG: ========== chiplink:%s dump end !!!!! ==========\n",
-                        chiplink->name);
+        printf("DEBUG: ========== noc:%s dump end !!!!! ==========\n",
+                        noc->name);
 
 ret_dump:
         return;
@@ -242,7 +239,7 @@ ret_dump:
  * ops structure
  *
  */
-static const ip_operations chiplink_ops = {
+static const ip_operations noc_ops = {
         .poweron = __on,
         .poweroff = __off,
         .idle = __idle,
@@ -262,10 +259,10 @@ static const ip_operations chiplink_ops = {
 static int parse_regconfig(regs **reglist)
 {
         int ret = -1;
-        char *config = "./chiplink.reg";
+        char *config = "./noc.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: chiplink reglist absent! %s, %s, %d\n",
+                printf("ERR: noc reglist absent! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_config;
         }
@@ -286,67 +283,64 @@ ret_config:
 
 
 /**
- * chiplink_alloc - alloc chiplink elements
- * @chiplink:   pointer to chiplink
- * @params:    init parameters
+ * noc_alloc - alloc noc elements
+ * @noc:     pointer to noc
+ * @params:  init parameters
  *
  */
-static int chiplink_alloc(ip *chiplink, param *params)
+static int noc_alloc(ip *noc, param *params)
 {
         int ret = -1;
         int id = -1;
 
         /*memory*/
-        //FIXME: DO NOTHING!!!
-        //NO NEED on chiplink level!!!
+        //NO need on noc level!!!
 
         /*reg list*/
         if (!params->reg_count) { //FIXME: should separate ips reg count
-                printf("INFO: chiplink have no reg!!! %s, %s, %d\n",
+                printf("INFO: noc have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL, if have no reg,
-        //the chiplink->reglist value can also mark as this ip's address
-        chiplink->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
-        if (unlikely(!chiplink->reglist)) {
-                printf("ERR: alloc chiplink reglist failed! %s, %s, %d\n",
+        //the noc->reglist value can also mark as this ip's address
+        noc->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        if (unlikely(!noc->reglist)) {
+                printf("ERR: alloc noc reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)chiplink->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)noc->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
 
         for (id = 0; id < params->reg_count; id++) {
-                chiplink->reglist[id] = malloc(sizeof(regs));
-                if (unlikely(!chiplink->reglist[id])) {
-                        printf("ERR: alloc chiplink reg%d failed! %s, %s, %d\n",
+                noc->reglist[id] = malloc(sizeof(regs));
+                if (unlikely(!noc->reglist[id])) {
+                        printf("ERR: alloc noc reg%d failed! %s, %s, %d\n",
                                         id, __FILE__, __func__, __LINE__);
                         goto ret_alloc;
                 }
-                memset((void *)chiplink->reglist[id], 0, sizeof(regs));
+                memset((void *)noc->reglist[id], 0, sizeof(regs));
         }
 
         /*reg hastable*/
-        chiplink->name2reg = init_hashtable();
-        if (unlikely(!chiplink->name2reg)) {
-                printf("ERR: alloc chiplink reg hashtable failed! %s, %s, %d\n",
+        noc->name2reg = init_hashtable();
+        if (unlikely(!noc->name2reg)) {
+                printf("ERR: alloc noc reg hashtable failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
 
-        chiplink->addr2reg = init_hashtable();
-        if (unlikely(!chiplink->addr2reg)) {
-                printf("ERR: alloc chiplink reg hashtable failed! %s, %s, %d\n",
+        noc->addr2reg = init_hashtable();
+        if (unlikely(!noc->addr2reg)) {
+                printf("ERR: alloc noc reg hashtable failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
 
         /*subips list*/
-        //FIXME: DO NOTHING!!!
         //NO subips
 
         /*subips hastable*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         ret = 0;
@@ -357,56 +351,56 @@ ret_alloc:
 
 
 /**
- * chiplink_init - init chiplink with params
- * @father:    pointer to the chiplink belongs to
- * @chiplink:  pointer to chiplink
- * @id:        chiplink id
+ * noc_init - init noc with params
+ * @father:    pointer to the noc belongs to
+ * @noc:       pointer to noc
+ * @id:        noc id
  * @params:    init parameters
  *
  */
-int chiplink_init(ip *father, ip *chiplink, int id, param *params)
+int noc_init(ip *father, ip *noc, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: chiplink init start!!!!! %s, %s, %d\n",
+        printf("INFO: noc init start!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        if (unlikely(!chiplink) || unlikely(!params)) {
-                printf("ERR: chiplink or params is absent! %s, %s, %d\n",
+        if (unlikely(!noc) || unlikely(!params)) {
+                printf("ERR: noc or params is absent! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
 
         /*alloc*/
-        ret = chiplink_alloc(chiplink, params);
+        ret = noc_alloc(noc, params);
         if (unlikely(ret)) {
-                printf("ERR: chiplink alloc elements failed! %s, %s, %d\n",
+                printf("ERR: noc alloc elements failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
 
         /*name*/
-        sprintf(chiplink->name, "chiplink%d", id);
+        sprintf(noc->name, "noc%d", id);
 
         /*id*/
-        chiplink->id = id;
+        noc->id = id;
 
         /*state machine*/
-        chiplink->status = OFF;
+        noc->status = OFF;
 
         /*ops*/
-        chiplink->ops = &chiplink_ops;
+        noc->ops = &noc_ops;
 
         /*memory*/
-        //NO NEED on chiplink level!!!
+        //NO need on noc level!!!
 
         /*reg list*/
-        ret = parse_regconfig(chiplink->reglist);
+        ret = parse_regconfig(noc->reglist);
         if (unlikely(ret)) {
-                printf("ERR: chiplink reglist init failed! %s, %s, %d\n",
+                printf("ERR: noc reglist init failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
@@ -414,26 +408,26 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         /*reg hashtable*/
         for (sub = 0; sub < params->reg_count; sub++) {
                 /*bypass empty reglist elements*/
-                if (unlikely(!strcmp(chiplink->reglist[sub]->name, "")))
+                if (unlikely(!strcmp(noc->reglist[sub]->name, "")))
                         continue;
 
                 /*table name2reg*/
-                ret = insert_hashtable(chiplink->reglist[sub]->name,
-                                (void *)chiplink->reglist[sub],
-                                chiplink->name2reg);
+                ret = insert_hashtable(noc->reglist[sub]->name,
+                                (void *)noc->reglist[sub],
+                                noc->name2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, chiplink->reglist[sub]->name,
+                                        sub, noc->reglist[sub]->name,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", chiplink->reglist[sub]->address);
-                ret = insert_hashtable(addr2str, (void *)chiplink->reglist[sub], chiplink->addr2reg);
+                sprintf(addr2str, "0x%x", noc->reglist[sub]->address);
+                ret = insert_hashtable(addr2str, (void *)noc->reglist[sub], noc->addr2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, chiplink->reglist[sub]->address,
+                                        sub, noc->reglist[sub]->address,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
@@ -441,26 +435,24 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
 
         /*address*/
         //FIXME: according to reality
-        chiplink->address = chiplink->reglist;
+        noc->address = noc->reglist;
 
         /*parent*/
-        chiplink->parent = father;
+        noc->parent = father;
 
         /*connected*/
-        chiplink->east = NULL;
-        chiplink->west = NULL;
-        chiplink->sourth = NULL;
-        chiplink->north = NULL;
+        noc->east = NULL;
+        noc->west = NULL;
+        noc->sourth = NULL;
+        noc->north = NULL;
 
-        /*subips: chiplink 1st*/
-        //FIXME: DO NOTHING!!!
+        /*subips: noc 1st*/
         //No subips
 
         /*subips: hashtable*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
-        printf("INFO: chiplink init end!!!!! %s, %s, %d\n",
+        printf("INFO: noc init end!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
 ret_init:
