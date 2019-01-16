@@ -19,35 +19,51 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <malloc.h>
 #include "common.h"
 #include "of.h"
 
 
 /**
- * load_image - load image to ddr
- * @ddr:  self pointer
+ * load_image_bd - load image to ddr through backdoor
+ * @ddr:     self pointer
+ * @offset:  image load offset from head of this ddr
  *
- * FIXME: no need here, move to ram inside core
- *
+ * FIXME: maybe no need
  */
-static int load_image(ip *ddr, address32_t offset, int length)
+static int load_image_bd(ip *ddr, address32_t offset)
 {
         int ret = -1;
-        int mem_size = -1;
         int id = -1;
         int fd = -1;
+        int mem_size = -1;
+        address32_t *mem_head = NULL;
         char *image = "./data/image";
  
-        //FIXME: todo...
+        /*each ddr mem*/
         id = 0;
         while (ddr->memory[id]) {
+                mem_head = ddr->memory[id];
                 mem_size = malloc_usable_size(ddr->memory[id]);
 
+                //FIXME: may load different image
                 fd = open(image, O_RDONLY);
+                if (-1 == fd) {
+                        printf("ERR: open image file:%s failed, please check! %s, %s, %d\n",
+                                        image, __FILE__, __func__, __LINE__);
+                        goto ret_load;
+                }
 
+                //FIXME: todo...read, write
+
+                /*next*/
                 id++;
         }
+
+        /*end*/
+        ret = 0;
 
 ret_load:
         return ret;
@@ -61,6 +77,10 @@ ret_load:
  */
 static void __on(ip *ddr)
 {
+        int ret = -1;
+        address32_t offset = 0;
+
+        /*begin*/
         if (unlikely(!ddr)) {
                 printf("ERR: ddr absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -68,6 +88,12 @@ static void __on(ip *ddr)
         }
 
         /*ddr level do 1st*/
+        ret = load_image_bd(ddr, offset);
+        if (unlikely(!ret)) {
+                printf("ERR: ddr load image backdoor failed, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_on;
+        }
         //FIXME: todo...
 
         /*power on subips 2nd*/
@@ -76,6 +102,7 @@ static void __on(ip *ddr)
         /*change state machine 3rd*/
         ddr->status = RUN;
 
+        /*end*/
         printf("INFO: ddr:%s power on!!!!! %s, %s, %d\n",
                         ddr->name, __FILE__, __func__, __LINE__);
 
