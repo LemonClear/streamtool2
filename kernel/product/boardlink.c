@@ -458,10 +458,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
         boardlink->parent = father;
 
         /*connected*/
-        boardlink->east = NULL;
-        boardlink->west = NULL;
-        boardlink->sourth = NULL;
-        boardlink->north = NULL;
+        //No connected
 
         /*subips*/
         //FIXME: DO NOTHING!!!

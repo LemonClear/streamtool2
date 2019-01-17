@@ -529,10 +529,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         board->parent = father;
 
         /*connected*/
-        board->east = NULL;
-        board->west = NULL;
-        board->sourth = NULL;
-        board->north = NULL;
+        //No connected
 
         /*subips: chip 1st*/
         for (sub = 0; sub < params->chip_count; sub++) {

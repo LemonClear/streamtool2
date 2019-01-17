@@ -242,7 +242,8 @@ static void __tick(ip *product)
 
         /*begin*/
         printf("INFO: product:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        product->name, tick_counter, __FILE__, __func__, __LINE__);
+                        product->name, tick_counter,
+                        __FILE__, __func__, __LINE__);
 
         /*product level do 1st*/
         //FIXME: todo...
@@ -258,7 +259,8 @@ static void __tick(ip *product)
 
         /*done*/
         printf("INFO: product:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        product->name, tick_counter, __FILE__, __func__, __LINE__);
+                        product->name, tick_counter,
+                        __FILE__, __func__, __LINE__);
 
 ret_tick:
         return;
@@ -493,8 +495,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         product->ops = &product_ops;
 
         /*memory*/
-        //FIXME: DO NOTHING!!!
-        //NO NEED on product level!!!
+        //NO need on product level!!!
 
         /*reg list*/
         ret = parse_regconfig(product->reglist);
@@ -540,10 +541,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         product->parent = father;
 
         /*connected*/
-        product->east = NULL;
-        product->west = NULL;
-        product->sourth = NULL;
-        product->north = NULL;
+        //No connected
 
         /*subips: board 1st*/
         for (sub = 0; sub < params->board_count; sub++) {
@@ -589,7 +587,8 @@ int product_init(ip *father, ip *product, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)product->subips[sub],
                                 product->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash board/boardlink%d:0x%x to addr2subip table failed! %s, %s, %d\n",
+                        printf("ERR: hash board/boardlink%d:0x%x to \
+                                        addr2subip table failed! %s, %s, %d\n",
                                         sub, product->subips[sub]->address,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;

@@ -441,10 +441,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
         noc->parent = father;
 
         /*connected*/
-        noc->east = NULL;
-        noc->west = NULL;
-        noc->sourth = NULL;
-        noc->north = NULL;
+        //No connected
 
         /*subips: noc 1st*/
         //No subips

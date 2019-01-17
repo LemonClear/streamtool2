@@ -451,10 +451,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         chiplink->parent = father;
 
         /*connected*/
-        chiplink->east = NULL;
-        chiplink->west = NULL;
-        chiplink->sourth = NULL;
-        chiplink->north = NULL;
+        //No connected
 
         /*subips: chiplink 1st*/
         //FIXME: DO NOTHING!!!

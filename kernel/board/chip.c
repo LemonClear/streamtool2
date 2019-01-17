@@ -523,10 +523,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         chip->parent = father;
 
         /*connected*/
-        chip->east = NULL;
-        chip->west = NULL;
-        chip->sourth = NULL;
-        chip->north = NULL;
+        //No connected
 
         /*subips: core 1st*/
         for (sub = 0; sub < params->core_count; sub++) {

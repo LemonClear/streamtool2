@@ -514,10 +514,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         ddr->parent = father;
 
         /*connected*/
-        ddr->east = NULL;
-        ddr->west = NULL;
-        ddr->sourth = NULL;
-        ddr->north = NULL;
+        //No connected
 
         /*subips: board 1st*/
         //NO subips
