@@ -297,7 +297,7 @@ static int noc_alloc(ip *noc, param *params)
         //NO need on noc level!!!
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
                 printf("INFO: noc have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }

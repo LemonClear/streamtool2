@@ -302,7 +302,7 @@ static int pcie_alloc(ip *pcie, param *params)
         //NO NEED on pcie level!!!
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
                 printf("INFO: pcie have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }

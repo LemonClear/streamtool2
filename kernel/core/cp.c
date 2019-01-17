@@ -297,7 +297,7 @@ static int cp_alloc(ip *cp, param *params)
         //FIXME: todo... maybe used as L2 cache? maybe no need.
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
                 printf("INFO: cp have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }

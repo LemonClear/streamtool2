@@ -347,7 +347,7 @@ static int core_alloc(ip *core, param *params)
         //NO need on core level!!!
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
                 printf("INFO: core have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }

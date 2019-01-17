@@ -348,7 +348,7 @@ static int chip_alloc(ip *chip, param *params)
         //NO NEED on chip level!!!
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
                 printf("INFO: chip have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }

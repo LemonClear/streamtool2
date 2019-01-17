@@ -51,7 +51,7 @@ static int load_image_bd(ip *ddr, address32_t offset)
 
                 //FIXME: may load different image
                 fd = open(image, O_RDONLY);
-                if (-1 == fd) {
+                if (unlikely(-1 == fd)) {
                         printf("ERR: open image file:%s failed, please check! %s, %s, %d\n",
                                         image, __FILE__, __func__, __LINE__);
                         goto ret_load;
@@ -371,7 +371,7 @@ static int ddr_alloc(ip *ddr, param *params)
         }
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
                 printf("INFO: ddr have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }

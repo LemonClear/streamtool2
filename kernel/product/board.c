@@ -349,7 +349,7 @@ static int board_alloc(ip *board, param *params)
         //NO NEED on board level!!!
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
                 printf("INFO: board have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }

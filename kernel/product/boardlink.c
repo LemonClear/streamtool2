@@ -312,7 +312,7 @@ static int boardlink_alloc(ip *boardlink, param *params)
         //NO NEED on boardlink level!!!
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg counts
+        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg counts
                 printf("INFO: boardlink have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
