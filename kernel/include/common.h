@@ -38,6 +38,7 @@ enum state {
         IDLE,        //idle
         SLEEP,       //sleep
         WAKEUP,      //wakeup
+        PENDING,     //pending
         READ,        //read
         WRITE,       //write
         CAL,         //calculate
@@ -54,20 +55,20 @@ typedef struct registers {
 
 /*ip operation*/
 typedef struct device_ops {
-        void (*poweron)();       //poweron
-        void (*poweroff)();      //poweroff
-        void (*idle)();          //idle
-        void (*sleep)();         //sleep
-        void (*wakeup)();        //wakeup
-        int  (*init)();          //init
-        void (*deinit)();        //deinit
-        void (*read)();          //read
-        void (*write)();         //write
-        void (*setreg)();        //set register
-        void (*getreg)();        //get register
-        void (*clearreg)();      //clear register
-        void (*tickarrive)();    //clock trigger
-        void (*dump)();          //debug
+        int (*poweron)();       //poweron
+        int (*poweroff)();      //poweroff
+        int (*idle)();          //idle
+        int (*sleep)();         //sleep
+        int (*wakeup)();        //wakeup
+        int (*init)();          //init
+        int (*deinit)();        //deinit
+        int (*read)();          //read
+        int (*write)();         //write
+        int (*setreg)();        //set register
+        int (*getreg)();        //get register
+        int (*clearreg)();      //clear register
+        int (*tickarrive)();    //clock trigger
+        int (*dump)();          //debug
 }ip_operations;
 
 /*ip*/
@@ -86,7 +87,6 @@ typedef struct device {
         hashtable *addr2reg;     //register hashtable2: addr->reg
 
         struct device *parent;   //parent
-        //FIXME: more? less?
         struct device *east;     //east connected ip
         struct device *west;     //west connected ip
         struct device *sourth;   //sourth connected ip
