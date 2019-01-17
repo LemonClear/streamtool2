@@ -13,7 +13,7 @@ Release Notes:
 7. add ip struct definition
 8. add parse config file and parse command line
 9. add product init
-10.
+10. all process-related c file done
 
 #################################
 
@@ -24,7 +24,6 @@ Readme:
 4. Dynamic libxxx.so makefile refer to ./lib/cmath/Makefile
 5. Static libxxx.a makefile refer to ./lib/of/Makefile
 6. Use "make" to compile and link, use "make clean" to remove "out/" directories
-7. 
 
 #################################
 
