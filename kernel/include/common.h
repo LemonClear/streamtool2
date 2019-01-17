@@ -168,6 +168,7 @@ extern enum state global_state;  //the whole product run state-machine
 extern u64 tick_counter;         //the tick counts from the beginning
 extern u64 step_counter;         //the step counts from the beginning
 extern int all_step_done;        //all step process ok
+extern int step_enable;          //one step done, process another step
 
 
 #endif

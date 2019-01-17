@@ -30,12 +30,14 @@
  * @tick_counter:    the tick counts from the beginning
  * @step_counter:    the step counts from the beginning
  * @all_step_done:   all step process ok
+ * @step_enable:     one step done, process another step
  *
  */
 enum state global_state = OFF;
 u64 tick_counter = 0;
 u64 step_counter = 0;
 int all_step_done = 0;
+int step_enable = 0;
 
 
 /**
@@ -298,6 +300,8 @@ static void __dump(ip *product)
 ret_dump:
         return;
 }
+
+
 /**
  * ops structure
  *
