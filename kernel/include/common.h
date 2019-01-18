@@ -62,10 +62,10 @@ typedef struct device_ops {
         int (*wakeup)();        //wakeup
         int (*init)();          //init
         int (*deinit)();        //deinit
-        int (*read)();          //read
-        int (*write)();         //write
-        int (*setreg)();        //set register
-        int (*getreg)();        //get register
+        int (*read)();          //read mem
+        int (*write)();         //write mem
+        reg32_t (*readreg)();   //read register
+        int (*writereg)();      //write register
         int (*clearreg)();      //clear register
         int (*tickarrive)();    //clock trigger
         int (*dump)();          //debug
