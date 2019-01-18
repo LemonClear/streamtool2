@@ -28,13 +28,6 @@
 
 
 /**
- * this ip pointer
- *
- */
-static ip *this = NULL;
-
-
-/**
  * load_image_bd - load image to ram through backdoor
  * @ram:     self pointer
  * @offset:  image load offset from head of this ram
