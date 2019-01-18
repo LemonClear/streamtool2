@@ -139,8 +139,8 @@ int power_sleep(ip *product);
 /*clock*/
 int clock_run(ip *product);
 /*product*/
-int product_init(ip *father, ip *product, int id, param *params);
-int product_run(ip *product);
+int product_init(ip *father, ip *self, int id, param *params);
+int product_run();
 /*board*/
 int board_init(ip *father, ip *board, int id, param *params);
 int boardlink_init(ip *father, ip *boardlink, int id, param *params);
