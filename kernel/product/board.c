@@ -29,8 +29,9 @@
  * @board:   board pointer
  *
  */
-static void __on(ip *board)
+static int __on(ip *board)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!board)) {
@@ -42,22 +43,35 @@ static void __on(ip *board)
         /*board level do 1st*/
         //FIXME: todo...
 
+        /*board have no subip*/
+        if (unlikely(!board->subips)) {
+                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_on;
+        }
+
         /*power on subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
-                board->subips[id]->ops->poweron(board->subips[id]);
-
+                ret = board->subips[id]->ops->poweron(board->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: power on subip%d-%s failed! %s, %s, %d\n",
+                                        id, board->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_on;
+                }
+                /*next subip*/
                 id++;
         }
 
         /*change state machine 3rd*/
         board->status = RUN;
 
-        printf("INFO: board:%s power on!!!!! %s, %s, %d\n",
+        printf("INFO: board:%s power on!!! %s, %s, %d\n",
                         board->name, __FILE__, __func__, __LINE__);
 
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -66,8 +80,9 @@ ret_on:
  * @board:   board pointer
  *
  */
-static void __off(ip *board)
+static int __off(ip *board)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!board)) {
@@ -76,11 +91,24 @@ static void __off(ip *board)
                 goto ret_off;
         }
 
+        /*board have no subip*/
+        if (unlikely(!board->subips)) {
+                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_off;
+        }
+
         /*power off subips 1st*/
         while (board->subips[id]) {
                 /*each subip*/
-                board->subips[id]->ops->poweroff(board->subips[id]);
-
+                ret = board->subips[id]->ops->poweroff(board->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: power off subip%d-%s failed! %s, %s, %d\n",
+                                        id, board->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_off;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -94,7 +122,7 @@ static void __off(ip *board)
                         board->name, __FILE__, __func__, __LINE__);
 
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -103,8 +131,9 @@ ret_off:
  * @board:   board pointer
  *
  */
-static void __idle(ip *board)
+static int __idle(ip *board)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!board)) {
@@ -113,11 +142,24 @@ static void __idle(ip *board)
                 goto ret_idle;
         }
 
+        /*board have no subip*/
+        if (unlikely(!board->subips)) {
+                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_idle;
+        }
+
         /*idle subips 1st*/
         while (board->subips[id]) {
                 /*each subip*/
-                board->subips[id]->ops->idle(board->subips[id]);
-
+                ret = board->subips[id]->ops->idle(board->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
+                                        id, board->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_idle;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -131,7 +173,7 @@ static void __idle(ip *board)
                         board->name, __FILE__, __func__, __LINE__);
 
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -140,8 +182,9 @@ ret_idle:
  * @board:   board pointer
  *
  */
-static void __sleep(ip *board)
+static int __sleep(ip *board)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!board)) {
@@ -150,11 +193,24 @@ static void __sleep(ip *board)
                 goto ret_sleep;
         }
 
+        /*board have no subip*/
+        if (unlikely(!board->subips)) {
+                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_sleep;
+        }
+
         /*sleep subips 1st*/
         while (board->subips[id]) {
                 /*each subip*/
-                board->subips[id]->ops->sleep(board->subips[id]);
-
+                ret = board->subips[id]->ops->sleep(board->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
+                                        id, board->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_sleep;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -168,7 +224,7 @@ static void __sleep(ip *board)
                         board->name, __FILE__, __func__, __LINE__);
 
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -177,8 +233,9 @@ ret_sleep:
  * @board:  board pointer
  *
  */
-static void __wakeup(ip *board)
+static int __wakeup(ip *board)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!board)) {
@@ -190,11 +247,24 @@ static void __wakeup(ip *board)
         /*board level do 1st*/
         //FIXME: todo...
 
+        /*board have no subip*/
+        if (unlikely(!board->subips)) {
+                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_wakeup;
+        }
+
         /*wakeup subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
-                board->subips[id]->ops->wakeup(board->subips[id]);
-
+                ret = board->subips[id]->ops->wakeup(board->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
+                                        id, board->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_wakeup;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -205,7 +275,7 @@ static void __wakeup(ip *board)
                         board->name, __FILE__, __func__, __LINE__);
 
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -214,8 +284,9 @@ ret_wakeup:
  * @board:   self pointer
  *
  */
-static void __tick(ip *board)
+static int __tick(ip *board)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!board)) {
@@ -226,26 +297,40 @@ static void __tick(ip *board)
 
         /*begin*/
         printf("INFO: board:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        board->name, tick_counter, __FILE__, __func__, __LINE__);
+                        board->name, tick_counter,
+                        __FILE__, __func__, __LINE__);
 
         /*board level do 1st*/
         //FIXME: todo...
 
+        /*board have no subip*/
+        if (unlikely(!board->subips)) {
+                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_tick;
+        }
 
         /*tick trigger subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
-                board->subips[id]->ops->tickarrive(board->subips[id]);
-
+                ret = board->subips[id]->ops->tickarrive(board->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
+                                        id, board->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_tick;
+                }
+                /*next subip*/
                 id++;
         }
 
         /*done*/
         printf("INFO: board:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        board->name, tick_counter, __FILE__, __func__, __LINE__);
+                        board->name, tick_counter,
+                        __FILE__, __func__, __LINE__);
 
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -254,8 +339,9 @@ ret_tick:
  * @board:   board pointer
  *
  */
-static void __dump(ip *board)
+static int __dump(ip *board)
 {
+        int ret = -1;
         int id = 0;
 
         printf("DEBUG: ========== board:%s dump start !!!!! ==========\n",
@@ -270,11 +356,24 @@ static void __dump(ip *board)
         /*dump board elements 1st*/
         //FIXME: todo...
 
+        /*board have no subip*/
+        if (unlikely(!board->subips)) {
+                printf("ERR: board->subips absent, dump failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_dump;
+        }
+
         /*dump subips 2nd*/
         while (board->subips[id]) {
                 /*each subip*/
-                board->subips[id]->ops->dump(board->subips[id]);
-
+                ret = board->subips[id]->ops->dump(board->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
+                                        id, board->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_dump;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -282,7 +381,7 @@ static void __dump(ip *board)
                         board->name);
 
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

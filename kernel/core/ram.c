@@ -76,7 +76,7 @@ ret_load:
  * @ram:  self pointer
  *
  */
-static void __on(ip *ram)
+static int __on(ip *ram)
 {
         int ret = -1;
         address32_t offset = 0;
@@ -108,7 +108,7 @@ static void __on(ip *ram)
                         ram->name, __FILE__, __func__, __LINE__);
 
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -117,8 +117,10 @@ ret_on:
  * @ram:   self pointer
  *
  */
-static void __off(ip *ram)
+static int __off(ip *ram)
 {
+        int ret = -1;
+
         if (unlikely(!ram)) {
                 printf("ERR: ram absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -137,8 +139,9 @@ static void __off(ip *ram)
         printf("INFO: ram:%s power off!!!!! %s, %s, %d\n",
                         ram->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -147,8 +150,10 @@ ret_off:
  * @ram:    self pointer
  *
  */
-static void __idle(ip *ram)
+static int __idle(ip *ram)
 {
+        int ret = -1;
+
         if (unlikely(!ram)) {
                 printf("ERR: ram absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -167,8 +172,9 @@ static void __idle(ip *ram)
         printf("INFO: ram:%s idle!!!!! %s, %s, %d\n",
                         ram->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -177,8 +183,10 @@ ret_idle:
  * @ram:     self pointer
  *
  */
-static void __sleep(ip *ram)
+static int __sleep(ip *ram)
 {
+        int ret = -1;
+
         if (unlikely(!ram)) {
                 printf("ERR: ram absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -197,8 +205,9 @@ static void __sleep(ip *ram)
         printf("INFO: ram:%s sleep!!!!! %s, %s, %d\n",
                         ram->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -207,8 +216,10 @@ ret_sleep:
  * @ram:      self pointer
  *
  */
-static void __wakeup(ip *ram)
+static int __wakeup(ip *ram)
 {
+        int ret = -1;
+
         if (unlikely(!ram)) {
                 printf("ERR: ram absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -227,8 +238,9 @@ static void __wakeup(ip *ram)
         printf("INFO: ram:%s wakeup!!!!! %s, %s, %d\n",
                         ram->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -239,9 +251,12 @@ ret_wakeup:
  * @length: bytes to read
  *
  */
-static void __read(ip *ram, address32_t start, int length)
+static int __read(ip *ram, address32_t start, int length)
 {
+        int ret = -1;
 
+ret_read:
+        return ret;
 }
 
 
@@ -252,9 +267,12 @@ static void __read(ip *ram, address32_t start, int length)
  * @length: bytes to write
  *
  */
-static void __write(ip *ram, address32_t start, int length)
+static int __write(ip *ram, address32_t start, int length)
 {
+        int ret = -1;
 
+ret_write:
+        return ret;
 }
 
 
@@ -263,8 +281,10 @@ static void __write(ip *ram, address32_t start, int length)
  * @ram:    self pointer
  *
  */
-static void __tick(ip *ram)
+static int __tick(ip *ram)
 {
+        int ret = -1;
+
         if (unlikely(!ram)) {
                 printf("ERR: ram absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -286,8 +306,9 @@ static void __tick(ip *ram)
         printf("INFO: ram:%s tick:%llu done!!!!! %s, %s, %d\n",
                         ram->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -296,8 +317,10 @@ ret_tick:
  * @ram:  self pointer
  *
  */
-static void __dump(ip *ram)
+static int __dump(ip *ram)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== ram:%s dump start !!!!! ==========\n",
                         ram->name);
 
@@ -316,8 +339,9 @@ static void __dump(ip *ram)
         printf("DEBUG: ========== ram:%s dump end !!!!! ==========\n",
                         ram->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

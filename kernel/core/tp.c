@@ -29,8 +29,10 @@
  * @tp:   tp pointer
  *
  */
-static void __on(ip *tp)
+static int __on(ip *tp)
 {
+        int ret = -1;
+
         if (unlikely(!tp)) {
                 printf("ERR: tp absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -49,8 +51,9 @@ static void __on(ip *tp)
         printf("INFO: tp:%s power on!!!!! %s, %s, %d\n",
                         tp->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -59,8 +62,10 @@ ret_on:
  * @tp:    tp pointer
  *
  */
-static void __off(ip *tp)
+static int __off(ip *tp)
 {
+        int ret = -1;
+
         if (unlikely(!tp)) {
                 printf("ERR: tp absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -79,8 +84,9 @@ static void __off(ip *tp)
         printf("INFO: tp:%s power off!!!!! %s, %s, %d\n",
                         tp->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -89,8 +95,10 @@ ret_off:
  * @tp:   tp pointer
  *
  */
-static void __idle(ip *tp)
+static int __idle(ip *tp)
 {
+        int ret = -1;
+
         if (unlikely(!tp)) {
                 printf("ERR: tp absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -109,8 +117,9 @@ static void __idle(ip *tp)
         printf("INFO: tp:%s idle!!!!! %s, %s, %d\n",
                         tp->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -119,8 +128,10 @@ ret_idle:
  * @tp:   tp pointer
  *
  */
-static void __sleep(ip *tp)
+static int __sleep(ip *tp)
 {
+        int ret = -1;
+
         if (unlikely(!tp)) {
                 printf("ERR: tp absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -139,8 +150,9 @@ static void __sleep(ip *tp)
         printf("INFO: tp:%s sleep!!!!! %s, %s, %d\n",
                         tp->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -149,8 +161,10 @@ ret_sleep:
  * @tp:   tp pointer
  *
  */
-static void __wakeup(ip *tp)
+static int __wakeup(ip *tp)
 {
+        int ret = -1;
+
         if (unlikely(!tp)) {
                 printf("ERR: tp absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -169,8 +183,9 @@ static void __wakeup(ip *tp)
         printf("INFO: tp:%s wakeup!!!!! %s, %s, %d\n",
                         tp->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -179,8 +194,10 @@ ret_wakeup:
  * @tp:     self pointer
  *
  */
-static void __tick(ip *tp)
+static int __tick(ip *tp)
 {
+        int ret = -1;
+
         if (unlikely(!tp)) {
                 printf("ERR: tp absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -201,8 +218,9 @@ static void __tick(ip *tp)
         printf("INFO: tp:%s tick:%llu done!!!!! %s, %s, %d\n",
                         tp->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -211,8 +229,9 @@ ret_tick:
  * @tp:   tp pointer
  *
  */
-static void __dump(ip *tp)
+static int __dump(ip *tp)
 {
+        int ret = -1;
         int id = 0;
 
         printf("DEBUG: ========== tp:%s dump start !!!!! ==========\n",
@@ -233,8 +252,9 @@ static void __dump(ip *tp)
         printf("DEBUG: ========== tp:%s dump end !!!!! ==========\n",
                         tp->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 
 

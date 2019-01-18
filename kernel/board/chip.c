@@ -29,8 +29,9 @@
  * @chip: chip pointer
  *
  */
-static void __on(ip *chip)
+static int __on(ip *chip)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!chip)) {
@@ -42,11 +43,24 @@ static void __on(ip *chip)
         /*chip level do 1st*/
         //FIXME: todo...
 
+        /*chip have no subip*/
+        if (unlikely(!chip->subips)) {
+                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_on;
+        }
+
         /*power on subips 2nd*/
         while (chip->subips[id]) {
                 /*each subip*/
-                chip->subips[id]->ops->poweron(chip->subips[id]);
-
+                ret = chip->subips[id]->ops->poweron(chip->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: poweron subip%d-%s failed! %s, %s, %d\n",
+                                        id, chip->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_on;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -57,7 +71,7 @@ static void __on(ip *chip)
                         chip->name, __FILE__, __func__, __LINE__);
 
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -66,8 +80,9 @@ ret_on:
  * @chip:  chip pointer
  *
  */
-static void __off(ip *chip)
+static int __off(ip *chip)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!chip)) {
@@ -76,11 +91,24 @@ static void __off(ip *chip)
                 goto ret_off;
         }
 
+        /*chip have no subip*/
+        if (unlikely(!chip->subips)) {
+                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_off;
+        }
+
         /*power off subips 1st*/
         while (chip->subips[id]) {
                 /*each subip*/
-                chip->subips[id]->ops->poweroff(chip->subips[id]);
-
+                ret = chip->subips[id]->ops->poweroff(chip->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: poweroff subip%d-%s failed! %s, %s, %d\n",
+                                        id, chip->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_off;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -94,7 +122,7 @@ static void __off(ip *chip)
                         chip->name, __FILE__, __func__, __LINE__);
 
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -103,8 +131,9 @@ ret_off:
  * @chip:   chip pointer
  *
  */
-static void __idle(ip *chip)
+static int __idle(ip *chip)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!chip)) {
@@ -113,11 +142,24 @@ static void __idle(ip *chip)
                 goto ret_idle;
         }
 
+        /*chip have no subip*/
+        if (unlikely(!chip->subips)) {
+                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_idle;
+        }
+
         /*idle subips 1st*/
         while (chip->subips[id]) {
                 /*each subip*/
-                chip->subips[id]->ops->idle(chip->subips[id]);
-
+                ret = chip->subips[id]->ops->idle(chip->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
+                                        id, chip->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_idle;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -131,7 +173,7 @@ static void __idle(ip *chip)
                         chip->name, __FILE__, __func__, __LINE__);
 
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -140,8 +182,9 @@ ret_idle:
  * @chip:    chip pointer
  *
  */
-static void __sleep(ip *chip)
+static int __sleep(ip *chip)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!chip)) {
@@ -150,11 +193,24 @@ static void __sleep(ip *chip)
                 goto ret_sleep;
         }
 
+        /*chip have no subip*/
+        if (unlikely(!chip->subips)) {
+                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_sleep;
+        }
+
         /*sleep subips 1st*/
         while (chip->subips[id]) {
                 /*each subip*/
-                chip->subips[id]->ops->sleep(chip->subips[id]);
-
+                ret = chip->subips[id]->ops->sleep(chip->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
+                                        id, chip->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_sleep;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -168,7 +224,7 @@ static void __sleep(ip *chip)
                         chip->name, __FILE__, __func__, __LINE__);
 
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -177,8 +233,9 @@ ret_sleep:
  * @chip:     chip pointer
  *
  */
-static void __wakeup(ip *chip)
+static int __wakeup(ip *chip)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!chip)) {
@@ -190,11 +247,24 @@ static void __wakeup(ip *chip)
         /*chip level do 1st*/
         //FIXME: todo...
 
+        /*chip have no subip*/
+        if (unlikely(!chip->subips)) {
+                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_wakeup;
+        }
+
         /*wakeup subips 2nd*/
         while (chip->subips[id]) {
                 /*each subip*/
-                chip->subips[id]->ops->wakeup(chip->subips[id]);
-
+                ret = chip->subips[id]->ops->wakeup(chip->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
+                                        id, chip->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_wakeup;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -205,7 +275,7 @@ static void __wakeup(ip *chip)
                         chip->name, __FILE__, __func__, __LINE__);
 
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -214,8 +284,9 @@ ret_wakeup:
  * @chip:   self pointer
  *
  */
-static void __tick(ip *chip)
+static int __tick(ip *chip)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!chip)) {
@@ -231,12 +302,24 @@ static void __tick(ip *chip)
         /*chip level do 1st*/
         //FIXME: todo...
 
+        /*chip have no subip*/
+        if (unlikely(!chip->subips)) {
+                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_tick;
+        }
 
         /*tick trigger subips 2nd*/
         while (chip->subips[id]) {
                 /*each subip*/
-                chip->subips[id]->ops->tickarrive(chip->subips[id]);
-
+                ret = chip->subips[id]->ops->tickarrive(chip->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: tick subip%d-%s failed! %s, %s, %d\n",
+                                        id, chip->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_tick;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -245,7 +328,7 @@ static void __tick(ip *chip)
                         chip->name, tick_counter, __FILE__, __func__, __LINE__);
 
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -254,8 +337,9 @@ ret_tick:
  * @chip:   chip pointer
  *
  */
-static void __dump(ip *chip)
+static int __dump(ip *chip)
 {
+        int ret = -1;
         int id = 0;
 
         printf("DEBUG: ========== chip:%s dump start !!!!! ==========\n",
@@ -270,11 +354,24 @@ static void __dump(ip *chip)
         /*dump chip elements 1st*/
         //FIXME: todo...
 
+        /*chip have no subip*/
+        if (unlikely(!chip->subips)) {
+                printf("ERR: chip->subips absent, dump failed! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_dump;
+        }
+
         /*dump subips 2nd*/
         while (chip->subips[id]) {
                 /*each subip*/
-                chip->subips[id]->ops->dump(chip->subips[id]);
-
+                ret = chip->subips[id]->ops->dump(chip->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
+                                        id, chip->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_dump;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -282,7 +379,7 @@ static void __dump(ip *chip)
                         chip->name);
 
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

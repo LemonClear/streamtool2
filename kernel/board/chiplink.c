@@ -29,8 +29,10 @@
  * @chiplink:  chiplink pointer
  *
  */
-static void __on(ip *chiplink)
+static int __on(ip *chiplink)
 {
+        int ret = -1;
+
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -50,8 +52,9 @@ static void __on(ip *chiplink)
         printf("INFO: chiplink:%s power on!!!!! %s, %s, %d\n",
                         chiplink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -60,8 +63,10 @@ ret_on:
  * @chiplink:   chiplink pointer
  *
  */
-static void __off(ip *chiplink)
+static int __off(ip *chiplink)
 {
+        int ret = -1;
+
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -81,8 +86,9 @@ static void __off(ip *chiplink)
         printf("INFO: chiplink:%s power off!!!!! %s, %s, %d\n",
                         chiplink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -91,8 +97,10 @@ ret_off:
  * @chiplink:   chiplink pointer
  *
  */
-static void __idle(ip *chiplink)
+static int __idle(ip *chiplink)
 {
+        int ret = -1;
+
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -112,8 +120,9 @@ static void __idle(ip *chiplink)
         printf("INFO: chiplink:%s idle!!!!! %s, %s, %d\n",
                         chiplink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -122,8 +131,10 @@ ret_idle:
  * @chiplink:   chiplink pointer
  *
  */
-static void __sleep(ip *chiplink)
+static int __sleep(ip *chiplink)
 {
+        int ret = -1;
+
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -143,8 +154,9 @@ static void __sleep(ip *chiplink)
         printf("INFO: chiplink:%s sleep!!!!! %s, %s, %d\n",
                         chiplink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -153,8 +165,10 @@ ret_sleep:
  * @chiplink:   chiplink pointer
  *
  */
-static void __wakeup(ip *chiplink)
+static int __wakeup(ip *chiplink)
 {
+        int ret = -1;
+
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -174,8 +188,9 @@ static void __wakeup(ip *chiplink)
         printf("INFO: chiplink:%s wakeup!!!!! %s, %s, %d\n",
                         chiplink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -184,8 +199,10 @@ ret_wakeup:
  * @chiplink:   self pointer
  *
  */
-static void __tick(ip *chiplink)
+static int __tick(ip *chiplink)
 {
+        int ret = -1;
+
         if (unlikely(!chiplink)) {
                 printf("ERR: chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -208,8 +225,9 @@ static void __tick(ip *chiplink)
         printf("INFO: chiplink:%s tick:%llu done!!!!! %s, %s, %d\n",
                         chiplink->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -218,8 +236,10 @@ ret_tick:
  * @chiplink:  chiplink pointer
  *
  */
-static void __dump(ip *chiplink)
+static int __dump(ip *chiplink)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== chiplink:%s dump start !!!!! ==========\n",
                         chiplink->name);
 
@@ -239,8 +259,9 @@ static void __dump(ip *chiplink)
         printf("DEBUG: ========== chiplink:%s dump end !!!!! ==========\n",
                         chiplink->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

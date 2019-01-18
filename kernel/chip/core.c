@@ -29,8 +29,9 @@
  * @core: core pointer
  *
  */
-static void __on(ip *core)
+static int __on(ip *core)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!core)) {
@@ -42,11 +43,23 @@ static void __on(ip *core)
         /*core level do 1st*/
         //FIXME: todo...
 
+        if (unlikely(!core->subips)) {
+                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_on;
+        }
+
         /*power on subips 2nd*/
         while (core->subips[id]) {
                 /*each subip*/
-                core->subips[id]->ops->poweron(core->subips[id]);
-
+                ret = core->subips[id]->ops->poweron(core->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: poweron subip%d-%s failed! %s, %s, %d\n",
+                                        id, core->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_on;
+                }
+                /*next subips*/
                 id++;
         }
 
@@ -57,7 +70,7 @@ static void __on(ip *core)
                         core->name, __FILE__, __func__, __LINE__);
 
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -66,8 +79,9 @@ ret_on:
  * @core:  core pointer
  *
  */
-static void __off(ip *core)
+static int __off(ip *core)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!core)) {
@@ -76,11 +90,24 @@ static void __off(ip *core)
                 goto ret_off;
         }
 
+        /*begin*/
+        if (unlikely(!core->subips)) {
+                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_off;
+        }
+
         /*power off subips 1st*/
         while (core->subips[id]) {
                 /*each subip*/
-                core->subips[id]->ops->poweroff(core->subips[id]);
-
+                ret = core->subips[id]->ops->poweroff(core->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: poweroff subip%d-%s failed! %s, %s, %d\n",
+                                        id, core->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_off;
+                }
+                /*next subips*/
                 id++;
         }
 
@@ -94,7 +121,7 @@ static void __off(ip *core)
                         core->name, __FILE__, __func__, __LINE__);
 
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -103,8 +130,9 @@ ret_off:
  * @core:   core pointer
  *
  */
-static void __idle(ip *core)
+static int __idle(ip *core)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!core)) {
@@ -113,11 +141,24 @@ static void __idle(ip *core)
                 goto ret_idle;
         }
 
+        /*begin*/
+        if (unlikely(!core->subips)) {
+                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_idle;
+        }
+
         /*idle subips 1st*/
         while (core->subips[id]) {
                 /*each subip*/
-                core->subips[id]->ops->idle(core->subips[id]);
-
+                ret = core->subips[id]->ops->idle(core->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
+                                        id, core->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_idle;
+                }
+                /*next subips*/
                 id++;
         }
 
@@ -131,7 +172,7 @@ static void __idle(ip *core)
                         core->name, __FILE__, __func__, __LINE__);
 
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -140,8 +181,9 @@ ret_idle:
  * @core:    core pointer
  *
  */
-static void __sleep(ip *core)
+static int __sleep(ip *core)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!core)) {
@@ -150,11 +192,24 @@ static void __sleep(ip *core)
                 goto ret_sleep;
         }
 
+        /*begin*/
+        if (unlikely(!core->subips)) {
+                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_sleep;
+        }
+
         /*sleep subips 1st*/
         while (core->subips[id]) {
                 /*each subip*/
-                core->subips[id]->ops->sleep(core->subips[id]);
-
+                ret = core->subips[id]->ops->sleep(core->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
+                                        id, core->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_sleep;
+                }
+                /*next subips*/
                 id++;
         }
 
@@ -168,7 +223,7 @@ static void __sleep(ip *core)
                         core->name, __FILE__, __func__, __LINE__);
 
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -177,8 +232,9 @@ ret_sleep:
  * @core:     core pointer
  *
  */
-static void __wakeup(ip *core)
+static int __wakeup(ip *core)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!core)) {
@@ -190,11 +246,23 @@ static void __wakeup(ip *core)
         /*core level do 1st*/
         //FIXME: todo...
 
+        if (unlikely(!core->subips)) {
+                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_wakeup;
+        }
+
         /*wakeup subips 2nd*/
         while (core->subips[id]) {
                 /*each subip*/
-                core->subips[id]->ops->wakeup(core->subips[id]);
-
+                ret = core->subips[id]->ops->wakeup(core->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
+                                        id, core->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_wakeup;
+                }
+                /*next subips*/
                 id++;
         }
 
@@ -205,7 +273,7 @@ static void __wakeup(ip *core)
                         core->name, __FILE__, __func__, __LINE__);
 
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -214,8 +282,9 @@ ret_wakeup:
  * @core:   self pointer
  *
  */
-static void __tick(ip *core)
+static int __tick(ip *core)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!core)) {
@@ -231,12 +300,23 @@ static void __tick(ip *core)
         /*core level do 1st*/
         //FIXME: todo...
 
+        if (unlikely(!core->subips)) {
+                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_tick;
+        }
 
         /*tick trigger subips 2nd*/
         while (core->subips[id]) {
                 /*each subip*/
-                core->subips[id]->ops->tickarrive(core->subips[id]);
-
+                ret = core->subips[id]->ops->tickarrive(core->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: tick subip%d-%s failed! %s, %s, %d\n",
+                                        id, core->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_tick;
+                }
+                /*next subips*/
                 id++;
         }
 
@@ -245,7 +325,7 @@ static void __tick(ip *core)
                         core->name, tick_counter, __FILE__, __func__, __LINE__);
 
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -254,8 +334,9 @@ ret_tick:
  * @core:   core pointer
  *
  */
-static void __dump(ip *core)
+static int __dump(ip *core)
 {
+        int ret = -1;
         int id = 0;
 
         printf("DEBUG: ========== core:%s dump start !!!!! ==========\n",
@@ -270,11 +351,23 @@ static void __dump(ip *core)
         /*dump core elements 1st*/
         //FIXME: todo...
 
+        if (unlikely(!core->subips)) {
+                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_dump;
+        }
+
         /*dump subips 2nd*/
         while (core->subips[id]) {
                 /*each subip*/
-                core->subips[id]->ops->dump(core->subips[id]);
-
+                ret = core->subips[id]->ops->dump(core->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
+                                        id, core->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_dump;
+                }
+                /*next subips*/
                 id++;
         }
 
@@ -282,7 +375,7 @@ static void __dump(ip *core)
                         core->name);
 
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

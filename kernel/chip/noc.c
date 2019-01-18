@@ -29,8 +29,10 @@
  * @noc:  noc pointer
  *
  */
-static void __on(ip *noc)
+static int __on(ip *noc)
 {
+        int ret = -1;
+
         if (unlikely(!noc)) {
                 printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -49,8 +51,9 @@ static void __on(ip *noc)
         printf("INFO: noc:%s power on!!!!! %s, %s, %d\n",
                         noc->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -59,8 +62,10 @@ ret_on:
  * @noc:   noc pointer
  *
  */
-static void __off(ip *noc)
+static int __off(ip *noc)
 {
+        int ret = -1;
+
         if (unlikely(!noc)) {
                 printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -79,8 +84,9 @@ static void __off(ip *noc)
         printf("INFO: noc:%s power off!!!!! %s, %s, %d\n",
                         noc->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -89,8 +95,10 @@ ret_off:
  * @noc:    noc pointer
  *
  */
-static void __idle(ip *noc)
+static int __idle(ip *noc)
 {
+        int ret = -1;
+
         if (unlikely(!noc)) {
                 printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -109,8 +117,9 @@ static void __idle(ip *noc)
         printf("INFO: noc:%s idle!!!!! %s, %s, %d\n",
                         noc->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -119,8 +128,10 @@ ret_idle:
  * @noc:   noc pointer
  *
  */
-static void __sleep(ip *noc)
+static int __sleep(ip *noc)
 {
+        int ret = -1;
+
         if (unlikely(!noc)) {
                 printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -139,8 +150,9 @@ static void __sleep(ip *noc)
         printf("INFO: noc:%s sleep!!!!! %s, %s, %d\n",
                         noc->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -149,8 +161,10 @@ ret_sleep:
  * @noc:   noc pointer
  *
  */
-static void __wakeup(ip *noc)
+static int __wakeup(ip *noc)
 {
+        int ret = -1;
+
         if (unlikely(!noc)) {
                 printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -169,8 +183,9 @@ static void __wakeup(ip *noc)
         printf("INFO: noc:%s wakeup!!!!! %s, %s, %d\n",
                         noc->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -179,8 +194,10 @@ ret_wakeup:
  * @noc:    self pointer
  *
  */
-static void __tick(ip *noc)
+static int __tick(ip *noc)
 {
+        int ret = -1;
+
         if (unlikely(!noc)) {
                 printf("ERR: noc absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -202,8 +219,9 @@ static void __tick(ip *noc)
         printf("INFO: noc:%s tick:%llu done!!!!! %s, %s, %d\n",
                         noc->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -212,8 +230,10 @@ ret_tick:
  * @noc:  noc pointer
  *
  */
-static void __dump(ip *noc)
+static int __dump(ip *noc)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== noc:%s dump start !!!!! ==========\n",
                         noc->name);
 
@@ -232,8 +252,9 @@ static void __dump(ip *noc)
         printf("DEBUG: ========== noc:%s dump end !!!!! ==========\n",
                         noc->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

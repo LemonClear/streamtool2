@@ -45,8 +45,9 @@ int step_enable = 0;
  * @product:   product pointer
  *
  */
-static void __on(ip *product)
+static int __on(ip *product)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!product)) {
@@ -58,22 +59,35 @@ static void __on(ip *product)
         /*product level do 1st*/
         //FIXME: todo...
 
+        /*product have no subip*/
+        if (unlikely(!product->subips)) {
+                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_on;
+        }
+
         /*power on subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
-                product->subips[id]->ops->poweron(product->subips[id]);
-
+                ret = product->subips[id]->ops->poweron(product->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: poweron subip%d-%s failed! %s, %s, %d\n",
+                                        id, product->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_on;
+                }
+                /*next subip*/
                 id++;
         }
 
         /*change state machine 3rd*/
         product->status = RUN;
 
-        printf("INFO: product:%s power on!!!!! %s, %s, %d\n",
+        printf("INFO: product:%s power on!!! %s, %s, %d\n",
                         product->name, __FILE__, __func__, __LINE__);
 
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -82,8 +96,9 @@ ret_on:
  * @product:   product pointer
  *
  */
-static void __off(ip *product)
+static int __off(ip *product)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!product)) {
@@ -92,11 +107,24 @@ static void __off(ip *product)
                 goto ret_off;
         }
 
+        /*product have no subip*/
+        if (unlikely(!product->subips)) {
+                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_off;
+        }
+
         /*power off subips 1st*/
         while (product->subips[id]) {
                 /*each subip*/
-                product->subips[id]->ops->poweroff(product->subips[id]);
-
+                ret = product->subips[id]->ops->poweroff(product->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: poweroff subip%d-%s failed! %s, %s, %d\n",
+                                        id, product->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_off;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -106,11 +134,11 @@ static void __off(ip *product)
         /*change state machine 3rd*/
         product->status = OFF;
 
-        printf("INFO: product:%s power off!!!!! %s, %s, %d\n",
+        printf("INFO: product:%s power off!!! %s, %s, %d\n",
                         product->name, __FILE__, __func__, __LINE__);
 
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -119,8 +147,9 @@ ret_off:
  * @product:   product pointer
  *
  */
-static void __idle(ip *product)
+static int __idle(ip *product)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!product)) {
@@ -129,11 +158,24 @@ static void __idle(ip *product)
                 goto ret_idle;
         }
 
+        /*product have no subip*/
+        if (unlikely(!product->subips)) {
+                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_idle;
+        }
+
         /*idle subips 1st*/
         while (product->subips[id]) {
                 /*each subip*/
-                product->subips[id]->ops->idle(product->subips[id]);
-
+                ret = product->subips[id]->ops->idle(product->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
+                                        id, product->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_idle;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -143,21 +185,22 @@ static void __idle(ip *product)
         /*change state machine 3rd*/
         product->status = IDLE;
 
-        printf("INFO: product:%s idle!!!!! %s, %s, %d\n",
+        printf("INFO: product:%s idle!!! %s, %s, %d\n",
                         product->name, __FILE__, __func__, __LINE__);
 
 ret_idle:
-        return;
+        return ret;
 }
 
 
 /**
  * __sleep - product sleep
- * @product:   product pointer
+ * @product: product pointer
  *
  */
-static void __sleep(ip *product)
+static int __sleep(ip *product)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!product)) {
@@ -166,11 +209,24 @@ static void __sleep(ip *product)
                 goto ret_sleep;
         }
 
+        /*product have no subip*/
+        if (unlikely(!product->subips)) {
+                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_sleep;
+        }
+
         /*sleep subips 1st*/
         while (product->subips[id]) {
                 /*each subip*/
-                product->subips[id]->ops->sleep(product->subips[id]);
-
+                ret = product->subips[id]->ops->sleep(product->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
+                                        id, product->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_sleep;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -180,11 +236,11 @@ static void __sleep(ip *product)
         /*change state machine 3rd*/
         product->status = SLEEP;
 
-        printf("INFO: product:%s sleep!!!!! %s, %s, %d\n",
+        printf("INFO: product:%s sleep!!! %s, %s, %d\n",
                         product->name, __FILE__, __func__, __LINE__);
 
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -193,8 +249,9 @@ ret_sleep:
  * @product:   product pointer
  *
  */
-static void __wakeup(ip *product)
+static int __wakeup(ip *product)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!product)) {
@@ -206,11 +263,24 @@ static void __wakeup(ip *product)
         /*product level do 1st*/
         //FIXME: todo...
 
+        /*product have no subip*/
+        if (unlikely(!product->subips)) {
+                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_wakeup;
+        }
+
         /*wakeup subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
-                product->subips[id]->ops->wakeup(product->subips[id]);
-
+                ret = product->subips[id]->ops->wakeup(product->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
+                                        id, product->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_wakeup;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -221,7 +291,7 @@ static void __wakeup(ip *product)
                         product->name, __FILE__, __func__, __LINE__);
 
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -230,8 +300,9 @@ ret_wakeup:
  * @product:   self pointer
  *
  */
-static void __tick(ip *product)
+static int __tick(ip *product)
 {
+        int ret = -1;
         int id = 0;
 
         if (unlikely(!product)) {
@@ -248,12 +319,24 @@ static void __tick(ip *product)
         /*product level do 1st*/
         //FIXME: todo...
 
+        /*product have no subip*/
+        if (unlikely(!product->subips)) {
+                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_tick;
+        }
 
         /*tick trigger subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
-                product->subips[id]->ops->tickarrive(product->subips[id]);
-
+                ret = product->subips[id]->ops->tickarrive(product->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: tick subip%d-%s failed! %s, %s, %d\n",
+                                        id, product->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_tick;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -263,7 +346,7 @@ static void __tick(ip *product)
                         __FILE__, __func__, __LINE__);
 
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -272,8 +355,9 @@ ret_tick:
  * @product:   product pointer
  *
  */
-static void __dump(ip *product)
+static int __dump(ip *product)
 {
+        int ret = -1;
         int id = 0;
 
         printf("DEBUG: ========== product:%s dump start !!!!! ==========\n",
@@ -288,11 +372,24 @@ static void __dump(ip *product)
         /*dump product elements 1st*/
         //FIXME: todo...
 
+        /*product have no subip*/
+        if (unlikely(!product->subips)) {
+                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
+                                __FILE__, __func__, __LINE__);
+                goto ret_dump;
+        }
+
         /*dump subips 2nd*/
         while (product->subips[id]) {
                 /*each subip*/
-                product->subips[id]->ops->dump(product->subips[id]);
-
+                ret = product->subips[id]->ops->dump(product->subips[id]);
+                if (unlikely(ret)) {
+                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
+                                        id, product->subips[id]->name,
+                                        __FILE__, __func__, __LINE__);
+                        goto ret_dump;
+                }
+                /*next subip*/
                 id++;
         }
 
@@ -300,7 +397,7 @@ static void __dump(ip *product)
                         product->name);
 
 ret_dump:
-        return;
+        return ret;
 }
 
 

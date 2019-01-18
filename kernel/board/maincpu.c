@@ -29,8 +29,10 @@
  * @maincpu:   maincpu pointer
  *
  */
-static void __on(ip *maincpu)
+static int __on(ip *maincpu)
 {
+        int ret = -1;
+
         if (unlikely(!maincpu)) {
                 printf("ERR: maincpu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -49,8 +51,9 @@ static void __on(ip *maincpu)
         printf("INFO: maincpu:%s power on!!!!! %s, %s, %d\n",
                         maincpu->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -59,8 +62,10 @@ ret_on:
  * @maincpu:   maincpu pointer
  *
  */
-static void __off(ip *maincpu)
+static int __off(ip *maincpu)
 {
+        int ret = -1;
+
         if (unlikely(!maincpu)) {
                 printf("ERR: maincpu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -79,8 +84,9 @@ static void __off(ip *maincpu)
         printf("INFO: maincpu:%s power off!!!!! %s, %s, %d\n",
                         maincpu->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -89,8 +95,10 @@ ret_off:
  * @maincpu:   maincpu pointer
  *
  */
-static void __idle(ip *maincpu)
+static int __idle(ip *maincpu)
 {
+        int ret = -1;
+
         if (unlikely(!maincpu)) {
                 printf("ERR: maincpu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -109,8 +117,9 @@ static void __idle(ip *maincpu)
         printf("INFO: maincpu:%s idle!!!!! %s, %s, %d\n",
                         maincpu->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -119,8 +128,10 @@ ret_idle:
  * @maincpu:   maincpu pointer
  *
  */
-static void __sleep(ip *maincpu)
+static int __sleep(ip *maincpu)
 {
+        int ret = -1;
+
         if (unlikely(!maincpu)) {
                 printf("ERR: maincpu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -139,8 +150,9 @@ static void __sleep(ip *maincpu)
         printf("INFO: maincpu:%s sleep!!!!! %s, %s, %d\n",
                         maincpu->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -149,8 +161,10 @@ ret_sleep:
  * @maincpu:   maincpu pointer
  *
  */
-static void __wakeup(ip *maincpu)
+static int __wakeup(ip *maincpu)
 {
+        int ret = -1;
+
         if (unlikely(!maincpu)) {
                 printf("ERR: maincpu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -169,8 +183,9 @@ static void __wakeup(ip *maincpu)
         printf("INFO: maincpu:%s wakeup!!!!! %s, %s, %d\n",
                         maincpu->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -179,8 +194,10 @@ ret_wakeup:
  * @maincpu:   self pointer
  *
  */
-static void __tick(ip *maincpu)
+static int __tick(ip *maincpu)
 {
+        int ret = -1;
+
         if (unlikely(!maincpu)) {
                 printf("ERR: maincpu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -201,8 +218,9 @@ static void __tick(ip *maincpu)
         printf("INFO: maincpu:%s tick:%llu done!!!!! %s, %s, %d\n",
                         maincpu->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -211,8 +229,10 @@ ret_tick:
  * @maincpu:   maincpu pointer
  *
  */
-static void __dump(ip *maincpu)
+static int __dump(ip *maincpu)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== maincpu:%s dump start !!!!! ==========\n",
                         maincpu->name);
 
@@ -231,8 +251,9 @@ static void __dump(ip *maincpu)
         printf("DEBUG: ========== maincpu:%s dump end !!!!! ==========\n",
                         maincpu->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

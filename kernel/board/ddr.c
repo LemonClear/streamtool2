@@ -76,7 +76,7 @@ ret_load:
  * @ddr:  self pointer
  *
  */
-static void __on(ip *ddr)
+static int __on(ip *ddr)
 {
         int ret = -1;
         address32_t offset = 0;
@@ -108,7 +108,7 @@ static void __on(ip *ddr)
                         ddr->name, __FILE__, __func__, __LINE__);
 
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -117,8 +117,10 @@ ret_on:
  * @ddr:   self pointer
  *
  */
-static void __off(ip *ddr)
+static int __off(ip *ddr)
 {
+        int ret = -1;
+
         if (unlikely(!ddr)) {
                 printf("ERR: ddr absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -137,8 +139,9 @@ static void __off(ip *ddr)
         printf("INFO: ddr:%s power off!!!!! %s, %s, %d\n",
                         ddr->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -147,8 +150,10 @@ ret_off:
  * @ddr:    self pointer
  *
  */
-static void __idle(ip *ddr)
+static int __idle(ip *ddr)
 {
+        int ret = -1;
+
         if (unlikely(!ddr)) {
                 printf("ERR: ddr absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -167,8 +172,9 @@ static void __idle(ip *ddr)
         printf("INFO: ddr:%s idle!!!!! %s, %s, %d\n",
                         ddr->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -177,8 +183,10 @@ ret_idle:
  * @ddr:     self pointer
  *
  */
-static void __sleep(ip *ddr)
+static int __sleep(ip *ddr)
 {
+        int ret = -1;
+
         if (unlikely(!ddr)) {
                 printf("ERR: ddr absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -197,8 +205,9 @@ static void __sleep(ip *ddr)
         printf("INFO: ddr:%s sleep!!!!! %s, %s, %d\n",
                         ddr->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -207,8 +216,10 @@ ret_sleep:
  * @ddr:      self pointer
  *
  */
-static void __wakeup(ip *ddr)
+static int __wakeup(ip *ddr)
 {
+        int ret = -1;
+
         if (unlikely(!ddr)) {
                 printf("ERR: ddr absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -227,8 +238,9 @@ static void __wakeup(ip *ddr)
         printf("INFO: ddr:%s wakeup!!!!! %s, %s, %d\n",
                         ddr->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -237,8 +249,10 @@ ret_wakeup:
  * @ddr:    self pointer
  *
  */
-static void __tick(ip *ddr)
+static int __tick(ip *ddr)
 {
+        int ret = -1;
+
         if (unlikely(!ddr)) {
                 printf("ERR: ddr absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -260,8 +274,9 @@ static void __tick(ip *ddr)
         printf("INFO: ddr:%s tick:%llu done!!!!! %s, %s, %d\n",
                         ddr->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -270,8 +285,10 @@ ret_tick:
  * @ddr:  self pointer
  *
  */
-static void __dump(ip *ddr)
+static int __dump(ip *ddr)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== ddr:%s dump start !!!!! ==========\n",
                         ddr->name);
 
@@ -290,8 +307,9 @@ static void __dump(ip *ddr)
         printf("DEBUG: ========== ddr:%s dump end !!!!! ==========\n",
                         ddr->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

@@ -29,8 +29,10 @@
  * @pcie: pcie pointer
  *
  */
-static void __on(ip *pcie)
+static int __on(ip *pcie)
 {
+        int ret = -1;
+
         if (unlikely(!pcie)) {
                 printf("ERR: pcie absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -50,8 +52,9 @@ static void __on(ip *pcie)
         printf("INFO: pcie:%s power on!!!!! %s, %s, %d\n",
                         pcie->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -60,8 +63,10 @@ ret_on:
  * @pcie:  pcie pointer
  *
  */
-static void __off(ip *pcie)
+static int __off(ip *pcie)
 {
+        int ret = -1;
+
         if (unlikely(!pcie)) {
                 printf("ERR: pcie absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -81,8 +86,9 @@ static void __off(ip *pcie)
         printf("INFO: pcie:%s power off!!!!! %s, %s, %d\n",
                         pcie->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -91,8 +97,10 @@ ret_off:
  * @pcie:   pcie pointer
  *
  */
-static void __idle(ip *pcie)
+static int __idle(ip *pcie)
 {
+        int ret = -1;
+
         if (unlikely(!pcie)) {
                 printf("ERR: pcie absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -112,8 +120,9 @@ static void __idle(ip *pcie)
         printf("INFO: pcie:%s idle!!!!! %s, %s, %d\n",
                         pcie->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -122,8 +131,10 @@ ret_idle:
  * @pcie:  pcie pointer
  *
  */
-static void __sleep(ip *pcie)
+static int __sleep(ip *pcie)
 {
+        int ret = -1;
+
         if (unlikely(!pcie)) {
                 printf("ERR: pcie absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -143,8 +154,9 @@ static void __sleep(ip *pcie)
         printf("INFO: pcie:%s sleep!!!!! %s, %s, %d\n",
                         pcie->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -153,8 +165,10 @@ ret_sleep:
  * @pcie:   pcie pointer
  *
  */
-static void __wakeup(ip *pcie)
+static int __wakeup(ip *pcie)
 {
+        int ret = -1;
+
         if (unlikely(!pcie)) {
                 printf("ERR: pcie absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -174,8 +188,9 @@ static void __wakeup(ip *pcie)
         printf("INFO: pcie:%s wakeup!!!!! %s, %s, %d\n",
                         pcie->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -184,8 +199,10 @@ ret_wakeup:
  * @pcie:   self pointer
  *
  */
-static void __tick(ip *pcie)
+static int __tick(ip *pcie)
 {
+        int ret = -1;
+
         if (unlikely(!pcie)) {
                 printf("ERR: pcie absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -207,8 +224,9 @@ static void __tick(ip *pcie)
         printf("INFO: pcie:%s tick:%llu done!!!!! %s, %s, %d\n",
                         pcie->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -217,8 +235,10 @@ ret_tick:
  * @pcie:   pcie pointer
  *
  */
-static void __dump(ip *pcie)
+static int __dump(ip *pcie)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== pcie:%s dump start !!!!! ==========\n",
                         pcie->name);
 
@@ -237,8 +257,9 @@ static void __dump(ip *pcie)
         printf("DEBUG: ========== pcie:%s dump end !!!!! ==========\n",
                         pcie->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

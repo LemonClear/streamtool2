@@ -29,8 +29,10 @@
  * @boardlink:   boardlink pointer
  *
  */
-static void __on(ip *boardlink)
+static int __on(ip *boardlink)
 {
+        int ret = -1;
+
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -38,11 +40,9 @@ static void __on(ip *boardlink)
         }
 
         /*boardlink level do 1st*/
-        //FIXME: DO NOTHING!!!
-        //Transparent Transmission temporally on this level
+        //FIXME: Transparent Transmission temporally on this level
 
         /*power on subips 2nd*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*change state machine 3rd*/
@@ -51,8 +51,9 @@ static void __on(ip *boardlink)
         printf("INFO: boardlink:%s power on!!!!! %s, %s, %d\n",
                         boardlink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -61,8 +62,10 @@ ret_on:
  * @boardlink:   boardlink pointer
  *
  */
-static void __off(ip *boardlink)
+static int __off(ip *boardlink)
 {
+        int ret = -1;
+
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -70,12 +73,10 @@ static void __off(ip *boardlink)
         }
 
         /*power off subips 1st*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*boardlink level do 2nd*/
-        //FIXME: DO NOTHING!!!
-        //Transparent Transmission temporally on this level
+        //FIXME: Transparent Transmission temporally on this level
 
         /*change state machine 3rd*/
         boardlink->status = OFF;
@@ -83,8 +84,9 @@ static void __off(ip *boardlink)
         printf("INFO: boardlink:%s power off!!!!! %s, %s, %d\n",
                         boardlink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -93,8 +95,10 @@ ret_off:
  * @boardlink:   boardlink pointer
  *
  */
-static void __idle(ip *boardlink)
+static int __idle(ip *boardlink)
 {
+        int ret = -1;
+
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -102,12 +106,10 @@ static void __idle(ip *boardlink)
         }
 
         /*idle subips 1st*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*boardlink level do 2nd*/
-        //FIXME: DO NOTHING!!!
-        //Transparent Transmission temporally on this level
+        //FIXME: Transparent Transmission temporally on this level
 
         /*change state machine 3rd*/
         boardlink->status = IDLE;
@@ -115,8 +117,9 @@ static void __idle(ip *boardlink)
         printf("INFO: boardlink:%s idle!!!!! %s, %s, %d\n",
                         boardlink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -125,8 +128,10 @@ ret_idle:
  * @boardlink:   boardlink pointer
  *
  */
-static void __sleep(ip *boardlink)
+static int __sleep(ip *boardlink)
 {
+        int ret = -1;
+
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -134,12 +139,10 @@ static void __sleep(ip *boardlink)
         }
 
         /*sleep subips 1st*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*boardlink level do 2nd*/
-        //FIXME: DO NOTHING!!!
-        //Transparent Transmission temporally on this level
+        //FIXME: Transparent Transmission temporally on this level
 
         /*change state machine 3rd*/
         boardlink->status = SLEEP;
@@ -147,8 +150,9 @@ static void __sleep(ip *boardlink)
         printf("INFO: boardlink:%s sleep!!!!! %s, %s, %d\n",
                         boardlink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -157,8 +161,10 @@ ret_sleep:
  * @boardlink:   boardlink pointer
  *
  */
-static void __wakeup(ip *boardlink)
+static int __wakeup(ip *boardlink)
 {
+        int ret = -1;
+
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -166,11 +172,9 @@ static void __wakeup(ip *boardlink)
         }
 
         /*boardlink level do 1st*/
-        //FIXME: DO NOTHING!!!
-        //Transparent Transmission temporally on this level
+        //FIXME: Transparent Transmission temporally on this level
 
         /*wakeup subips 2nd*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*change state machine 3rd*/
@@ -179,8 +183,9 @@ static void __wakeup(ip *boardlink)
         printf("INFO: boardlink:%s wakeup!!!!! %s, %s, %d\n",
                         boardlink->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -189,8 +194,10 @@ ret_wakeup:
  * @boardlink:   self pointer
  *
  */
-static void __tick(ip *boardlink)
+static int __tick(ip *boardlink)
 {
+        int ret = -1;
+
         if (unlikely(!boardlink)) {
                 printf("ERR: boardlink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -202,20 +209,19 @@ static void __tick(ip *boardlink)
                         boardlink->name, tick_counter, __FILE__, __func__, __LINE__);
 
         /*boardlink level do 1st*/
-        //FIXME: DO NOTHING!!!
-        //Transparent Transmission temporally on this level
+        //FIXME: Transparent Transmission temporally on this level
 
 
         /*tick trigger subips 2nd*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         /*done*/
         printf("INFO: boardlink:%s tick:%llu done!!!!! %s, %s, %d\n",
                         boardlink->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -224,8 +230,10 @@ ret_tick:
  * @boardlink:   boardlink pointer
  *
  */
-static void __dump(ip *boardlink)
+static int __dump(ip *boardlink)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== boardlink:%s dump start !!!!! ==========\n",
                         boardlink->name);
 
@@ -239,14 +247,14 @@ static void __dump(ip *boardlink)
         //FIXME: todo...
 
         /*dump subips 2nd*/
-        //FIXME: DO NOTHING!!!
         //No subips
 
         printf("DEBUG: ========== boardlink:%s dump end !!!!! ==========\n",
                         boardlink->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure

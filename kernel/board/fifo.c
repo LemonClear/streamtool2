@@ -31,8 +31,10 @@
  * @fifo:  self pointer
  *
  */
-static void __on(ip *fifo)
+static int __on(ip *fifo)
 {
+        int ret = -1;
+
         if (unlikely(!fifo)) {
                 printf("ERR: fifo absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -51,8 +53,9 @@ static void __on(ip *fifo)
         printf("INFO: fifo:%s power on!!!!! %s, %s, %d\n",
                         fifo->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_on:
-        return;
+        return ret;
 }
 
 
@@ -61,8 +64,10 @@ ret_on:
  * @fifo:   self pointer
  *
  */
-static void __off(ip *fifo)
+static int __off(ip *fifo)
 {
+        int ret = -1;
+
         if (unlikely(!fifo)) {
                 printf("ERR: fifo absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -81,8 +86,9 @@ static void __off(ip *fifo)
         printf("INFO: fifo:%s power off!!!!! %s, %s, %d\n",
                         fifo->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_off:
-        return;
+        return ret;
 }
 
 
@@ -91,8 +97,10 @@ ret_off:
  * @fifo:    self pointer
  *
  */
-static void __idle(ip *fifo)
+static int __idle(ip *fifo)
 {
+        int ret = -1;
+
         if (unlikely(!fifo)) {
                 printf("ERR: fifo absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -111,8 +119,9 @@ static void __idle(ip *fifo)
         printf("INFO: fifo:%s idle!!!!! %s, %s, %d\n",
                         fifo->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_idle:
-        return;
+        return ret;
 }
 
 
@@ -121,8 +130,10 @@ ret_idle:
  * @fifo:     self pointer
  *
  */
-static void __sleep(ip *fifo)
+static int __sleep(ip *fifo)
 {
+        int ret = -1;
+
         if (unlikely(!fifo)) {
                 printf("ERR: fifo absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -141,8 +152,9 @@ static void __sleep(ip *fifo)
         printf("INFO: fifo:%s sleep!!!!! %s, %s, %d\n",
                         fifo->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_sleep:
-        return;
+        return ret;
 }
 
 
@@ -151,8 +163,10 @@ ret_sleep:
  * @fifo:      self pointer
  *
  */
-static void __wakeup(ip *fifo)
+static int __wakeup(ip *fifo)
 {
+        int ret = -1;
+
         if (unlikely(!fifo)) {
                 printf("ERR: fifo absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -171,8 +185,9 @@ static void __wakeup(ip *fifo)
         printf("INFO: fifo:%s wakeup!!!!! %s, %s, %d\n",
                         fifo->name, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_wakeup:
-        return;
+        return ret;
 }
 
 
@@ -181,8 +196,10 @@ ret_wakeup:
  * @fifo:    self pointer
  *
  */
-static void __tick(ip *fifo)
+static int __tick(ip *fifo)
 {
+        int ret = -1;
+
         if (unlikely(!fifo)) {
                 printf("ERR: fifo absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -204,8 +221,9 @@ static void __tick(ip *fifo)
         printf("INFO: fifo:%s tick:%llu done!!!!! %s, %s, %d\n",
                         fifo->name, tick_counter, __FILE__, __func__, __LINE__);
 
+        ret = 0;
 ret_tick:
-        return;
+        return ret;
 }
 
 
@@ -214,8 +232,10 @@ ret_tick:
  * @fifo:  self pointer
  *
  */
-static void __dump(ip *fifo)
+static int __dump(ip *fifo)
 {
+        int ret = -1;
+
         printf("DEBUG: ========== fifo:%s dump start !!!!! ==========\n",
                         fifo->name);
 
@@ -234,8 +254,9 @@ static void __dump(ip *fifo)
         printf("DEBUG: ========== fifo:%s dump end !!!!! ==========\n",
                         fifo->name);
 
+        ret = 0;
 ret_dump:
-        return;
+        return ret;
 }
 /**
  * ops structure
