@@ -28,6 +28,13 @@
 
 
 /**
+ * this ip pointer
+ *
+ */
+static ip *this = NULL;
+
+
+/**
  * load_image_bd - load image to ram through backdoor
  * @ram:     self pointer
  * @offset:  image load offset from head of this ram
@@ -277,6 +284,58 @@ ret_write:
 
 
 /**
+ * __readreg - read ip registers
+ * @addr:  register address
+ * @name:  register name
+ *
+ */
+static reg32_t __readreg(ip* ram, address32_t addr, char *name)
+{
+        reg32_t ret = 0;
+
+        /*name == NULL, use addr*/
+        if (likely(!name)) {
+                printf("\n");
+                //ret = ;
+                goto ret_readreg;
+        }
+
+        /*name != NULL, use name*/
+
+
+ret_readreg:
+        return ret;
+}
+
+
+/**
+ * __writereg - write ip registers
+ * @addr:  register address
+ * @name:  register name
+ * @value: value to write
+ *
+ */
+static int __writereg(ip *ram, address32_t addr, char *name, reg32_t value)
+{
+        int ret = -1;
+
+        /*name == NULL, use addr*/
+        if (likely(!name)) {
+                printf("\n");
+                ret = 0;
+                goto ret_writereg;
+        }
+
+        /*name != NULL, use name*/
+
+
+        ret = 0;
+ret_writereg:
+        return ret;
+}
+
+
+/**
  * __tick - one tick trigger
  * @ram:    self pointer
  *
@@ -343,6 +402,8 @@ static int __dump(ip *ram)
 ret_dump:
         return ret;
 }
+
+
 /**
  * ops structure
  *
@@ -355,6 +416,8 @@ static const ip_operations ram_ops = {
         .wakeup = __wakeup,
         .read = __read,
         .write = __write,
+        .readreg = __readreg,
+        .writereg = __writereg,
         .tickarrive = __tick,
         .dump = __dump,
 };
