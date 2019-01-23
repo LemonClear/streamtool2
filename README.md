@@ -14,6 +14,7 @@ Release Notes:
 8. add parse config file and parse command line
 9. add product init
 10. all process-related c file done
+11. add logger feature, use INFO/WARNING/ERROR/DEBUG instead printf
 
 #################################
 
@@ -48,4 +49,4 @@ Relation Structure:
 2. product {board, boardlink, clock, power}
 3. board {chip, chiplink, ddr, fifo, maincpu, pcie}
 4. chip {core, noc}
-5. core {cp, np, tp, ram}
+5. core {mcu, ncp, tcp, ram}
