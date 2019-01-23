@@ -284,18 +284,19 @@ void dump_hashtable(hashtable *table)
         }
 
         /*begin*/
-        for (hashid = 0; hashid <= HASHTABLE_MAXID; hashid++) {
-                INFO("--- DUMP HASHTABLE %p BEGIN ---\n", table);
+        DEBUG("--- DUMP HASHTABLE %p BEGIN ---\n", table);
 
+        for (hashid = 0; hashid <= HASHTABLE_MAXID; hashid++) {
                 table[hashid].string = (!table[hashid].string) ?
                         ("NULL") : (table[hashid].string);
 
-                INFO("hashid=%d, hashkey=%d, hashstring=%s, hashelement=%p\n",
+                DEBUG("hashid=%d, hashkey=%d, hashstring=%s, hashelement=%p\n",
                                 hashid, table[hashid].hashkey,
                                 table[hashid].string, table[hashid].element);
-
-                INFO("--- DUMP HASHTABLE %p END ---\n", table);
         }
+
+        /*end*/
+        DEBUG("--- DUMP HASHTABLE %p END ---\n", table);
 
 ret_dump:
         return;
