@@ -141,7 +141,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         int ret = -1;
 
         /*begin*/
-        INFO("-- SIMULATOR INIT START --\n");
+        INFO("-- SIMULATOR INIT GO... --\n");
 
         if (unlikely(!simulator)) {
                 ERROR("simulator struct is null !!!\n");
@@ -168,7 +168,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
                 goto ret_init;
         }
 
-        INFO("-- SIMULATOR INIT END --\n");
+        INFO("-- SIMULATOR INIT DONE --\n");
 
 ret_init:
         return ret;
@@ -185,7 +185,7 @@ static int simu_run(simu *simulator)
         int ret = -1;
 
         /*begin*/
-        INFO("-- SIMULATOR RUN START --\n");
+        INFO("-- SIMULATOR RUN GO... --\n");
 
         if (unlikely(!simulator)) {
                 ERROR("simulator struct is null !!!\n");
@@ -199,7 +199,7 @@ static int simu_run(simu *simulator)
                 goto ret_run;
         }
 
-        INFO("-- SIMULATOR RUN END --\n");
+        INFO("-- SIMULATOR RUN DONE --\n");
 
 ret_run:
         return ret;
