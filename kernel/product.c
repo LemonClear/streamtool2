@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -51,18 +52,19 @@ static int __on(ip *product)
         int id = 0;
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("--- PRODUCT %s POWER ON GO... ---\n", product->name);
 
         /*product level do 1st*/
         //FIXME: todo...
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
-                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product->subips is null !!!\n");
                 goto ret_on;
         }
 
@@ -71,9 +73,8 @@ static int __on(ip *product)
                 /*each subip*/
                 ret = product->subips[id]->ops->poweron(product->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: poweron subip%d-%s failed! %s, %s, %d\n",
-                                        id, product->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("poweron subip%d-%s failed !!!\n",
+                                        id, product->subips[id]->name);
                         goto ret_on;
                 }
                 /*next subip*/
@@ -83,8 +84,8 @@ static int __on(ip *product)
         /*change state machine 3rd*/
         product->status = RUN;
 
-        printf("INFO: product:%s power on!!! %s, %s, %d\n",
-                        product->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("--- PRODUCT %s POWER ON DONE ---\n", product->name);
 
 ret_on:
         return ret;
@@ -102,15 +103,16 @@ static int __off(ip *product)
         int id = 0;
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_off;
         }
 
+        /*begin*/
+        INFO("--- PRODUCT %s POWER OFF GO... ---\n", product->name);
+
         /*product have no subip*/
         if (unlikely(!product->subips)) {
-                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product->subips is null !!!\n");
                 goto ret_off;
         }
 
@@ -119,9 +121,8 @@ static int __off(ip *product)
                 /*each subip*/
                 ret = product->subips[id]->ops->poweroff(product->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: poweroff subip%d-%s failed! %s, %s, %d\n",
-                                        id, product->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("poweroff subip%d-%s failed !!!\n",
+                                        id, product->subips[id]->name);
                         goto ret_off;
                 }
                 /*next subip*/
@@ -134,8 +135,8 @@ static int __off(ip *product)
         /*change state machine 3rd*/
         product->status = OFF;
 
-        printf("INFO: product:%s power off!!! %s, %s, %d\n",
-                        product->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("--- PRODUCT %s POWER OFF DONE ---\n", product->name);
 
 ret_off:
         return ret;
@@ -153,15 +154,16 @@ static int __idle(ip *product)
         int id = 0;
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_idle;
         }
 
+        /*begin*/
+        INFO("--- PRODUCT %s IDLE GO... ---\n", product->name);
+
         /*product have no subip*/
         if (unlikely(!product->subips)) {
-                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product->subips is null !!!\n");
                 goto ret_idle;
         }
 
@@ -170,9 +172,8 @@ static int __idle(ip *product)
                 /*each subip*/
                 ret = product->subips[id]->ops->idle(product->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
-                                        id, product->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("idle subip%d-%s failed !!!\n",
+                                        id, product->subips[id]->name);
                         goto ret_idle;
                 }
                 /*next subip*/
@@ -185,8 +186,8 @@ static int __idle(ip *product)
         /*change state machine 3rd*/
         product->status = IDLE;
 
-        printf("INFO: product:%s idle!!! %s, %s, %d\n",
-                        product->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("--- PRODUCT %s IDLE DONE ---\n", product->name);
 
 ret_idle:
         return ret;
@@ -204,15 +205,16 @@ static int __sleep(ip *product)
         int id = 0;
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_sleep;
         }
 
+        /*begin*/
+        INFO("--- PRODUCT %s SLEEP GO... ---\n", product->name);
+
         /*product have no subip*/
         if (unlikely(!product->subips)) {
-                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product->subips is null !!!\n");
                 goto ret_sleep;
         }
 
@@ -221,9 +223,8 @@ static int __sleep(ip *product)
                 /*each subip*/
                 ret = product->subips[id]->ops->sleep(product->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
-                                        id, product->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("sleep subip%d-%s failed !!!\n",
+                                        id, product->subips[id]->name);
                         goto ret_sleep;
                 }
                 /*next subip*/
@@ -236,8 +237,8 @@ static int __sleep(ip *product)
         /*change state machine 3rd*/
         product->status = SLEEP;
 
-        printf("INFO: product:%s sleep!!! %s, %s, %d\n",
-                        product->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("--- PRODUCT %s SLEEP DONE... ---\n", product->name);
 
 ret_sleep:
         return ret;
@@ -255,18 +256,19 @@ static int __wakeup(ip *product)
         int id = 0;
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("--- PRODUCT %s WAKEUP GO... ---\n", product->name);
 
         /*product level do 1st*/
         //FIXME: todo...
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
-                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product->subips is null !!!\n");
                 goto ret_wakeup;
         }
 
@@ -275,9 +277,8 @@ static int __wakeup(ip *product)
                 /*each subip*/
                 ret = product->subips[id]->ops->wakeup(product->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
-                                        id, product->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("wakeup subip%d-%s failed !!!\n",
+                                        id, product->subips[id]->name);
                         goto ret_wakeup;
                 }
                 /*next subip*/
@@ -287,8 +288,8 @@ static int __wakeup(ip *product)
         /*change state machine 3rd*/
         product->status = RUN;
 
-        printf("INFO: product:%s wakeup!!!!! %s, %s, %d\n",
-                        product->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("--- PRODUCT %s WAKEUP DONE ---\n", product->name);
 
 ret_wakeup:
         return ret;
@@ -306,23 +307,20 @@ static int __tick(ip *product)
         int id = 0;
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: product:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        product->name, tick_counter,
-                        __FILE__, __func__, __LINE__);
+        INFO("--- PRODUCT %s TICK:%llu GO... ---\n",
+                        product->name, tick_counter);
 
         /*product level do 1st*/
         //FIXME: todo...
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
-                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product->subips is null !!!\n");
                 goto ret_tick;
         }
 
@@ -331,9 +329,8 @@ static int __tick(ip *product)
                 /*each subip*/
                 ret = product->subips[id]->ops->tickarrive(product->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: tick subip%d-%s failed! %s, %s, %d\n",
-                                        id, product->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("tick subip%d-%s failed !!!\n",
+                                        id, product->subips[id]->name);
                         goto ret_tick;
                 }
                 /*next subip*/
@@ -341,9 +338,8 @@ static int __tick(ip *product)
         }
 
         /*done*/
-        printf("INFO: product:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        product->name, tick_counter,
-                        __FILE__, __func__, __LINE__);
+        INFO("--- PRODUCT %s TICK:%llu DONE ---\n",
+                        product->name, tick_counter);
 
 ret_tick:
         return ret;
@@ -360,22 +356,20 @@ static int __dump(ip *product)
         int ret = -1;
         int id = 0;
 
-        printf("DEBUG: ========== product:%s dump start !!!!! ==========\n",
-                        product->name);
-
         if (unlikely(!product)) {
-                printf("ERR: product absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP PRODUCT %s BEGIN ---\n", product->name);
 
         /*dump product elements 1st*/
         //FIXME: todo...
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
-                printf("ERR: product->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product->subips is null !!!\n");
                 goto ret_dump;
         }
 
@@ -384,17 +378,16 @@ static int __dump(ip *product)
                 /*each subip*/
                 ret = product->subips[id]->ops->dump(product->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
-                                        id, product->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("dump subip%d-%s failed !!!\n",
+                                        id, product->subips[id]->name);
                         goto ret_dump;
                 }
                 /*next subip*/
                 id++;
         }
 
-        printf("DEBUG: ========== product:%s dump end !!!!! ==========\n",
-                        product->name);
+        /*end*/
+        DEBUG("--- DUMP PRODUCT %s END ---\n", product->name);
 
 ret_dump:
         return ret;
@@ -428,16 +421,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./product.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: product reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -465,15 +456,13 @@ static int product_alloc(ip *product, param *params)
 
         /*reg list*/
         if (!params->product_reg_count) {
-                printf("INFO: product have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNNING("have no registers !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         product->reglist = malloc((params->product_reg_count + 1) * sizeof(regs *));
         if (unlikely(!product->reglist)) {
-                printf("ERR: alloc product reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)product->reglist, 0, (params->product_reg_count + 1 ) * sizeof(regs *));
@@ -481,8 +470,7 @@ static int product_alloc(ip *product, param *params)
         for (id = 0; id < params->product_reg_count; id++) {
                 product->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!product->reglist[id])) {
-                        printf("ERR: alloc product reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)product->reglist[id], 0, sizeof(regs));
@@ -491,15 +479,13 @@ static int product_alloc(ip *product, param *params)
         /*reg hastable*/
         product->name2reg = init_hashtable();
         if (unlikely(!product->name2reg)) {
-                printf("ERR: alloc product reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         product->addr2reg = init_hashtable();
         if (unlikely(!product->addr2reg)) {
-                printf("ERR: alloc product reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -507,8 +493,7 @@ static int product_alloc(ip *product, param *params)
         product->subips = malloc((params->board_count +
                                 params->boardlink_count + 1) * sizeof(ip *));
         if (unlikely(!product->subips)) {
-                printf("ERR: product alloc subip array failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc subip array failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)product->subips, 0, (params->board_count +
@@ -518,8 +503,7 @@ static int product_alloc(ip *product, param *params)
                                 params->boardlink_count); id++) {
                 product->subips[id] = malloc(sizeof(ip));
                 if (unlikely(!product->subips[id])) {
-                        printf("ERR: alloc product subip%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc subip%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)product->subips[id], 0, sizeof(ip));
@@ -528,15 +512,13 @@ static int product_alloc(ip *product, param *params)
         /*subips hastable*/
         product->name2subip = init_hashtable();
         if (unlikely(!product->name2subip)) {
-                printf("ERR: alloc product subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2subip failed !!!\n");
                 goto ret_alloc;
         }
 
         product->addr2subip = init_hashtable();
         if (unlikely(!product->addr2subip)) {
-                printf("ERR: alloc product subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2subip failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -562,20 +544,18 @@ int product_init(ip *father, ip *product, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: product init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("--- PRODUCT INIT GO... ---\n");
 
         if (unlikely(!product) || unlikely(!params)) {
-                printf("ERR: product or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is %p, params is %p !!!\n",
+                                product, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = product_alloc(product, params);
         if (unlikely(ret)) {
-                printf("ERR: product alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -597,8 +577,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(product->reglist);
         if (unlikely(ret)) {
-                printf("ERR: product reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -613,9 +592,8 @@ int product_init(ip *father, ip *product, int id, param *params)
                                 (void *)product->reglist[sub],
                                 product->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, product->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash reg%d:%s to name2reg failed !!!\n",
+                                        sub, product->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -623,9 +601,8 @@ int product_init(ip *father, ip *product, int id, param *params)
                 sprintf(addr2str, "0x%x", product->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)product->reglist[sub], product->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, product->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash reg%d:0x%x to addr2reg failed !!!\n",
+                                        sub, product->reglist[sub]->address);
                         goto ret_init;
                 }
         }
@@ -645,8 +622,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                 /*call subip:board init function*/
                 ret = board_init(product, product->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: board%d init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("board%d init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -655,8 +631,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                 /*call subip:boardlink init function*/
                 ret = boardlink_init(product, product->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: boardlink%d init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("boardlink%d init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -673,9 +648,8 @@ int product_init(ip *father, ip *product, int id, param *params)
                                 (void *)product->subips[sub],
                                 product->name2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash %s to name2subip table failed! %s, %s, %d\n",
-                                        product->subips[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2subip failed !!!\n",
+                                        product->subips[sub]->name);
                         goto ret_init;
                 }
 
@@ -684,16 +658,14 @@ int product_init(ip *father, ip *product, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)product->subips[sub],
                                 product->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash board/boardlink%d:0x%x to \
-                                        addr2subip table failed! %s, %s, %d\n",
-                                        sub, product->subips[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash 0x%x to addr2subip failed !!!\n",
+                                        product->subips[sub]->address);
                         goto ret_init;
                 }
         }
 
-        printf("INFO: product init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("--- PRODUCT INIT DONE ---\n");
 
 ret_init:
         return ret;
@@ -709,18 +681,18 @@ int product_run(ip *product)
 {
         int ret = -1;
 
-        /*begin*/
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_run;
         }
+
+        /*begin*/
+        INFO("--- PRODUCT %s RUN GO... ---\n", product->name);
 
         /*power on*/
         ret = power_on(product); //power start
         if (unlikely(ret)) {
-                printf("ERR: power on failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("%s power on failed !!!\n", product->name);
                 goto ret_run;
         }
 
@@ -732,8 +704,7 @@ running:
         if (likely(RUN == global_state)) {
                 ret = clock_run(product); //clock start
                 if (unlikely(ret)) {
-                        printf("ERR: clock run failed! %s, %s, %d\n",
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("%s clock run failed !!!\n", product->name);
                         goto ret_run;
                 }
         }
@@ -742,8 +713,7 @@ running:
         while (IDLE == global_state) {
                 ret = power_idle(product); //internal clock wakeup
                 if (unlikely(ret)) {
-                        printf("ERR: power idle failed! %s, %s, %d\n",
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("%s idle failed !!!\n", product->name);
                         goto ret_run;
                 }
 
@@ -755,8 +725,7 @@ running:
         while (SLEEP == global_state) {
                 ret = power_sleep(product); //outer clock wakeup
                 if (unlikely(ret)) {
-                        printf("ERR: power sleep failed! %s, %s, %d\n",
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("%s sleep failed !!!\n", product->name);
                         goto ret_run;
                 }
 
@@ -766,6 +735,9 @@ running:
 
         /*power off*/
         power_off(product);
+
+        /*end*/
+        INFO("--- PRODUCT %s RUN DONE ---\n", product->name);
 
 ret_run:
         return ret;
