@@ -22,5 +22,5 @@ void logger()
 {
         char* name = "logger";
 
-        printf("My name = %s\n", name);
+        DEBUG("My name = %s\n", name);
 }

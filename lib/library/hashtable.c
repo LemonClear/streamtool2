@@ -22,6 +22,7 @@
 #include "cerr.h"
 #include "compiler.h"
 #include "library.h"
+#include "logger.h"
 
 
 /**
@@ -106,16 +107,15 @@ static int hashcore(const char *string, hashtable *table)
 
         /*check params*/
         if (unlikely(!string || !table)) {
-                printf("string or hashtable is NULL! %s,%s,%d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("string is %p, hashtable is %p !!!\n",
+                                string, table);
                 goto ret_hashid;
         }
 
         /*being*/
         hashkey = gen_hashkey(string);
         if (unlikely(-1 == hashkey)) {
-                printf("generate hashkey fail! %s,%s,%d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("generate hashkey fail !!!\n");
                 goto ret_hashid;
         }
 
@@ -150,8 +150,7 @@ do_rehash_core:
         table[hashid].string = string;
 
 
-        printf("DEBUG: hash conflicts count %d, IN %s,%s,%d\n",
-                        count, __FILE__, __func__, __LINE__);
+        DEBUG("hash conflicts count is %d\n", count);
 
 ret_hashid:
         return hashid;
@@ -171,15 +170,14 @@ int insert_hashtable(const char *string, void *element, hashtable *table)
         int hashid = -1;
 
         if (unlikely(!string) || unlikely(!element) || unlikely(!table)) {
-                printf("some paramters absent! string=%p, element=%p, table=%p! %s,%s,%d\n",
-                                string, element, table, __FILE__, __func__, __LINE__);
+                ERROR("string is %p, element is %p, table is %p !!!\n",
+                                string, element, table);
                 goto ret_insert;
         }
 
         hashid = hashcore(string, table);
         if (unlikely(-1 == hashid)) {
-                printf("get hashid fail! %s,%s,%d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("get hashid fail !!!\n");
                 goto ret_insert;
         }
 
@@ -206,16 +204,15 @@ void * lookfor_hashtable(const char *string, hashtable *table)
         int count = 0;
 
         if (unlikely(!string || !table)) {
-                printf("string or hashtable is NULL! %s,%s,%d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("string is %p, hashtable is %p !!!\n",
+                                string, table);
                 goto ret_element;
         }
 
         /*begin*/
         hashkey = gen_hashkey(string);
         if (unlikely(-1 == hashkey)) {
-                printf("generate hashkey fail! %s,%s,%d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("generate hashkey failed !!!\n");
                 goto ret_element;
         }
 
@@ -223,7 +220,7 @@ void * lookfor_hashtable(const char *string, hashtable *table)
         element = table[hashid].element;
         /*NULL means empty, miss!*/
         if (unlikely(!element)) {
-                printf("MISS: element %s not hashed in table %p\n",
+                WARNNING("MISS: element %s not hashed in table %p !\n",
                                 string, table);
                 goto ret_element;
         }
@@ -255,14 +252,14 @@ do_rehash_find:
                                 likely(!strcmp(string, table[hashid].string))) {
                         element = table[hashid].element;
 
-                        printf("DEBUG: hash conflicts count %d, IN %s,%s,%d\n",
-                                        count, __FILE__, __func__, __LINE__);
+                        DEBUG("hash conflicts count %d\n", count);
                         goto ret_element;
                 }
 
                 /*hashkey conflicts, miss!*/
                 element = NULL;
-                printf("MISS: element %s not hashed in table %p\n", string, table);
+                WARNNING("MISS: element %s not hashed in table %p !\n",
+                                string, table);
 
         } while (table[hashid].element);
 
@@ -282,23 +279,22 @@ void dump_hashtable(hashtable *table)
         int hashid = -1;
 
         if (unlikely(!table)) {
-                printf("hashtable is NULL! %s,%s,%d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("hashtable is null !!!\n");
                 goto ret_dump;
         }
 
         /*begin*/
         for (hashid = 0; hashid <= HASHTABLE_MAXID; hashid++) {
-                printf("==========DUMP HASHTABLE %p BEGIN==========\n", table);
+                INFO("--- DUMP HASHTABLE %p BEGIN ---\n", table);
 
                 table[hashid].string = (!table[hashid].string) ?
                         ("NULL") : (table[hashid].string);
 
-                printf("hashid=%d, hashkey=%d, hashstring=%s, hashelement=%p\n",
+                INFO("hashid=%d, hashkey=%d, hashstring=%s, hashelement=%p\n",
                                 hashid, table[hashid].hashkey,
                                 table[hashid].string, table[hashid].element);
 
-                printf("==========DUMP HASHTABLE %p END============\n", table);
+                INFO("--- DUMP HASHTABLE %p END ---\n", table);
         }
 
 ret_dump:
@@ -317,8 +313,7 @@ hashtable * init_hashtable()
         /*begin*/
         table = malloc(HASHTABLE_MAXID * sizeof(hashtable));
         if (unlikely(!table)) {
-                printf("hashtable init failed: malloc error! %s,%s,%d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("hashtable init failed, malloc error !!!\n");
                 goto ret_init;
         }
 
@@ -340,7 +335,7 @@ int del_hashtable(hashtable *table)
         int hashid = -1;
 
         if (unlikely(!table)) {
-                printf("the hashtable is absent!!\n");
+                ERROR("hashtable is null !!!\n");
                 goto ret_del;
         }
 

@@ -17,10 +17,11 @@
 */
 #include <stdio.h>
 #include "cerr.h"
+#include "logger.h"
 
 void cerr()
 {
         char* name = "cerr";
 
-        printf("My name = %s\n", name);
+        DEBUG("My name = %s\n", name);
 }

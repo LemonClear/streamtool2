@@ -58,7 +58,7 @@ ret_config:
 
 
 /**
- * parse_commandline - parse the command line
+ * parse_commandline - parse the commandline
  * @argc:       strings count
  * @argv:       strings
  * @params:     parameter struct
@@ -74,7 +74,7 @@ static int parse_commandline(int argc, char *argv[], param *params)
         }
 
         if (unlikely(argc < 2) || unlikely(!argv[1])) {
-                WARNNING("no command line parameters !!!\n");
+                WARNNING("no commandline parameters !!!\n");
                 ret = 0;
                 goto ret_commands;
         }
@@ -130,8 +130,8 @@ ret_simu:
 
 /**
  * simu_init - init simulator
- * @argc: command line parameter counts
- * @argv: command line parameters
+ * @argc: commandline parameter counts
+ * @argv: commandline parameters
  * @simulator: pointer to the simulator
  *
  * FIXME: demo.config need to be dynamic or further no-need
@@ -153,10 +153,10 @@ static int simu_init(int argc, char *argv[], simu *simulator)
                 goto ret_init;
         }
 
-        /*parse: command line*/
+        /*parse: commandline*/
         ret = parse_commandline(argc, argv, simulator->params);
         if (unlikely(ret)) {
-                INFO("ignore command line parameters !!!\n");
+                WARNNING("ignore commandline parameters !!!\n");
         }
 
         /*init: the whole product*/
@@ -200,8 +200,8 @@ ret_run:
 
 /**
  * main - the simulator MAIN entrace
- * @argc:   command line parameter counts
- * @argv:   command line parameters
+ * @argc:   commandline parameter counts
+ * @argv:   commandline parameters
  *
  */
 int main(int argc, char *argv[])

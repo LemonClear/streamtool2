@@ -16,9 +16,11 @@
 #
 */
 #include <stdio.h>
+#include "logger.h"
+
 
 void fp16_pt()
 {
         int i = 0;
-        printf("My fp16 = %d\n", i);
+        DEBUG("My fp16 = %d\n", i);
 }

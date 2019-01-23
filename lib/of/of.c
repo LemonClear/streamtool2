@@ -21,6 +21,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "compiler.h"
+#include "logger.h"
 
 
 /**
@@ -32,7 +33,7 @@ void of()
 {
         char* name = "of";
 
-        printf("My name = %s\n", name);
+        DEBUG("My name = %s\n", name);
 }
 
 
@@ -49,16 +50,14 @@ int parseline(const char *line, char *sep)
         char *config = "./product.reg";
 
         if (unlikely(!line)) {
-                printf("WARN: line empty! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNNING("line is empty\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNNING("register config file %s is null !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }

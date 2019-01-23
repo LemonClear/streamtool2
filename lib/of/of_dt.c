@@ -16,13 +16,14 @@
 #
 */
 #include <stdio.h>
+#include "logger.h"
 
 
 void of_dt()
 {
         char* name = "of_dt";
 
-        printf("My name = %s\n", name);
+        DEBUG("My name = %s\n", name);
 }
 
 
@@ -39,16 +40,14 @@ int parse_regconfig(regs **reglist)
         char *config = "./product.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: product reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNNING("register config file %s is null !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
