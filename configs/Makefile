@@ -22,6 +22,6 @@ PHONY:_all
 _all:copy_config
 
 copy_config:
-	cp $(source) $(BUILD_OUTPUT)
+	cp $(source) $(BUILD_OUTPUT_CONFIGS)
 
 .PHONY: $(PHONY)

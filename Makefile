@@ -61,7 +61,11 @@ BUILD_OUTPUT_TOOLOBJS  = $(BUILD_OUTPUT)/tools
 BUILD_OUTPUT_TOOLOBJS := $(shell mkdir -p $(BUILD_OUTPUT_TOOLOBJS) && cd $(BUILD_OUTPUT_TOOLOBJS) && pwd)
 $(if $(BUILD_OUTPUT_TOOLOBJS),, $(error failed to create output directory "$(BUILD_OUTPUT_TOOLOBJS)"))
 
-export BUILD_OUTPUT BUILD_OUTPUT_LIBOBJS BUILD_OUTPUT_TOOLOBJS
+BUILD_OUTPUT_CONFIGS  = $(BUILD_OUTPUT)/configs
+BUILD_OUTPUT_CONFIGS := $(shell mkdir -p $(BUILD_OUTPUT_CONFIGS) && cd $(BUILD_OUTPUT_CONFIGS) && pwd)
+$(if $(BUILD_OUTPUT_CONFIGS),, $(error failed to create output directory "$(BUILD_OUTPUT_CONFIGS)"))
+
+export BUILD_OUTPUT BUILD_OUTPUT_LIBOBJS BUILD_OUTPUT_TOOLOBJS BUILD_OUTPUT_CONFIGS
 
 # 4.Make variables (CC, etc...)
 AS              = as
@@ -94,7 +98,8 @@ STATIC_LIBS_PATH := -L$(srctree)/out/
 
 STATIC_LIBS      := -lof \
 		    -llibrary \
-		    -lcerr
+		    -lcerr \
+		    -llogger
 
 DYNAMIC_LIBS_PATH:= -L$(srctree)/out/
 
