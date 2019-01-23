@@ -46,7 +46,7 @@ int parse_regconfig(regs **reglist)
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                WARNNING("register config file %s is null !!! use default config !!!\n",
+                WARNING("register config file %s is null !!! use default config !!!\n",
                                 config);
                 ret = 0;
                 goto ret_config;

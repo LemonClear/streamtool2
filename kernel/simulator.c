@@ -44,7 +44,7 @@ static int parse_defconfigs(param *params)
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                WARNNING("config file {%s} not exist !!! use default config !!!\n",
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
                                 config);
                 ret = 0;
                 goto ret_config;
@@ -74,7 +74,7 @@ static int parse_commandline(int argc, char *argv[], param *params)
         }
 
         if (unlikely(argc < 2) || unlikely(!argv[1])) {
-                WARNNING("no commandline parameters !!!\n");
+                WARNING("no commandline parameters !!!\n");
                 ret = 0;
                 goto ret_commands;
         }
@@ -158,7 +158,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         /*parse: commandline*/
         ret = parse_commandline(argc, argv, simulator->params);
         if (unlikely(ret)) {
-                WARNNING("ignore commandline parameters !!!\n");
+                WARNING("ignore commandline parameters !!!\n");
         }
 
         /*init: the whole product*/

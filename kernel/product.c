@@ -427,7 +427,7 @@ static int parse_regconfig(regs **reglist)
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                WARNNING("config file {%s} not exist !!! use default config !!!\n",
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
                                 config);
                 ret = 0;
                 goto ret_config;
@@ -456,7 +456,7 @@ static int product_alloc(ip *product, param *params)
 
         /*reg list*/
         if (!params->product_reg_count) {
-                WARNNING("have no registers !!!\n");
+                WARNING("have no registers !!!\n");
         }
 
         //Trick: malloc(0)!=NULL

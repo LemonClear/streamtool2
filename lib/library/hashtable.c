@@ -220,7 +220,7 @@ void * lookfor_hashtable(const char *string, hashtable *table)
         element = table[hashid].element;
         /*NULL means empty, miss!*/
         if (unlikely(!element)) {
-                WARNNING("MISS: element %s not hashed in table %p !\n",
+                WARNING("MISS: element %s not hashed in table %p !\n",
                                 string, table);
                 goto ret_element;
         }
@@ -258,7 +258,7 @@ do_rehash_find:
 
                 /*hashkey conflicts, miss!*/
                 element = NULL;
-                WARNNING("MISS: element %s not hashed in table %p !\n",
+                WARNING("MISS: element %s not hashed in table %p !\n",
                                 string, table);
 
         } while (table[hashid].element);

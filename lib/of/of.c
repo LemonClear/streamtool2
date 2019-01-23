@@ -50,13 +50,13 @@ int parseline(const char *line, char *sep)
         char *config = "./product.reg";
 
         if (unlikely(!line)) {
-                WARNNING("line is empty\n");
+                WARNING("line is empty\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                WARNNING("register config file %s is null !!! use default config !!!\n",
+                WARNING("register config file %s is null !!! use default config !!!\n",
                                 config);
                 ret = 0;
                 goto ret_config;
