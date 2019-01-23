@@ -25,12 +25,12 @@
 
 
 /**
- * parse_configs - parse the config file
+ * parse_defconfigs - parse the config file
  * @params:     param struct
  *
  * FIXME: to be replaced by kconfig/kbuild
  */
-static int parse_configs(param *params)
+static int parse_defconfigs(param *params)
 {
         int ret = -1;
         FILE *stream = NULL;
@@ -59,13 +59,13 @@ ret_config:
 
 
 /**
- * parse_commands - parse the command line
+ * parse_commandline - parse the command line
  * @argc:       strings count
  * @argv:       strings
  * @params:     parameter struct
  *
  */
-static int parse_commands(int argc, char *argv[], param *params)
+static int parse_commandline(int argc, char *argv[], param *params)
 {
         int ret = -1;
 
@@ -153,7 +153,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         }
 
         /*parse: config file*/
-        ret = parse_configs(simulator->params);
+        ret = parse_defconfigs(simulator->params);
         if (unlikely(ret)) {
                 printf("ERR: parse config file failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
@@ -161,7 +161,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         }
 
         /*parse: command line*/
-        ret = parse_commands(argc, argv, simulator->params);
+        ret = parse_commandline(argc, argv, simulator->params);
         if (unlikely(ret)) {
                 printf("WARN: ignore command lines! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);

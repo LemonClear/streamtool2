@@ -445,21 +445,21 @@ static int chip_alloc(ip *chip, param *params)
         //NO NEED on chip level!!!
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->chip_reg_count)) {
                 printf("INFO: chip have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        chip->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        chip->reglist = malloc((params->chip_reg_count + 1) * sizeof(regs *));
         if (unlikely(!chip->reglist)) {
                 printf("ERR: alloc chip reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)chip->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)chip->reglist, 0, (params->chip_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->chip_reg_count; id++) {
                 chip->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!chip->reglist[id])) {
                         printf("ERR: alloc chip reg%d failed! %s, %s, %d\n",
@@ -585,7 +585,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->chip_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(chip->reglist[sub]->name, "")))
                         continue;

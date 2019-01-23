@@ -479,21 +479,21 @@ static int ram_alloc(ip *ram, param *params)
         }
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->ram_reg_count)) {
                 printf("INFO: ram have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        ram->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        ram->reglist = malloc((params->ram_reg_count + 1) * sizeof(regs *));
         if (unlikely(!ram->reglist)) {
                 printf("ERR: alloc ram reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)ram->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)ram->reglist, 0, (params->ram_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->ram_reg_count; id++) {
                 ram->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!ram->reglist[id])) {
                         printf("ERR: alloc ram reg%d failed! %s, %s, %d\n",
@@ -587,7 +587,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->ram_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(ram->reglist[sub]->name, "")))
                         continue;

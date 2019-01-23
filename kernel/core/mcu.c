@@ -26,30 +26,30 @@
 
 /**
  * __on - main control cpu power on
- * @cp:   cp pointer
+ * @mcu:   mcu pointer
  *
  */
-static int __on(ip *cp)
+static int __on(ip *mcu)
 {
         int ret = -1;
 
-        if (unlikely(!cp)) {
-                printf("ERR: cp absent, please check! %s, %s, %d\n",
+        if (unlikely(!mcu)) {
+                printf("ERR: mcu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_on;
         }
 
-        /*cp level do 1st*/
+        /*mcu level do 1st*/
         //FIXME: todo...
 
         /*power on subips 2nd*/
         //No subips
 
         /*change state machine 3rd*/
-        cp->status = RUN;
+        mcu->status = RUN;
 
-        printf("INFO: cp:%s power on!!!!! %s, %s, %d\n",
-                        cp->name, __FILE__, __func__, __LINE__);
+        printf("INFO: mcu:%s power on!!!!! %s, %s, %d\n",
+                        mcu->name, __FILE__, __func__, __LINE__);
 
         ret = 0;
 ret_on:
@@ -58,16 +58,16 @@ ret_on:
 
 
 /**
- * __off - cp power off
- * @cp:    cp pointer
+ * __off - mcu power off
+ * @mcu:    mcu pointer
  *
  */
-static int __off(ip *cp)
+static int __off(ip *mcu)
 {
         int ret = -1;
 
-        if (unlikely(!cp)) {
-                printf("ERR: cp absent, please check! %s, %s, %d\n",
+        if (unlikely(!mcu)) {
+                printf("ERR: mcu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_off;
         }
@@ -75,14 +75,14 @@ static int __off(ip *cp)
         /*power off subips 1st*/
         //No subips
 
-        /*cp level do 2nd*/
+        /*mcu level do 2nd*/
         //FIXME: todo...
 
         /*change state machine 3rd*/
-        cp->status = OFF;
+        mcu->status = OFF;
 
-        printf("INFO: cp:%s power off!!!!! %s, %s, %d\n",
-                        cp->name, __FILE__, __func__, __LINE__);
+        printf("INFO: mcu:%s power off!!!!! %s, %s, %d\n",
+                        mcu->name, __FILE__, __func__, __LINE__);
 
         ret = 0;
 ret_off:
@@ -91,16 +91,16 @@ ret_off:
 
 
 /**
- * __idle - cp idle
- * @cp:   cp pointer
+ * __idle - mcu idle
+ * @mcu:   mcu pointer
  *
  */
-static int __idle(ip *cp)
+static int __idle(ip *mcu)
 {
         int ret = -1;
 
-        if (unlikely(!cp)) {
-                printf("ERR: cp absent, please check! %s, %s, %d\n",
+        if (unlikely(!mcu)) {
+                printf("ERR: mcu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_idle;
         }
@@ -108,14 +108,14 @@ static int __idle(ip *cp)
         /*idle subips 1st*/
         //No subips
 
-        /*cp level do 2nd*/
+        /*mcu level do 2nd*/
         //FIXME: todo...
 
         /*change state machine 3rd*/
-        cp->status = IDLE;
+        mcu->status = IDLE;
 
-        printf("INFO: cp:%s idle!!!!! %s, %s, %d\n",
-                        cp->name, __FILE__, __func__, __LINE__);
+        printf("INFO: mcu:%s idle!!!!! %s, %s, %d\n",
+                        mcu->name, __FILE__, __func__, __LINE__);
 
         ret = 0;
 ret_idle:
@@ -124,16 +124,16 @@ ret_idle:
 
 
 /**
- * __sleep - cp sleep
- * @cp:   cp pointer
+ * __sleep - mcu sleep
+ * @mcu:   mcu pointer
  *
  */
-static int __sleep(ip *cp)
+static int __sleep(ip *mcu)
 {
         int ret = -1;
 
-        if (unlikely(!cp)) {
-                printf("ERR: cp absent, please check! %s, %s, %d\n",
+        if (unlikely(!mcu)) {
+                printf("ERR: mcu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_sleep;
         }
@@ -141,14 +141,14 @@ static int __sleep(ip *cp)
         /*sleep subips 1st*/
         //No subips
 
-        /*cp level do 2nd*/
+        /*mcu level do 2nd*/
         //FIXME: todo...
 
         /*change state machine 3rd*/
-        cp->status = SLEEP;
+        mcu->status = SLEEP;
 
-        printf("INFO: cp:%s sleep!!!!! %s, %s, %d\n",
-                        cp->name, __FILE__, __func__, __LINE__);
+        printf("INFO: mcu:%s sleep!!!!! %s, %s, %d\n",
+                        mcu->name, __FILE__, __func__, __LINE__);
 
         ret = 0;
 ret_sleep:
@@ -157,31 +157,31 @@ ret_sleep:
 
 
 /**
- * __wakeup - cp wakeup
- * @cp:   cp pointer
+ * __wakeup - mcu wakeup
+ * @mcu:   mcu pointer
  *
  */
-static int __wakeup(ip *cp)
+static int __wakeup(ip *mcu)
 {
         int ret = -1;
 
-        if (unlikely(!cp)) {
-                printf("ERR: cp absent, please check! %s, %s, %d\n",
+        if (unlikely(!mcu)) {
+                printf("ERR: mcu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_wakeup;
         }
 
-        /*cp level do 1st*/
+        /*mcu level do 1st*/
         //FIXME: todo...
 
         /*wakeup subips 2nd*/
         //No subips
 
         /*change state machine 3rd*/
-        cp->status = RUN;
+        mcu->status = RUN;
 
-        printf("INFO: cp:%s wakeup!!!!! %s, %s, %d\n",
-                        cp->name, __FILE__, __func__, __LINE__);
+        printf("INFO: mcu:%s wakeup!!!!! %s, %s, %d\n",
+                        mcu->name, __FILE__, __func__, __LINE__);
 
         ret = 0;
 ret_wakeup:
@@ -191,32 +191,32 @@ ret_wakeup:
 
 /**
  * __tick - one tick trigger
- * @cp:   self pointer
+ * @mcu:   self pointer
  *
  */
-static int __tick(ip *cp)
+static int __tick(ip *mcu)
 {
         int ret = -1;
 
-        if (unlikely(!cp)) {
-                printf("ERR: cp absent, please check! %s, %s, %d\n",
+        if (unlikely(!mcu)) {
+                printf("ERR: mcu absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: cp:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        cp->name, tick_counter, __FILE__, __func__, __LINE__);
+        printf("INFO: mcu:%s tick:%llu come!!!!! %s, %s, %d\n",
+                        mcu->name, tick_counter, __FILE__, __func__, __LINE__);
 
-        /*cp level do 1st*/
+        /*mcu level do 1st*/
         //FIXME: todo...
 
         /*tick trigger subips 2nd*/
         //No subips
 
         /*done*/
-        printf("INFO: cp:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        cp->name, tick_counter, __FILE__, __func__, __LINE__);
+        printf("INFO: mcu:%s tick:%llu done!!!!! %s, %s, %d\n",
+                        mcu->name, tick_counter, __FILE__, __func__, __LINE__);
 
         ret = 0;
 ret_tick:
@@ -225,31 +225,31 @@ ret_tick:
 
 
 /**
- * __dump - cp dump informations
- * @cp:   cp pointer
+ * __dump - mcu dump informations
+ * @mcu:   mcu pointer
  *
  */
-static int __dump(ip *cp)
+static int __dump(ip *mcu)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== cp:%s dump start !!!!! ==========\n",
-                        cp->name);
+        printf("DEBUG: ========== mcu:%s dump start !!!!! ==========\n",
+                        mcu->name);
 
-        if (unlikely(!cp)) {
-                printf("ERR: cp absent, dump failed! %s, %s, %d\n",
+        if (unlikely(!mcu)) {
+                printf("ERR: mcu absent, dump failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_dump;
         }
 
-        /*dump cp elements 1st*/
+        /*dump mcu elements 1st*/
         //FIXME: todo...
 
         /*dump subips 2nd*/
         //No subips
 
-        printf("DEBUG: ========== cp:%s dump end !!!!! ==========\n",
-                        cp->name);
+        printf("DEBUG: ========== mcu:%s dump end !!!!! ==========\n",
+                        mcu->name);
 
         ret = 0;
 ret_dump:
@@ -259,7 +259,7 @@ ret_dump:
  * ops structure
  *
  */
-static const ip_operations cp_ops = {
+static const ip_operations mcu_ops = {
         .poweron = __on,
         .poweroff = __off,
         .idle = __idle,
@@ -279,10 +279,10 @@ static const ip_operations cp_ops = {
 static int parse_regconfig(regs **reglist)
 {
         int ret = -1;
-        char *config = "./cp.reg";
+        char *config = "./mcu.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: cp reglist absent! %s, %s, %d\n",
+                printf("ERR: mcu reglist absent! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_config;
         }
@@ -304,12 +304,12 @@ ret_config:
 
 
 /**
- * cp_alloc - alloc cp elements
- * @cp:   pointer to cp
+ * mcu_alloc - alloc mcu elements
+ * @mcu:   pointer to mcu
  * @params:    init parameters
  *
  */
-static int cp_alloc(ip *cp, param *params)
+static int mcu_alloc(ip *mcu, param *params)
 {
         int ret = -1;
         int id = -1;
@@ -318,41 +318,41 @@ static int cp_alloc(ip *cp, param *params)
         //FIXME: todo... maybe used as L2 cache? maybe no need.
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
-                printf("INFO: cp have no reg!!! %s, %s, %d\n",
+        if (unlikely(!params->mcu_reg_count)) {
+                printf("INFO: mcu have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        cp->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
-        if (unlikely(!cp->reglist)) {
-                printf("ERR: alloc cp reglist failed! %s, %s, %d\n",
+        mcu->reglist = malloc((params->mcu_reg_count + 1) * sizeof(regs *));
+        if (unlikely(!mcu->reglist)) {
+                printf("ERR: alloc mcu reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)cp->reglist, 0, (params->reg_count + 1 ) * sizeof(regs *));
+        memset((void *)mcu->reglist, 0, (params->mcu_reg_count + 1 ) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
-                cp->reglist[id] = malloc(sizeof(regs));
-                if (unlikely(!cp->reglist[id])) {
-                        printf("ERR: alloc cp reg%d failed! %s, %s, %d\n",
+        for (id = 0; id < params->mcu_reg_count; id++) {
+                mcu->reglist[id] = malloc(sizeof(regs));
+                if (unlikely(!mcu->reglist[id])) {
+                        printf("ERR: alloc mcu reg%d failed! %s, %s, %d\n",
                                         id, __FILE__, __func__, __LINE__);
                         goto ret_alloc;
                 }
-                memset((void *)cp->reglist[id], 0, sizeof(regs));
+                memset((void *)mcu->reglist[id], 0, sizeof(regs));
         }
 
         /*reg hastable*/
-        cp->name2reg = init_hashtable();
-        if (unlikely(!cp->name2reg)) {
-                printf("ERR: alloc cp reg hashtable failed! %s, %s, %d\n",
+        mcu->name2reg = init_hashtable();
+        if (unlikely(!mcu->name2reg)) {
+                printf("ERR: alloc mcu reg hashtable failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
 
-        cp->addr2reg = init_hashtable();
-        if (unlikely(!cp->addr2reg)) {
-                printf("ERR: alloc cp reg hashtable failed! %s, %s, %d\n",
+        mcu->addr2reg = init_hashtable();
+        if (unlikely(!mcu->addr2reg)) {
+                printf("ERR: alloc mcu reg hashtable failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
@@ -371,83 +371,83 @@ ret_alloc:
 
 
 /**
- * cp_init - init cp with params
- * @father:    pointer to the cp belongs to
- * @cp:        pointer to cp
- * @id:        cp id
+ * mcu_init - init mcu with params
+ * @father:    pointer to the mcu belongs to
+ * @mcu:       pointer to mcu
+ * @id:        mcu id
  * @params:    init parameters
  *
  */
-int cp_init(ip *father, ip *cp, int id, param *params)
+int mcu_init(ip *father, ip *mcu, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: cp init start!!!!! %s, %s, %d\n",
+        printf("INFO: mcu init start!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
-        if (unlikely(!cp) || unlikely(!params)) {
-                printf("ERR: cp or params is absent! %s, %s, %d\n",
+        if (unlikely(!mcu) || unlikely(!params)) {
+                printf("ERR: mcu or params is absent! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
 
         /*alloc*/
-        ret = cp_alloc(cp, params);
+        ret = mcu_alloc(mcu, params);
         if (unlikely(ret)) {
-                printf("ERR: cp alloc elements failed! %s, %s, %d\n",
+                printf("ERR: mcu alloc elements failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
 
         /*name*/
-        sprintf(cp->name, "cp%d", id);
+        sprintf(mcu->name, "mcu%d", id);
 
         /*id*/
-        cp->id = id;
+        mcu->id = id;
 
         /*state machine*/
-        cp->status = OFF;
+        mcu->status = OFF;
 
         /*ops*/
-        cp->ops = &cp_ops;
+        mcu->ops = &mcu_ops;
 
         /*memory*/
         //FIXME: todo... maybe used as L2 cache? maybe no need.
 
         /*reg list*/
-        ret = parse_regconfig(cp->reglist);
+        ret = parse_regconfig(mcu->reglist);
         if (unlikely(ret)) {
-                printf("ERR: cp reglist init failed! %s, %s, %d\n",
+                printf("ERR: mcu reglist init failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_init;
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->mcu_reg_count; sub++) {
                 /*bypass empty reglist elements*/
-                if (unlikely(!strcmp(cp->reglist[sub]->name, "")))
+                if (unlikely(!strcmp(mcu->reglist[sub]->name, "")))
                         continue;
 
                 /*table name2reg*/
-                ret = insert_hashtable(cp->reglist[sub]->name,
-                                (void *)cp->reglist[sub],
-                                cp->name2reg);
+                ret = insert_hashtable(mcu->reglist[sub]->name,
+                                (void *)mcu->reglist[sub],
+                                mcu->name2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, cp->reglist[sub]->name,
+                                        sub, mcu->reglist[sub]->name,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", cp->reglist[sub]->address);
-                ret = insert_hashtable(addr2str, (void *)cp->reglist[sub], cp->addr2reg);
+                sprintf(addr2str, "0x%x", mcu->reglist[sub]->address);
+                ret = insert_hashtable(addr2str, (void *)mcu->reglist[sub], mcu->addr2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, cp->reglist[sub]->address,
+                                        sub, mcu->reglist[sub]->address,
                                         __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
@@ -455,10 +455,10 @@ int cp_init(ip *father, ip *cp, int id, param *params)
 
         /*address*/
         //FIXME: according to reality
-        cp->address = cp->reglist;
+        mcu->address = mcu->reglist;
 
         /*parent*/
-        cp->parent = father;
+        mcu->parent = father;
 
         /*connected*/
         //No connected
@@ -469,7 +469,7 @@ int cp_init(ip *father, ip *cp, int id, param *params)
         /*subips: hashtable*/
         //No subips
 
-        printf("INFO: cp init end!!!!! %s, %s, %d\n",
+        printf("INFO: mcu init end!!!!! %s, %s, %d\n",
                         __FILE__, __func__, __LINE__);
 
 ret_init:

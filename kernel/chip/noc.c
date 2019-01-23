@@ -318,22 +318,22 @@ static int noc_alloc(ip *noc, param *params)
         //NO need on noc level!!!
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->noc_reg_count)) {
                 printf("INFO: noc have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL, if have no reg,
         //the noc->reglist value can also mark as this ip's address
-        noc->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        noc->reglist = malloc((params->noc_reg_count + 1) * sizeof(regs *));
         if (unlikely(!noc->reglist)) {
                 printf("ERR: alloc noc reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)noc->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)noc->reglist, 0, (params->noc_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->noc_reg_count; id++) {
                 noc->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!noc->reglist[id])) {
                         printf("ERR: alloc noc reg%d failed! %s, %s, %d\n",
@@ -427,7 +427,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->noc_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(noc->reglist[sub]->name, "")))
                         continue;

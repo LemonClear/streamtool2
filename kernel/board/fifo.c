@@ -336,21 +336,21 @@ static int fifo_alloc(ip *fifo, param *params)
         }
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->fifo_reg_count)) {
                 printf("INFO: fifo have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        fifo->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        fifo->reglist = malloc((params->fifo_reg_count + 1) * sizeof(regs *));
         if (unlikely(!fifo->reglist)) {
                 printf("ERR: alloc fifo reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)fifo->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)fifo->reglist, 0, (params->fifo_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->fifo_reg_count; id++) {
                 fifo->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!fifo->reglist[id])) {
                         printf("ERR: alloc fifo reg%d failed! %s, %s, %d\n",
@@ -444,7 +444,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->fifo_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(fifo->reglist[sub]->name, "")))
                         continue;

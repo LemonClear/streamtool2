@@ -323,22 +323,22 @@ static int pcie_alloc(ip *pcie, param *params)
         //NO NEED on pcie level!!!
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->pcie_reg_count)) {
                 printf("INFO: pcie have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL, if have no reg,
         //the pcie->reglist value can also mark as this ip's address
-        pcie->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        pcie->reglist = malloc((params->pcie_reg_count + 1) * sizeof(regs *));
         if (unlikely(!pcie->reglist)) {
                 printf("ERR: alloc pcie reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)pcie->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)pcie->reglist, 0, (params->pcie_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->pcie_reg_count; id++) {
                 pcie->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!pcie->reglist[id])) {
                         printf("ERR: alloc pcie reg%d failed! %s, %s, %d\n",
@@ -432,7 +432,7 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->pcie_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(pcie->reglist[sub]->name, "")))
                         continue;

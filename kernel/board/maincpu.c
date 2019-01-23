@@ -318,21 +318,21 @@ static int maincpu_alloc(ip *maincpu, param *params)
         //FIXME: todo... maybe used as L2 cache? maybe no need.
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->maincpu_reg_count)) {
                 printf("INFO: maincpu have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        maincpu->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        maincpu->reglist = malloc((params->maincpu_reg_count + 1) * sizeof(regs *));
         if (unlikely(!maincpu->reglist)) {
                 printf("ERR: alloc maincpu reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)maincpu->reglist, 0, (params->reg_count + 1 ) * sizeof(regs *));
+        memset((void *)maincpu->reglist, 0, (params->maincpu_reg_count + 1 ) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->maincpu_reg_count; id++) {
                 maincpu->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!maincpu->reglist[id])) {
                         printf("ERR: alloc maincpu reg%d failed! %s, %s, %d\n",
@@ -426,7 +426,7 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->maincpu_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(maincpu->reglist[sub]->name, "")))
                         continue;

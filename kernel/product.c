@@ -464,21 +464,21 @@ static int product_alloc(ip *product, param *params)
         //NO NEED on product level!!!
 
         /*reg list*/
-        if (!params->reg_count) { //FIXME: should separate ips reg count
+        if (!params->product_reg_count) {
                 printf("INFO: product have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        product->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        product->reglist = malloc((params->product_reg_count + 1) * sizeof(regs *));
         if (unlikely(!product->reglist)) {
                 printf("ERR: alloc product reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)product->reglist, 0, (params->reg_count + 1 ) * sizeof(regs *));
+        memset((void *)product->reglist, 0, (params->product_reg_count + 1 ) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->product_reg_count; id++) {
                 product->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!product->reglist[id])) {
                         printf("ERR: alloc product reg%d failed! %s, %s, %d\n",
@@ -603,7 +603,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->product_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(product->reglist[sub]->name, "")))
                         continue;

@@ -389,21 +389,21 @@ static int ddr_alloc(ip *ddr, param *params)
         }
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->ddr_reg_count)) {
                 printf("INFO: ddr have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        ddr->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        ddr->reglist = malloc((params->ddr_reg_count + 1) * sizeof(regs *));
         if (unlikely(!ddr->reglist)) {
                 printf("ERR: alloc ddr reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)ddr->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)ddr->reglist, 0, (params->ddr_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->ddr_reg_count; id++) {
                 ddr->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!ddr->reglist[id])) {
                         printf("ERR: alloc ddr reg%d failed! %s, %s, %d\n",
@@ -497,7 +497,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->ddr_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(ddr->reglist[sub]->name, "")))
                         continue;

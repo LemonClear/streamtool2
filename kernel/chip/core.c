@@ -440,21 +440,21 @@ static int core_alloc(ip *core, param *params)
         //NO need on core level!!!
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->core_reg_count)) {
                 printf("INFO: core have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        core->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        core->reglist = malloc((params->core_reg_count + 1) * sizeof(regs *));
         if (unlikely(!core->reglist)) {
                 printf("ERR: alloc core reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)core->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)core->reglist, 0, (params->core_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->core_reg_count; id++) {
                 core->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!core->reglist[id])) {
                         printf("ERR: alloc core reg%d failed! %s, %s, %d\n",
@@ -480,18 +480,18 @@ static int core_alloc(ip *core, param *params)
         }
 
         /*subips list*/
-        core->subips = malloc((params->np_count + params->tp_count +
-                                params->cp_count + params->ram_count + 1) * sizeof(ip *));
+        core->subips = malloc((params->ncp_count + params->tcp_count +
+                                params->mcu_count + params->ram_count + 1) * sizeof(ip *));
         if (unlikely(!core->subips)) {
                 printf("ERR: core alloc subip array failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)core->subips, 0, (params->np_count + params->tp_count +
-                                params->cp_count + params->ram_count + 1) * sizeof(ip *));
+        memset((void *)core->subips, 0, (params->ncp_count + params->tcp_count +
+                                params->mcu_count + params->ram_count + 1) * sizeof(ip *));
 
-        for (id = 0; id < (params->np_count + params->tp_count +
-                                params->cp_count + params->ram_count); id++) {
+        for (id = 0; id < (params->ncp_count + params->tcp_count +
+                                params->mcu_count + params->ram_count); id++) {
                 core->subips[id] = malloc(sizeof(ip));
                 if (unlikely(!core->subips[id])) {
                         printf("ERR: alloc core subip%d failed! %s, %s, %d\n",
@@ -579,7 +579,7 @@ int core_init(ip *father, ip *core, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->core_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(core->reglist[sub]->name, "")))
                         continue;
@@ -616,40 +616,40 @@ int core_init(ip *father, ip *core, int id, param *params)
         /*connected*/
         //No connected
 
-        /*subips: np 1st*/
-        for (sub = 0; sub < params->np_count; sub++) {
-                /*call subip:np init function*/
-                ret = np_init(core, core->subips[sub], sub, params);
+        /*subips: ncp 1st*/
+        for (sub = 0; sub < params->ncp_count; sub++) {
+                /*call subip:ncp init function*/
+                ret = ncp_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-np init failed! %s, %s, %d\n",
+                        printf("ERR: subip%d-ncp init failed! %s, %s, %d\n",
                                         sub, __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
         }
-        /*subips: tp 2nd*/
-        for (; sub < (params->np_count + params->tp_count); sub++) {
-                /*call subip:tp init function*/
-                ret = tp_init(core, core->subips[sub], sub, params);
+        /*subips: tcp 2nd*/
+        for (; sub < (params->ncp_count + params->tcp_count); sub++) {
+                /*call subip:tcp init function*/
+                ret = tcp_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-tp init failed! %s, %s, %d\n",
+                        printf("ERR: subip%d-tcp init failed! %s, %s, %d\n",
                                         sub, __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
         }
-        /*subips: cp 3rd*/
-        for (; sub < (params->np_count + params->tp_count +
-                                params->cp_count); sub++) {
-                /*call subip:cp init function*/
-                ret = cp_init(core, core->subips[sub], sub, params);
+        /*subips: mcu 3rd*/
+        for (; sub < (params->ncp_count + params->tcp_count +
+                                params->mcu_count); sub++) {
+                /*call subip:mcu init function*/
+                ret = mcu_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-cp init failed! %s, %s, %d\n",
+                        printf("ERR: subip%d-mcu init failed! %s, %s, %d\n",
                                         sub, __FILE__, __func__, __LINE__);
                         goto ret_init;
                 }
         }
         /*subips: ram 4th*/
-        for (; sub < (params->np_count + params->tp_count +
-                                params->cp_count + params->ram_count); sub++) {
+        for (; sub < (params->ncp_count + params->tcp_count +
+                                params->mcu_count + params->ram_count); sub++) {
                 /*call subip:ram init function*/
                 ret = ram_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
@@ -660,8 +660,8 @@ int core_init(ip *father, ip *core, int id, param *params)
         }
 
         /*subips: hashtable*/
-        for (sub = 0; sub < (params->np_count + params->tp_count +
-                                params->cp_count + params->ram_count); sub++) {
+        for (sub = 0; sub < (params->ncp_count + params->tcp_count +
+                                params->mcu_count + params->ram_count); sub++) {
                 /*bypass empty subip elements*/
                 if (unlikely(!strcmp(core->subips[sub]->name, "")))
                         continue;
@@ -682,7 +682,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)core->subips[sub],
                                 core->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash np/tp/cp/ram%d:0x%x to addr2subip \
+                        printf("ERR: hash ncp/tcp/mcu/ram%d:0x%x to addr2subip \
                                         table failed! %s, %s, %d\n",
                                         sub, core->subips[sub]->address,
                                         __FILE__, __func__, __LINE__);

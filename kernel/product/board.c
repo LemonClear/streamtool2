@@ -448,21 +448,21 @@ static int board_alloc(ip *board, param *params)
         //NO NEED on board level!!!
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->board_reg_count)) {
                 printf("INFO: board have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        board->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        board->reglist = malloc((params->board_reg_count + 1) * sizeof(regs *));
         if (unlikely(!board->reglist)) {
                 printf("ERR: alloc board reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)board->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)board->reglist, 0, (params->board_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->board_reg_count; id++) {
                 board->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!board->reglist[id])) {
                         printf("ERR: alloc board reg%d failed! %s, %s, %d\n",
@@ -593,7 +593,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->board_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(board->reglist[sub]->name, "")))
                         continue;

@@ -320,21 +320,21 @@ static int boardlink_alloc(ip *boardlink, param *params)
         //NO NEED on boardlink level!!!
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg counts
+        if (unlikely(!params->boardlink_reg_count)) {
                 printf("INFO: boardlink have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL
-        boardlink->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        boardlink->reglist = malloc((params->boardlink_reg_count + 1) * sizeof(regs *));
         if (unlikely(!boardlink->reglist)) {
                 printf("ERR: alloc boardlink reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)boardlink->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)boardlink->reglist, 0, (params->boardlink_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->boardlink_reg_count; id++) {
                 boardlink->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!boardlink->reglist[id])) {
                         printf("ERR: alloc boardlink reg%d failed! %s, %s, %d\n",
@@ -431,7 +431,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->boardlink_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(boardlink->reglist[sub]->name, "")))
                         continue;

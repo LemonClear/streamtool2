@@ -15,7 +15,7 @@
 #
 
 
-source          := $(wildcard *.sig *.reg *.defconfig)
+source          := $(wildcard regconfig* *defconfig)
 
 ## main compile
 PHONY:_all

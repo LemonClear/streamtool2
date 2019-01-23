@@ -326,22 +326,22 @@ static int chiplink_alloc(ip *chiplink, param *params)
         //NO NEED on chiplink level!!!
 
         /*reg list*/
-        if (unlikely(!params->reg_count)) { //FIXME: should separate ips reg count
+        if (unlikely(!params->chiplink_reg_count)) {
                 printf("INFO: chiplink have no reg!!! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
         }
 
         //Trick: malloc(0)!=NULL, if have no reg,
         //the chiplink->reglist value can also mark as this ip's address
-        chiplink->reglist = malloc((params->reg_count + 1) * sizeof(regs *));
+        chiplink->reglist = malloc((params->chiplink_reg_count + 1) * sizeof(regs *));
         if (unlikely(!chiplink->reglist)) {
                 printf("ERR: alloc chiplink reglist failed! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_alloc;
         }
-        memset((void *)chiplink->reglist, 0, (params->reg_count + 1) * sizeof(regs *));
+        memset((void *)chiplink->reglist, 0, (params->chiplink_reg_count + 1) * sizeof(regs *));
 
-        for (id = 0; id < params->reg_count; id++) {
+        for (id = 0; id < params->chiplink_reg_count; id++) {
                 chiplink->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!chiplink->reglist[id])) {
                         printf("ERR: alloc chiplink reg%d failed! %s, %s, %d\n",
@@ -437,7 +437,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         }
 
         /*reg hashtable*/
-        for (sub = 0; sub < params->reg_count; sub++) {
+        for (sub = 0; sub < params->chiplink_reg_count; sub++) {
                 /*bypass empty reglist elements*/
                 if (unlikely(!strcmp(chiplink->reglist[sub]->name, "")))
                         continue;

@@ -99,25 +99,53 @@ typedef struct device {
 
 /*parameter*/
 typedef struct parameter {
+        /*product*/
+        int product_reg_count;
+        /*boardlink*/
         int boardlink_count;
+        int boardlink_reg_count;
+        /*board*/
         int board_count;
+        int board_reg_count;
+        /*chiplink*/
         int chiplink_count;
+        int chiplink_reg_count;
+        /*chip*/
         int chip_count;
+        int chip_reg_count;
+        /*ddr*/
         int ddr_count;
-        int ddr_size;
+        int ddr_reg_count;
+        int *ddr_size;
+        /*fifo*/
         int fifo_count;
-        int fifo_size;
+        int fifo_reg_count;
+        int *fifo_size;
+        /*fifo*/
         int pcie_count;
+        int pcie_reg_count;
+        /*main cpu*/
         int maincpu_count;
+        int maincpu_reg_count;
+        /*noc*/
         int noc_count;
+        int noc_reg_count;
+        /*core*/
         int core_count;
-        int cp_count;
-        int np_count;
-        int tp_count;
+        int core_reg_count;
+        /*mcu*/
+        int mcu_count;
+        int mcu_reg_count;
+        /*ncp*/
+        int ncp_count;
+        int ncp_reg_count;
+        /*tcp*/
+        int tcp_count;
+        int tcp_reg_count;
+        /*ram*/
         int ram_count;
-        int ram_size;
-        int reg_count;
-        //FIXME: add more
+        int ram_reg_count;
+        int *ram_size;
 }param;
 
 /*simulator*/
@@ -154,9 +182,9 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params);
 /*core*/
 int core_init(ip *father, ip *core, int id, param *params);
 int noc_init(ip *father, ip *noc, int id, param *params);
-int cp_init(ip *father, ip *cp, int id, param *params);
-int np_init(ip *father, ip *np, int id, param *params);
-int tp_init(ip *father, ip *tp, int id, param *params);
+int mcu_init(ip *father, ip *mcu, int id, param *params);
+int ncp_init(ip *father, ip *ncp, int id, param *params);
+int tcp_init(ip *father, ip *tcp, int id, param *params);
 int ram_init(ip *father, ip *ram, int id, param *params);
 
 
