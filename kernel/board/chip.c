@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -35,18 +36,19 @@ static int __on(ip *chip)
         int id = 0;
 
         if (unlikely(!chip)) {
-                printf("ERR: chip absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- CHIP %s POWER ON GO... -\n", chip->name);
 
         /*chip level do 1st*/
         //FIXME: todo...
 
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip->subips is null !!!\n");
                 goto ret_on;
         }
 
@@ -55,9 +57,8 @@ static int __on(ip *chip)
                 /*each subip*/
                 ret = chip->subips[id]->ops->poweron(chip->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: poweron subip%d-%s failed! %s, %s, %d\n",
-                                        id, chip->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("poweron subip%d-%s failed !!!\n",
+                                        id, chip->subips[id]->name);
                         goto ret_on;
                 }
                 /*next subip*/
@@ -67,8 +68,8 @@ static int __on(ip *chip)
         /*change state machine third*/
         chip->status = RUN;
 
-        printf("INFO: chip:%s power on!!!!! %s, %s, %d\n",
-                        chip->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIP %s POWER ON DONE -\n", chip->name);
 
 ret_on:
         return ret;
@@ -86,15 +87,16 @@ static int __off(ip *chip)
         int id = 0;
 
         if (unlikely(!chip)) {
-                printf("ERR: chip absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is null !!!\n");
                 goto ret_off;
         }
 
+        /*begin*/
+        INFO("- CHIP %s POWER OFF GO... -\n", chip->name);
+
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip->subips is null !!!\n");
                 goto ret_off;
         }
 
@@ -103,9 +105,8 @@ static int __off(ip *chip)
                 /*each subip*/
                 ret = chip->subips[id]->ops->poweroff(chip->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: poweroff subip%d-%s failed! %s, %s, %d\n",
-                                        id, chip->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("poweroff subip%d-%s failed !!!\n",
+                                        id, chip->subips[id]->name);
                         goto ret_off;
                 }
                 /*next subip*/
@@ -118,8 +119,8 @@ static int __off(ip *chip)
         /*change state machine third*/
         chip->status = OFF;
 
-        printf("INFO: chip:%s power off!!!!! %s, %s, %d\n",
-                        chip->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIP %s POWER OFF DONE -\n", chip->name);
 
 ret_off:
         return ret;
@@ -137,15 +138,16 @@ static int __idle(ip *chip)
         int id = 0;
 
         if (unlikely(!chip)) {
-                printf("ERR: chip absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is null !!!\n");
                 goto ret_idle;
         }
 
+        /*begin*/
+        INFO("- CHIP %s IDLE GO... -\n", chip->name);
+
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip->subips is null !!!\n");
                 goto ret_idle;
         }
 
@@ -154,9 +156,8 @@ static int __idle(ip *chip)
                 /*each subip*/
                 ret = chip->subips[id]->ops->idle(chip->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
-                                        id, chip->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("idle subip%d-%s failed !!!\n",
+                                        id, chip->subips[id]->name);
                         goto ret_idle;
                 }
                 /*next subip*/
@@ -169,8 +170,8 @@ static int __idle(ip *chip)
         /*change state machine third*/
         chip->status = IDLE;
 
-        printf("INFO: chip:%s idle!!!!! %s, %s, %d\n",
-                        chip->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIP %s IDLE DONE -\n", chip->name);
 
 ret_idle:
         return ret;
@@ -188,15 +189,16 @@ static int __sleep(ip *chip)
         int id = 0;
 
         if (unlikely(!chip)) {
-                printf("ERR: chip absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is null !!!\n");
                 goto ret_sleep;
         }
 
+        /*begin*/
+        INFO("- CHIP %s SLEEP GO... -\n", chip->name);
+
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip->subips is null !!!\n");
                 goto ret_sleep;
         }
 
@@ -205,9 +207,8 @@ static int __sleep(ip *chip)
                 /*each subip*/
                 ret = chip->subips[id]->ops->sleep(chip->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
-                                        id, chip->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("sleep subip%d-%s failed !!!\n",
+                                        id, chip->subips[id]->name);
                         goto ret_sleep;
                 }
                 /*next subip*/
@@ -220,8 +221,8 @@ static int __sleep(ip *chip)
         /*change state machine third*/
         chip->status = SLEEP;
 
-        printf("INFO: chip:%s sleep!!!!! %s, %s, %d\n",
-                        chip->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIP %s SLEEP DONE -\n", chip->name);
 
 ret_sleep:
         return ret;
@@ -239,18 +240,19 @@ static int __wakeup(ip *chip)
         int id = 0;
 
         if (unlikely(!chip)) {
-                printf("ERR: chip absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- CHIP %s WAKEUP GO... -\n", chip->name);
 
         /*chip level do 1st*/
         //FIXME: todo...
 
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip->subips is null !!!\n");
                 goto ret_wakeup;
         }
 
@@ -259,9 +261,8 @@ static int __wakeup(ip *chip)
                 /*each subip*/
                 ret = chip->subips[id]->ops->wakeup(chip->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
-                                        id, chip->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("wakeup subip%d-%s failed !!!\n",
+                                        id, chip->subips[id]->name);
                         goto ret_wakeup;
                 }
                 /*next subip*/
@@ -271,8 +272,8 @@ static int __wakeup(ip *chip)
         /*change state machine third*/
         chip->status = RUN;
 
-        printf("INFO: chip:%s wakeup!!!!! %s, %s, %d\n",
-                        chip->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIP %s WAKEUP DONE -\n", chip->name);
 
 ret_wakeup:
         return ret;
@@ -290,22 +291,20 @@ static int __tick(ip *chip)
         int id = 0;
 
         if (unlikely(!chip)) {
-                printf("ERR: chip absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: chip:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        chip->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- CHIP %s TICK %llu GO... -\n",
+                        chip->name, tick_counter);
 
         /*chip level do 1st*/
         //FIXME: todo...
 
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip->subips is null !!!\n");
                 goto ret_tick;
         }
 
@@ -314,9 +313,8 @@ static int __tick(ip *chip)
                 /*each subip*/
                 ret = chip->subips[id]->ops->tickarrive(chip->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: tick subip%d-%s failed! %s, %s, %d\n",
-                                        id, chip->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("tick subip%d-%s failed !!!\n",
+                                        id, chip->subips[id]->name);
                         goto ret_tick;
                 }
                 /*next subip*/
@@ -324,8 +322,8 @@ static int __tick(ip *chip)
         }
 
         /*done*/
-        printf("INFO: chip:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        chip->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- CHIP %s TICK %llu DONE -\n",
+                        chip->name, tick_counter);
 
 ret_tick:
         return ret;
@@ -342,22 +340,20 @@ static int __dump(ip *chip)
         int ret = -1;
         int id = 0;
 
-        printf("DEBUG: ========== chip:%s dump start !!!!! ==========\n",
-                        chip->name);
-
         if (unlikely(!chip)) {
-                printf("ERR: chip absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP CHIP %s BEGIN ---\n", chip->name);
 
         /*dump chip elements 1st*/
         //FIXME: todo...
 
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip->subips absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip->subips is null !!!\n");
                 goto ret_dump;
         }
 
@@ -366,17 +362,16 @@ static int __dump(ip *chip)
                 /*each subip*/
                 ret = chip->subips[id]->ops->dump(chip->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
-                                        id, chip->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("dump subip%d-%s failed !!!\n",
+                                        id, chip->subips[id]->name);
                         goto ret_dump;
                 }
                 /*next subip*/
                 id++;
         }
 
-        printf("DEBUG: ========== chip:%s dump end !!!!! ==========\n",
-                        chip->name);
+        /*end*/
+        DEBUG("--- DUMP CHIP %s END ---\n", chip->name);
 
 ret_dump:
         return ret;
@@ -408,16 +403,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./chip.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: chip reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -446,15 +439,13 @@ static int chip_alloc(ip *chip, param *params)
 
         /*reg list*/
         if (unlikely(!params->chip_reg_count)) {
-                printf("INFO: chip have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no regster !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         chip->reglist = malloc((params->chip_reg_count + 1) * sizeof(regs *));
         if (unlikely(!chip->reglist)) {
-                printf("ERR: alloc chip reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)chip->reglist, 0, (params->chip_reg_count + 1) * sizeof(regs *));
@@ -462,8 +453,7 @@ static int chip_alloc(ip *chip, param *params)
         for (id = 0; id < params->chip_reg_count; id++) {
                 chip->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!chip->reglist[id])) {
-                        printf("ERR: alloc chip reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)chip->reglist[id], 0, sizeof(regs));
@@ -472,15 +462,13 @@ static int chip_alloc(ip *chip, param *params)
         /*reg hastable*/
         chip->name2reg = init_hashtable();
         if (unlikely(!chip->name2reg)) {
-                printf("ERR: alloc chip reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         chip->addr2reg = init_hashtable();
         if (unlikely(!chip->addr2reg)) {
-                printf("ERR: alloc chip reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -488,8 +476,7 @@ static int chip_alloc(ip *chip, param *params)
         chip->subips = malloc((params->core_count +
                                 params->noc_count + 1) * sizeof(ip *));
         if (unlikely(!chip->subips)) {
-                printf("ERR: chip alloc subip array failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc subip array failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)chip->subips, 0, (params->core_count +
@@ -499,8 +486,7 @@ static int chip_alloc(ip *chip, param *params)
                                 params->noc_count); id++) {
                 chip->subips[id] = malloc(sizeof(ip));
                 if (unlikely(!chip->subips[id])) {
-                        printf("ERR: alloc chip subip%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc subip%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)chip->subips[id], 0, sizeof(ip));
@@ -509,15 +495,13 @@ static int chip_alloc(ip *chip, param *params)
         /*subips hastable*/
         chip->name2subip = init_hashtable();
         if (unlikely(!chip->name2subip)) {
-                printf("ERR: alloc chip subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2subip failed !!!\n");
                 goto ret_alloc;
         }
 
         chip->addr2subip = init_hashtable();
         if (unlikely(!chip->addr2subip)) {
-                printf("ERR: alloc chip subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2subip failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -543,20 +527,17 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: chip init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- CHIP chip%d INIT GO... -\n", id);
 
         if (unlikely(!chip) || unlikely(!params)) {
-                printf("ERR: chip or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip is %p, params is %p !!!\n", chip, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = chip_alloc(chip, params);
         if (unlikely(ret)) {
-                printf("ERR: chip alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chip alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -579,8 +560,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(chip->reglist);
         if (unlikely(ret)) {
-                printf("ERR: chip reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -595,9 +575,8 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                                 (void *)chip->reglist[sub],
                                 chip->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, chip->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        chip->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -605,9 +584,8 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                 sprintf(addr2str, "0x%x", chip->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)chip->reglist[sub], chip->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, chip->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash 0x%x to addr2reg failed !!!\n",
+                                        chip->reglist[sub]->address);
                         goto ret_init;
                 }
         }
@@ -627,8 +605,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                 /*call subip:core init function*/
                 ret = core_init(chip, chip->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-core init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-core init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -637,8 +614,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                 /*call subip:noc init function*/
                 ret = noc_init(chip, chip->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-noc init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-noc init failed !!!\n",sub);
                         goto ret_init;
                 }
         }
@@ -655,9 +631,8 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                                 (void *)chip->subips[sub],
                                 chip->name2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash %s to name2subip table failed! %s, %s, %d\n",
-                                        chip->subips[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2subip failed !!!\n",
+                                        chip->subips[sub]->name);
                         goto ret_init;
                 }
 
@@ -666,15 +641,14 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)chip->subips[sub],
                                 chip->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash chip/noc%d:0x%x to addr2subip table failed! %s, %s, %d\n",
-                                        sub, chip->subips[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash 0x%x to addr2subip failed !!!\n",
+                                        chip->subips[sub]->address);
                         goto ret_init;
                 }
         }
 
-        printf("INFO: chip init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIP chip%d INIT DONE -\n", id);
 
 ret_init:
         return ret;

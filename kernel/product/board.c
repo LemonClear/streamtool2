@@ -409,7 +409,7 @@ static int parse_regconfig(regs **reglist)
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                WARNING("config file %s not exist !!! use default config !!!\n",
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
                                 config);
                 ret = 0;
                 goto ret_config;
