@@ -25,6 +25,7 @@
 #include <malloc.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -52,8 +53,7 @@ static int load_image_bd(ip *ddr, address32_t offset)
                 //FIXME: may load different image
                 fd = open(image, O_RDONLY);
                 if (unlikely(-1 == fd)) {
-                        printf("ERR: open image file:%s failed, please check! %s, %s, %d\n",
-                                        image, __FILE__, __func__, __LINE__);
+                        ERROR("open image file {%s} failed !!!\n", image);
                         goto ret_load;
                 }
 
@@ -81,18 +81,18 @@ static int __on(ip *ddr)
         int ret = -1;
         address32_t offset = 0;
 
-        /*begin*/
         if (unlikely(!ddr)) {
-                printf("ERR: ddr absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- DDR %s POWER ON GO... -\n", ddr->name);
 
         /*ddr level do 1st*/
         ret = load_image_bd(ddr, offset);
         if (unlikely(!ret)) {
-                printf("ERR: ddr load image backdoor failed, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("load image backdoor failed !!!\n");
                 goto ret_on;
         }
         //FIXME: todo...
@@ -104,8 +104,7 @@ static int __on(ip *ddr)
         ddr->status = RUN;
 
         /*end*/
-        printf("INFO: ddr:%s power on!!!!! %s, %s, %d\n",
-                        ddr->name, __FILE__, __func__, __LINE__);
+        INFO("- DDR %s POWER ON DONE -\n", ddr->name);
 
 ret_on:
         return ret;
@@ -122,10 +121,12 @@ static int __off(ip *ddr)
         int ret = -1;
 
         if (unlikely(!ddr)) {
-                printf("ERR: ddr absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- DDR %s POWER OFF GO... -\n", ddr->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -136,8 +137,8 @@ static int __off(ip *ddr)
         /*change state machine 3rd*/
         ddr->status = OFF;
 
-        printf("INFO: ddr:%s power off!!!!! %s, %s, %d\n",
-                        ddr->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- DDR %s POWER OFF DONE -\n", ddr->name);
 
         ret = 0;
 ret_off:
@@ -155,10 +156,12 @@ static int __idle(ip *ddr)
         int ret = -1;
 
         if (unlikely(!ddr)) {
-                printf("ERR: ddr absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- DDR %s IDLE GO... -\n", ddr->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -169,8 +172,8 @@ static int __idle(ip *ddr)
         /*change state machine 3rd*/
         ddr->status = IDLE;
 
-        printf("INFO: ddr:%s idle!!!!! %s, %s, %d\n",
-                        ddr->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- DDR %s IDLE DONE -\n", ddr->name);
 
         ret = 0;
 ret_idle:
@@ -188,10 +191,12 @@ static int __sleep(ip *ddr)
         int ret = -1;
 
         if (unlikely(!ddr)) {
-                printf("ERR: ddr absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- DDR %s SLEEP GO... -\n", ddr->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -202,8 +207,8 @@ static int __sleep(ip *ddr)
         /*change state machine 3rd*/
         ddr->status = SLEEP;
 
-        printf("INFO: ddr:%s sleep!!!!! %s, %s, %d\n",
-                        ddr->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- DDR %s SLEEP DONE -\n", ddr->name);
 
         ret = 0;
 ret_sleep:
@@ -221,10 +226,12 @@ static int __wakeup(ip *ddr)
         int ret = -1;
 
         if (unlikely(!ddr)) {
-                printf("ERR: ddr absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- DDR %s WAKEUP GO... -\n", ddr->name);
 
         /*ddr level do 1st*/
         //FIXME: todo...
@@ -235,8 +242,8 @@ static int __wakeup(ip *ddr)
         /*change state machine 3rd*/
         ddr->status = RUN;
 
-        printf("INFO: ddr:%s wakeup!!!!! %s, %s, %d\n",
-                        ddr->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- DDR %s WAKEUP DONE -\n", ddr->name);
 
         ret = 0;
 ret_wakeup:
@@ -254,14 +261,13 @@ static int __tick(ip *ddr)
         int ret = -1;
 
         if (unlikely(!ddr)) {
-                printf("ERR: ddr absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: ddr:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        ddr->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- DDR %s TICK %llu GO... -\n",
+                        ddr->name, tick_counter);
 
         /*ddr level do 1st*/
         //FIXME: todo...
@@ -270,9 +276,9 @@ static int __tick(ip *ddr)
         /*tick trigger subips 2nd*/
         //NO subips
 
-        /*done*/
-        printf("INFO: ddr:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        ddr->name, tick_counter, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- DDR %s TICK %llu DONE -\n",
+                        ddr->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -289,14 +295,13 @@ static int __dump(ip *ddr)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== ddr:%s dump start !!!!! ==========\n",
-                        ddr->name);
-
         if (unlikely(!ddr)) {
-                printf("ERR: ddr absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP DDR %s BEGIN ---\n", ddr->name);
 
         /*dump ddr elements 1st*/
         //FIXME: todo...
@@ -304,8 +309,8 @@ static int __dump(ip *ddr)
         /*dump subips 2nd*/
         //NO subips
 
-        printf("DEBUG: ========== ddr:%s dump end !!!!! ==========\n",
-                        ddr->name);
+        /*end*/
+        DEBUG("--- DUMP DDR %s END ---\n", ddr->name);
 
         ret = 0;
 ret_dump:
@@ -338,16 +343,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./ddr.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: ddr reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -373,8 +376,7 @@ static int ddr_alloc(ip *ddr, param *params)
         /*memory*/
         ddr->memory = malloc((params->ddr_count + 1) * sizeof(address32_t *));
         if (unlikely(!ddr->memory)) {
-                printf("ERR: alloc ddr memory failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc memory failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)ddr->memory, 0, (params->ddr_count + 1) * sizeof(address32_t *));
@@ -382,23 +384,20 @@ static int ddr_alloc(ip *ddr, param *params)
         for (id = 0; id < params->ddr_count; id++) {
                 ddr->memory[id] = malloc(params->ddr_size); //ATT: memory[id]++ is 4bytes
                 if (unlikely(!ddr->memory[id])) {
-                        printf("ERR: alloc ddr mem%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc mem%d failed !!!\n", id);
                         goto ret_alloc;
                 }
         }
 
         /*reg list*/
         if (unlikely(!params->ddr_reg_count)) {
-                printf("INFO: ddr have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no registers !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         ddr->reglist = malloc((params->ddr_reg_count + 1) * sizeof(regs *));
         if (unlikely(!ddr->reglist)) {
-                printf("ERR: alloc ddr reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)ddr->reglist, 0, (params->ddr_reg_count + 1) * sizeof(regs *));
@@ -406,8 +405,7 @@ static int ddr_alloc(ip *ddr, param *params)
         for (id = 0; id < params->ddr_reg_count; id++) {
                 ddr->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!ddr->reglist[id])) {
-                        printf("ERR: alloc ddr reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)ddr->reglist[id], 0, sizeof(regs));
@@ -416,15 +414,13 @@ static int ddr_alloc(ip *ddr, param *params)
         /*reg hastable*/
         ddr->name2reg = init_hashtable();
         if (unlikely(!ddr->name2reg)) {
-                printf("ERR: alloc ddr reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         ddr->addr2reg = init_hashtable();
         if (unlikely(!ddr->addr2reg)) {
-                printf("ERR: alloc ddr reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -456,20 +452,18 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: ddr init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- DDR ddr%d INIT GO... -\n", id);
 
         if (unlikely(!ddr) || unlikely(!params)) {
-                printf("ERR: ddr or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr is %p, params is %p !!!\n",
+                                ddr, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = ddr_alloc(ddr, params);
         if (unlikely(ret)) {
-                printf("ERR: ddr alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ddr alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -491,8 +485,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(ddr->reglist);
         if (unlikely(ret)) {
-                printf("ERR: ddr reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -507,9 +500,8 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
                                 (void *)ddr->reglist[sub],
                                 ddr->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, ddr->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        ddr->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -517,9 +509,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
                 sprintf(addr2str, "0x%x", ddr->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)ddr->reglist[sub], ddr->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, ddr->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -540,8 +530,8 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         /*subips: hashtable*/
         //NO subips
 
-        printf("INFO: ddr init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- DDR ddr%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
