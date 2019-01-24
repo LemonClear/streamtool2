@@ -22,6 +22,7 @@
 #include <fcntl.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,8 +35,7 @@ int clock_wakeup(ip *product)
         int ret = -1;
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, wakeup failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_wakeup;
         }
 
@@ -64,8 +64,7 @@ int clock_run(ip *product)
 
         /*begin*/
         if (unlikely(!product)) {
-                printf("ERR: product absent, run failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_run;
         }
 
