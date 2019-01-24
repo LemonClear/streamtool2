@@ -592,8 +592,8 @@ int product_init(ip *father, ip *product, int id, param *params)
                                 (void *)product->reglist[sub],
                                 product->name2reg);
                 if (unlikely(ret)) {
-                        ERROR("hash reg%d:%s to name2reg failed !!!\n",
-                                        sub, product->reglist[sub]->name);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        product->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -601,8 +601,8 @@ int product_init(ip *father, ip *product, int id, param *params)
                 sprintf(addr2str, "0x%x", product->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)product->reglist[sub], product->addr2reg);
                 if (unlikely(ret)) {
-                        ERROR("hash reg%d:0x%x to addr2reg failed !!!\n",
-                                        sub, product->reglist[sub]->address);
+                        ERROR("hash 0x%x to addr2reg failed !!!\n",
+                                        product->reglist[sub]->address);
                         goto ret_init;
                 }
         }

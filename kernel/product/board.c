@@ -537,7 +537,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         INFO("- BOARD board%d INIT GO... -\n", id);
 
         if (unlikely(!board) || unlikely(!params)) {
-                ERROR("board is %p, params is %p !!!\n");
+                ERROR("board is %p, params is %p !!!\n", board, params);
                 goto ret_init;
         }
 
@@ -581,8 +581,8 @@ int board_init(ip *father, ip *board, int id, param *params)
                                 (void *)board->reglist[sub],
                                 board->name2reg);
                 if (unlikely(ret)) {
-                        ERROR("hash reg%d:%s to name2reg failed !!!\n",
-                                        sub, board->reglist[sub]->name);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        board->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -590,8 +590,8 @@ int board_init(ip *father, ip *board, int id, param *params)
                 sprintf(addr2str, "0x%x", board->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)board->reglist[sub], board->addr2reg);
                 if (unlikely(ret)) {
-                        ERROR("hash reg%d:0x%x to addr2reg failed !!!\n",
-                                        sub, board->reglist[sub]->address);
+                        ERROR("hash 0x%x to addr2reg failed !!!\n",
+                                        board->reglist[sub]->address);
                         goto ret_init;
                 }
         }
@@ -697,8 +697,8 @@ int board_init(ip *father, ip *board, int id, param *params)
                 }
         }
 
-        /*begin*/
-        INFO("- BOARD board%d INIT DONE -\n", board);
+        /*end*/
+        INFO("- BOARD board%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
