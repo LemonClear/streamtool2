@@ -54,31 +54,31 @@
 
 /*func definitions*/
 #define ERROR \
-        (printf("%s[%s,%s]%s %sERROR:  %s %s[%s, %s(), line %d]%s ", \
+        (printf("%s[%s,%s]%s %sERROR:  %s %s[ %s, line %d, %s() ]%s ", \
                 LOG_BG_VIRDIAN, __DATE__, __TIME__, LOG_END, \
                 LOG_FG_RED, LOG_END, \
-                LOG_BG_BLACK, __FILE__, __func__, __LINE__, LOG_END), \
+                LOG_BG_BLACK, __FILE__, __LINE__, __func__, LOG_END), \
                 printf)
 
 #define WARNING \
-        (printf("%s[%s,%s]%s %sWARNING:%s %s[%s, %s(), line %d]%s ", \
+        (printf("%s[%s,%s]%s %sWARNING:%s %s[ %s, line %d, %s() ]%s ", \
                 LOG_BG_VIRDIAN, __DATE__, __TIME__, LOG_END, \
                 LOG_FG_YELLOW, LOG_END, \
-                LOG_BG_BLACK, __FILE__, __func__, __LINE__, LOG_END), \
+                LOG_BG_BLACK, __FILE__, __LINE__, __func__, LOG_END), \
                 printf)
 
 #define INFO \
-        (printf("%s[%s,%s]%s %sINFO:   %s %s[%s, %s(), line %d]%s ", \
+        (printf("%s[%s,%s]%s %sINFO:   %s %s[ %s, line %d, %s() ]%s ", \
                 LOG_BG_VIRDIAN, __DATE__, __TIME__, LOG_END, \
                 LOG_FG_GREEN, LOG_END, \
-                LOG_BG_BLACK, __FILE__, __func__, __LINE__, LOG_END), \
+                LOG_BG_BLACK, __FILE__, __LINE__, __func__, LOG_END), \
                 printf)
 
 #define DEBUG \
-        (printf("%s[%s,%s]%s %sDEBUG:  %s %s[%s, %s(), line %d]%s ", \
+        (printf("%s[%s,%s]%s %sDEBUG:  %s %s[ %s, line %d, %s() ]%s ", \
                 LOG_BG_VIRDIAN, __DATE__, __TIME__, LOG_END, \
                 LOG_FG_BLUE, LOG_END, \
-                LOG_BG_BLACK, __FILE__, __func__, __LINE__, LOG_END), \
+                LOG_BG_BLACK, __FILE__, __LINE__, __func__, LOG_END), \
                 printf)
 
 
