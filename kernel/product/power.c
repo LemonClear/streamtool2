@@ -20,6 +20,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include "common.h"
+#include "logger.h"
 
 
 /**
@@ -31,11 +32,8 @@ int power_on(ip *product)
 {
         int ret = -1;
 
-        printf("INFO: Power On !!\n");
-
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_power_on;
         }
 
@@ -54,11 +52,9 @@ ret_power_on:
 int power_off(ip *product)
 {
         int ret = -1;
-        printf("INFO: Power Off !!\n");
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_power_off;
         }
 
@@ -77,11 +73,9 @@ ret_power_off:
 int power_idle(ip *product)
 {
         int ret = -1;
-        printf("INFO: Power Idle !!\n");
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_power_idle;
         }
 
@@ -100,11 +94,9 @@ ret_power_idle:
 int power_sleep(ip *product)
 {
         int ret = -1;
-        printf("INFO: Power Sleep\n");
 
         if (unlikely(!product)) {
-                printf("ERR: product absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("product is null !!!\n");
                 goto ret_power_sleep;
         }
 
