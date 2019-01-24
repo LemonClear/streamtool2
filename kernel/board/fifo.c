@@ -23,6 +23,7 @@
 #include <malloc.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 
@@ -36,10 +37,12 @@ static int __on(ip *fifo)
         int ret = -1;
 
         if (unlikely(!fifo)) {
-                printf("ERR: fifo absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- FIFO %s POWER ON GO... -\n", fifo->name);
 
         /*fifo level do 1st*/
         //FIXME: todo...
@@ -50,8 +53,8 @@ static int __on(ip *fifo)
         /*change state machine 3rd*/
         fifo->status = RUN;
 
-        printf("INFO: fifo:%s power on!!!!! %s, %s, %d\n",
-                        fifo->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- FIFO %s POWER ON DONE -\n", fifo->name);
 
         ret = 0;
 ret_on:
@@ -69,10 +72,12 @@ static int __off(ip *fifo)
         int ret = -1;
 
         if (unlikely(!fifo)) {
-                printf("ERR: fifo absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- FIFO %s POWER OFF GO... -\n", fifo->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -83,8 +88,8 @@ static int __off(ip *fifo)
         /*change state machine 3rd*/
         fifo->status = OFF;
 
-        printf("INFO: fifo:%s power off!!!!! %s, %s, %d\n",
-                        fifo->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- FIFO %s POWER OFF DONE -\n", fifo->name);
 
         ret = 0;
 ret_off:
@@ -102,10 +107,12 @@ static int __idle(ip *fifo)
         int ret = -1;
 
         if (unlikely(!fifo)) {
-                printf("ERR: fifo absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- FIFO %s IDLE GO... -\n", fifo->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -116,8 +123,8 @@ static int __idle(ip *fifo)
         /*change state machine 3rd*/
         fifo->status = IDLE;
 
-        printf("INFO: fifo:%s idle!!!!! %s, %s, %d\n",
-                        fifo->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- FIFO %s IDLE DONE -\n", fifo->name);
 
         ret = 0;
 ret_idle:
@@ -135,10 +142,12 @@ static int __sleep(ip *fifo)
         int ret = -1;
 
         if (unlikely(!fifo)) {
-                printf("ERR: fifo absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- FIFO %s SLEEP GO... -\n", fifo->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -149,8 +158,8 @@ static int __sleep(ip *fifo)
         /*change state machine 3rd*/
         fifo->status = SLEEP;
 
-        printf("INFO: fifo:%s sleep!!!!! %s, %s, %d\n",
-                        fifo->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- FIFO %s SLEEP DONE -\n", fifo->name);
 
         ret = 0;
 ret_sleep:
@@ -168,10 +177,12 @@ static int __wakeup(ip *fifo)
         int ret = -1;
 
         if (unlikely(!fifo)) {
-                printf("ERR: fifo absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- FIFO %s WAKEUP GO... -\n", fifo->name);
 
         /*fifo level do 1st*/
         //FIXME: todo...
@@ -182,8 +193,8 @@ static int __wakeup(ip *fifo)
         /*change state machine 3rd*/
         fifo->status = RUN;
 
-        printf("INFO: fifo:%s wakeup!!!!! %s, %s, %d\n",
-                        fifo->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- FIFO %s WAKEUP DONE -\n", fifo->name);
 
         ret = 0;
 ret_wakeup:
@@ -201,14 +212,13 @@ static int __tick(ip *fifo)
         int ret = -1;
 
         if (unlikely(!fifo)) {
-                printf("ERR: fifo absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: fifo:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        fifo->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- FIFO %s TICK %llu GO... -\n",
+                        fifo->name, tick_counter);
 
         /*fifo level do 1st*/
         //FIXME: todo...
@@ -218,8 +228,8 @@ static int __tick(ip *fifo)
         //NO subips
 
         /*done*/
-        printf("INFO: fifo:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        fifo->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- FIFO %s TICK %llu DONE -\n",
+                        fifo->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -236,14 +246,13 @@ static int __dump(ip *fifo)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== fifo:%s dump start !!!!! ==========\n",
-                        fifo->name);
-
         if (unlikely(!fifo)) {
-                printf("ERR: fifo absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP FIFO %s BEGIN ---\n", fifo->name);
 
         /*dump fifo elements 1st*/
         //FIXME: todo...
@@ -251,8 +260,8 @@ static int __dump(ip *fifo)
         /*dump subips 2nd*/
         //NO subips
 
-        printf("DEBUG: ========== fifo:%s dump end !!!!! ==========\n",
-                        fifo->name);
+        /*end*/
+        DEBUG("--- DUMP FIFO %s END ---\n", fifo->name);
 
         ret = 0;
 ret_dump:
@@ -285,16 +294,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./fifo.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: fifo reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -320,8 +327,7 @@ static int fifo_alloc(ip *fifo, param *params)
         /*memory*/
         fifo->memory = malloc((params->fifo_count + 1) * sizeof(address32_t *));
         if (unlikely(!fifo->memory)) {
-                printf("ERR: alloc fifo memory failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc memory failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)fifo->memory, 0, (params->fifo_count + 1) * sizeof(address32_t *));
@@ -329,23 +335,20 @@ static int fifo_alloc(ip *fifo, param *params)
         for (id = 0; id < params->fifo_count; id++) {
                 fifo->memory[id] = malloc(params->fifo_size); //ATT: memory[id]++ is 4bytes
                 if (unlikely(!fifo->memory[id])) {
-                        printf("ERR: alloc fifo mem%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc mem%d failed !!!\n", id);
                         goto ret_alloc;
                 }
         }
 
         /*reg list*/
         if (unlikely(!params->fifo_reg_count)) {
-                printf("INFO: fifo have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no register !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         fifo->reglist = malloc((params->fifo_reg_count + 1) * sizeof(regs *));
         if (unlikely(!fifo->reglist)) {
-                printf("ERR: alloc fifo reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)fifo->reglist, 0, (params->fifo_reg_count + 1) * sizeof(regs *));
@@ -353,8 +356,7 @@ static int fifo_alloc(ip *fifo, param *params)
         for (id = 0; id < params->fifo_reg_count; id++) {
                 fifo->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!fifo->reglist[id])) {
-                        printf("ERR: alloc fifo reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)fifo->reglist[id], 0, sizeof(regs));
@@ -363,15 +365,13 @@ static int fifo_alloc(ip *fifo, param *params)
         /*reg hastable*/
         fifo->name2reg = init_hashtable();
         if (unlikely(!fifo->name2reg)) {
-                printf("ERR: alloc fifo reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         fifo->addr2reg = init_hashtable();
         if (unlikely(!fifo->addr2reg)) {
-                printf("ERR: alloc fifo reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -403,20 +403,18 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: fifo init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- FIFO fifo%d INIT GO... -\n", id);
 
         if (unlikely(!fifo) || unlikely(!params)) {
-                printf("ERR: fifo or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo is %p, params is %p !!!\n",
+                                fifo, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = fifo_alloc(fifo, params);
         if (unlikely(ret)) {
-                printf("ERR: fifo alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("fifo alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -438,8 +436,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(fifo->reglist);
         if (unlikely(ret)) {
-                printf("ERR: fifo reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -454,9 +451,8 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
                                 (void *)fifo->reglist[sub],
                                 fifo->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, fifo->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        fifo->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -464,9 +460,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
                 sprintf(addr2str, "0x%x", fifo->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)fifo->reglist[sub], fifo->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, fifo->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -484,8 +478,8 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         /*subips: hashtable*/
         //NO subips
 
-        printf("INFO: fifo init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- FIFO fifo%d INIT END -\n", id);
 
 ret_init:
         return ret;
