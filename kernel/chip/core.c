@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -35,17 +36,18 @@ static int __on(ip *core)
         int id = 0;
 
         if (unlikely(!core)) {
-                printf("ERR: core absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- CORE %s POWER ON GO... -\n", core->name);
 
         /*core level do 1st*/
         //FIXME: todo...
 
         if (unlikely(!core->subips)) {
-                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core->subips is null !!!\n");
                 goto ret_on;
         }
 
@@ -54,9 +56,8 @@ static int __on(ip *core)
                 /*each subip*/
                 ret = core->subips[id]->ops->poweron(core->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: poweron subip%d-%s failed! %s, %s, %d\n",
-                                        id, core->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("poweron subip%d-%s failed !!!\n",
+                                        id, core->subips[id]->name);
                         goto ret_on;
                 }
                 /*next subips*/
@@ -66,8 +67,8 @@ static int __on(ip *core)
         /*change state machine third*/
         core->status = RUN;
 
-        printf("INFO: core:%s power on!!!!! %s, %s, %d\n",
-                        core->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CORE %s POWER ON DONE -\n", core->name);
 
 ret_on:
         return ret;
@@ -85,15 +86,15 @@ static int __off(ip *core)
         int id = 0;
 
         if (unlikely(!core)) {
-                printf("ERR: core absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is null !!!\n");
                 goto ret_off;
         }
 
         /*begin*/
+        INFO("- CORE %s POWER OFF GO... -\n", core->name);
+
         if (unlikely(!core->subips)) {
-                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core->subips is null !!!\n");
                 goto ret_off;
         }
 
@@ -102,9 +103,8 @@ static int __off(ip *core)
                 /*each subip*/
                 ret = core->subips[id]->ops->poweroff(core->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: poweroff subip%d-%s failed! %s, %s, %d\n",
-                                        id, core->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("poweroff subip%d-%s failed !!!\n",
+                                        id, core->subips[id]->name);
                         goto ret_off;
                 }
                 /*next subips*/
@@ -117,8 +117,8 @@ static int __off(ip *core)
         /*change state machine third*/
         core->status = OFF;
 
-        printf("INFO: core:%s power off!!!!! %s, %s, %d\n",
-                        core->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CORE %s POWER OFF DONE -\n", core->name);
 
 ret_off:
         return ret;
@@ -136,15 +136,15 @@ static int __idle(ip *core)
         int id = 0;
 
         if (unlikely(!core)) {
-                printf("ERR: core absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is null !!!\n");
                 goto ret_idle;
         }
 
         /*begin*/
+        INFO("- CORE %s IDLE GO... -\n", core->name);
+
         if (unlikely(!core->subips)) {
-                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core->subips is null !!!\n");
                 goto ret_idle;
         }
 
@@ -153,9 +153,8 @@ static int __idle(ip *core)
                 /*each subip*/
                 ret = core->subips[id]->ops->idle(core->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
-                                        id, core->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("idle subip%d-%s failed !!!\n",
+                                        id, core->subips[id]->name);
                         goto ret_idle;
                 }
                 /*next subips*/
@@ -168,8 +167,8 @@ static int __idle(ip *core)
         /*change state machine third*/
         core->status = IDLE;
 
-        printf("INFO: core:%s idle!!!!! %s, %s, %d\n",
-                        core->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CORE %s IDLE DONE -\n", core->name);
 
 ret_idle:
         return ret;
@@ -187,15 +186,15 @@ static int __sleep(ip *core)
         int id = 0;
 
         if (unlikely(!core)) {
-                printf("ERR: core absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is null !!!\n");
                 goto ret_sleep;
         }
 
         /*begin*/
+        INFO("- CORE %s SLEEP GO... -\n", core->name);
+
         if (unlikely(!core->subips)) {
-                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core->subips is null !!!\n");
                 goto ret_sleep;
         }
 
@@ -204,9 +203,8 @@ static int __sleep(ip *core)
                 /*each subip*/
                 ret = core->subips[id]->ops->sleep(core->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
-                                        id, core->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("sleep subip%d-%s failed !!!\n",
+                                        id, core->subips[id]->name);
                         goto ret_sleep;
                 }
                 /*next subips*/
@@ -219,8 +217,8 @@ static int __sleep(ip *core)
         /*change state machine third*/
         core->status = SLEEP;
 
-        printf("INFO: core:%s sleep!!!!! %s, %s, %d\n",
-                        core->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CORE %s SLEEP DONE -\n", core->name);
 
 ret_sleep:
         return ret;
@@ -238,17 +236,18 @@ static int __wakeup(ip *core)
         int id = 0;
 
         if (unlikely(!core)) {
-                printf("ERR: core absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- CORE %s WAKEUP GO... -\n", core->name);
 
         /*core level do 1st*/
         //FIXME: todo...
 
         if (unlikely(!core->subips)) {
-                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core->subips is null !!!\n");
                 goto ret_wakeup;
         }
 
@@ -257,9 +256,8 @@ static int __wakeup(ip *core)
                 /*each subip*/
                 ret = core->subips[id]->ops->wakeup(core->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
-                                        id, core->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("wakeup subip%d-%s failed !!!\n",
+                                        id, core->subips[id]->name);
                         goto ret_wakeup;
                 }
                 /*next subips*/
@@ -269,8 +267,8 @@ static int __wakeup(ip *core)
         /*change state machine third*/
         core->status = RUN;
 
-        printf("INFO: core:%s wakeup!!!!! %s, %s, %d\n",
-                        core->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CORE %s WAKEUP DONE -\n", core->name);
 
 ret_wakeup:
         return ret;
@@ -288,21 +286,19 @@ static int __tick(ip *core)
         int id = 0;
 
         if (unlikely(!core)) {
-                printf("ERR: core absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: core:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        core->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- CORE %s TICK %llu GO... -\n",
+                        core->name, tick_counter);
 
         /*core level do 1st*/
         //FIXME: todo...
 
         if (unlikely(!core->subips)) {
-                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core->subips is null !!!\n");
                 goto ret_tick;
         }
 
@@ -311,9 +307,8 @@ static int __tick(ip *core)
                 /*each subip*/
                 ret = core->subips[id]->ops->tickarrive(core->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: tick subip%d-%s failed! %s, %s, %d\n",
-                                        id, core->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("tick subip%d-%s failed !!!\n",
+                                        id, core->subips[id]->name);
                         goto ret_tick;
                 }
                 /*next subips*/
@@ -321,8 +316,8 @@ static int __tick(ip *core)
         }
 
         /*done*/
-        printf("INFO: core:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        core->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- CORE %s TICK %llu DONE -\n",
+                        core->name, tick_counter);
 
 ret_tick:
         return ret;
@@ -339,21 +334,19 @@ static int __dump(ip *core)
         int ret = -1;
         int id = 0;
 
-        printf("DEBUG: ========== core:%s dump start !!!!! ==========\n",
-                        core->name);
-
         if (unlikely(!core)) {
-                printf("ERR: core absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP CORE %s BEGIN ---\n", core->name);
 
         /*dump core elements 1st*/
         //FIXME: todo...
 
         if (unlikely(!core->subips)) {
-                printf("ERR: core->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core->subips is null !!!\n");
                 goto ret_dump;
         }
 
@@ -362,17 +355,16 @@ static int __dump(ip *core)
                 /*each subip*/
                 ret = core->subips[id]->ops->dump(core->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
-                                        id, core->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("dump subip%d-%s failed !!!\n",
+                                        id, core->subips[id]->name);
                         goto ret_dump;
                 }
                 /*next subips*/
                 id++;
         }
 
-        printf("DEBUG: ========== core:%s dump end !!!!! ==========\n",
-                        core->name);
+        /*end*/
+        DEBUG("--- DUMP CORE %s END ---\n", core->name);
 
 ret_dump:
         return ret;
@@ -404,16 +396,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./core.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: core reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -441,15 +431,13 @@ static int core_alloc(ip *core, param *params)
 
         /*reg list*/
         if (unlikely(!params->core_reg_count)) {
-                printf("INFO: core have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no registers !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         core->reglist = malloc((params->core_reg_count + 1) * sizeof(regs *));
         if (unlikely(!core->reglist)) {
-                printf("ERR: alloc core reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)core->reglist, 0, (params->core_reg_count + 1) * sizeof(regs *));
@@ -457,8 +445,7 @@ static int core_alloc(ip *core, param *params)
         for (id = 0; id < params->core_reg_count; id++) {
                 core->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!core->reglist[id])) {
-                        printf("ERR: alloc core reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)core->reglist[id], 0, sizeof(regs));
@@ -467,15 +454,13 @@ static int core_alloc(ip *core, param *params)
         /*reg hastable*/
         core->name2reg = init_hashtable();
         if (unlikely(!core->name2reg)) {
-                printf("ERR: alloc core reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         core->addr2reg = init_hashtable();
         if (unlikely(!core->addr2reg)) {
-                printf("ERR: alloc core reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -483,8 +468,7 @@ static int core_alloc(ip *core, param *params)
         core->subips = malloc((params->ncp_count + params->tcp_count +
                                 params->mcu_count + params->ram_count + 1) * sizeof(ip *));
         if (unlikely(!core->subips)) {
-                printf("ERR: core alloc subip array failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc subip array failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)core->subips, 0, (params->ncp_count + params->tcp_count +
@@ -494,8 +478,7 @@ static int core_alloc(ip *core, param *params)
                                 params->mcu_count + params->ram_count); id++) {
                 core->subips[id] = malloc(sizeof(ip));
                 if (unlikely(!core->subips[id])) {
-                        printf("ERR: alloc core subip%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc subip%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)core->subips[id], 0, sizeof(ip));
@@ -504,15 +487,13 @@ static int core_alloc(ip *core, param *params)
         /*subips hastable*/
         core->name2subip = init_hashtable();
         if (unlikely(!core->name2subip)) {
-                printf("ERR: alloc core subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2subip failed !!!\n");
                 goto ret_alloc;
         }
 
         core->addr2subip = init_hashtable();
         if (unlikely(!core->addr2subip)) {
-                printf("ERR: alloc core subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2subip failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -538,20 +519,18 @@ int core_init(ip *father, ip *core, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: core init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- CORE core%d INIT GO... -\n", id);
 
         if (unlikely(!core) || unlikely(!params)) {
-                printf("ERR: core or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core is %p, params is %p\n",
+                                core, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = core_alloc(core, params);
         if (unlikely(ret)) {
-                printf("ERR: core alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("core alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -573,8 +552,7 @@ int core_init(ip *father, ip *core, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(core->reglist);
         if (unlikely(ret)) {
-                printf("ERR: core reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -589,9 +567,8 @@ int core_init(ip *father, ip *core, int id, param *params)
                                 (void *)core->reglist[sub],
                                 core->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, core->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        core->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -599,9 +576,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 sprintf(addr2str, "0x%x", core->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)core->reglist[sub], core->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, core->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -621,8 +596,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 /*call subip:ncp init function*/
                 ret = ncp_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-ncp init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-ncp init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -631,8 +605,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 /*call subip:tcp init function*/
                 ret = tcp_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-tcp init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-tcp init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -642,8 +615,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 /*call subip:mcu init function*/
                 ret = mcu_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-mcu init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-mcu init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -653,8 +625,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 /*call subip:ram init function*/
                 ret = ram_init(core, core->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-ram init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-ram init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -671,9 +642,8 @@ int core_init(ip *father, ip *core, int id, param *params)
                                 (void *)core->subips[sub],
                                 core->name2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash %s to name2subip table failed! %s, %s, %d\n",
-                                        core->subips[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2subip failed !!!\n",
+                                        core->subips[sub]->name);
                         goto ret_init;
                 }
 
@@ -682,16 +652,13 @@ int core_init(ip *father, ip *core, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)core->subips[sub],
                                 core->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash ncp/tcp/mcu/ram%d:0x%x to addr2subip \
-                                        table failed! %s, %s, %d\n",
-                                        sub, core->subips[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2subip failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
 
-        printf("INFO: core init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CORE core%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
