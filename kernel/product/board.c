@@ -590,8 +590,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 sprintf(addr2str, "0x%x", board->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)board->reglist[sub], board->addr2reg);
                 if (unlikely(ret)) {
-                        ERROR("hash 0x%x to addr2reg failed !!!\n",
-                                        board->reglist[sub]->address);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -691,8 +690,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)board->subips[sub],
                                 board->addr2subip);
                 if (unlikely(ret)) {
-                        ERROR("hash 0x%x to addr2subip failed !!!\n",
-                                        board->subips[sub]->address);
+                        ERROR("hash %s to addr2subip failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }

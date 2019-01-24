@@ -601,8 +601,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                 sprintf(addr2str, "0x%x", product->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)product->reglist[sub], product->addr2reg);
                 if (unlikely(ret)) {
-                        ERROR("hash 0x%x to addr2reg failed !!!\n",
-                                        product->reglist[sub]->address);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -658,8 +657,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)product->subips[sub],
                                 product->addr2subip);
                 if (unlikely(ret)) {
-                        ERROR("hash 0x%x to addr2subip failed !!!\n",
-                                        product->subips[sub]->address);
+                        ERROR("hash %s to addr2subip failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }

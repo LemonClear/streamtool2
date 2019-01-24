@@ -448,8 +448,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
                 sprintf(addr2str, "0x%x", boardlink->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)boardlink->reglist[sub], boardlink->addr2reg);
                 if (unlikely(ret)) {
-                        ERROR("hash 0x%x to addr2reg failed !!!\n",
-                                        boardlink->reglist[sub]->address);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
