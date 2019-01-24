@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -35,18 +36,19 @@ static int __on(ip *board)
         int id = 0;
 
         if (unlikely(!board)) {
-                printf("ERR: board absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- BOARD %s POWER ON GO... -\n", board->name);
 
         /*board level do 1st*/
         //FIXME: todo...
 
         /*board have no subip*/
         if (unlikely(!board->subips)) {
-                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board->subips is null !!!\n");
                 goto ret_on;
         }
 
@@ -55,9 +57,8 @@ static int __on(ip *board)
                 /*each subip*/
                 ret = board->subips[id]->ops->poweron(board->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: power on subip%d-%s failed! %s, %s, %d\n",
-                                        id, board->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("power on subip%d-%s failed !!!\n",
+                                        id, board->subips[id]->name);
                         goto ret_on;
                 }
                 /*next subip*/
@@ -67,8 +68,8 @@ static int __on(ip *board)
         /*change state machine 3rd*/
         board->status = RUN;
 
-        printf("INFO: board:%s power on!!! %s, %s, %d\n",
-                        board->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- BOARD %s POWER ON DONE -\n", board->name);
 
 ret_on:
         return ret;
@@ -86,15 +87,16 @@ static int __off(ip *board)
         int id = 0;
 
         if (unlikely(!board)) {
-                printf("ERR: board absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is null !!!\n");
                 goto ret_off;
         }
 
+        /*begin*/
+        INFO("- BOARD %s POWER OFF GO... -\n", board->name);
+
         /*board have no subip*/
         if (unlikely(!board->subips)) {
-                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board->subips is null !!!\n");
                 goto ret_off;
         }
 
@@ -103,9 +105,8 @@ static int __off(ip *board)
                 /*each subip*/
                 ret = board->subips[id]->ops->poweroff(board->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: power off subip%d-%s failed! %s, %s, %d\n",
-                                        id, board->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("power off subip%d-%s failed !!!\n",
+                                        id, board->subips[id]->name);
                         goto ret_off;
                 }
                 /*next subip*/
@@ -118,8 +119,8 @@ static int __off(ip *board)
         /*change state machine 3rd*/
         board->status = OFF;
 
-        printf("INFO: board:%s power off!!!!! %s, %s, %d\n",
-                        board->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- BOARD %s POWER OFF DONE -\n", board->name);
 
 ret_off:
         return ret;
@@ -137,15 +138,16 @@ static int __idle(ip *board)
         int id = 0;
 
         if (unlikely(!board)) {
-                printf("ERR: board absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is null !!!\n");
                 goto ret_idle;
         }
 
+        /*begin*/
+        INFO("- BOARD %s IDLE GO... -\n", board->name);
+
         /*board have no subip*/
         if (unlikely(!board->subips)) {
-                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board->subips is null !!!\n");
                 goto ret_idle;
         }
 
@@ -154,9 +156,8 @@ static int __idle(ip *board)
                 /*each subip*/
                 ret = board->subips[id]->ops->idle(board->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: idle subip%d-%s failed! %s, %s, %d\n",
-                                        id, board->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("idle subip%d-%s failed !!!\n",
+                                        id, board->subips[id]->name);
                         goto ret_idle;
                 }
                 /*next subip*/
@@ -169,8 +170,8 @@ static int __idle(ip *board)
         /*change state machine 3rd*/
         board->status = IDLE;
 
-        printf("INFO: board:%s idle!!!!! %s, %s, %d\n",
-                        board->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- BOARD %s IDLE DONE -\n", board->name);
 
 ret_idle:
         return ret;
@@ -188,15 +189,16 @@ static int __sleep(ip *board)
         int id = 0;
 
         if (unlikely(!board)) {
-                printf("ERR: board absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is null !!!\n");
                 goto ret_sleep;
         }
 
+        /*begin*/
+        INFO("- BOARD %s SLEEP GO... -\n", board->name);
+
         /*board have no subip*/
         if (unlikely(!board->subips)) {
-                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board->subips is null !!!\n");
                 goto ret_sleep;
         }
 
@@ -205,9 +207,8 @@ static int __sleep(ip *board)
                 /*each subip*/
                 ret = board->subips[id]->ops->sleep(board->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: sleep subip%d-%s failed! %s, %s, %d\n",
-                                        id, board->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("sleep subip%d-%s failed !!!\n",
+                                        id, board->subips[id]->name);
                         goto ret_sleep;
                 }
                 /*next subip*/
@@ -220,8 +221,8 @@ static int __sleep(ip *board)
         /*change state machine 3rd*/
         board->status = SLEEP;
 
-        printf("INFO: board:%s sleep!!!!! %s, %s, %d\n",
-                        board->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- BOARD %s SLEEP DONE -\n", board->name);
 
 ret_sleep:
         return ret;
@@ -239,18 +240,19 @@ static int __wakeup(ip *board)
         int id = 0;
 
         if (unlikely(!board)) {
-                printf("ERR: board absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- BOARD %s WAKEUP GO... -\n", board->name);
 
         /*board level do 1st*/
         //FIXME: todo...
 
         /*board have no subip*/
         if (unlikely(!board->subips)) {
-                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board->subips is null !!!\n");
                 goto ret_wakeup;
         }
 
@@ -259,9 +261,8 @@ static int __wakeup(ip *board)
                 /*each subip*/
                 ret = board->subips[id]->ops->wakeup(board->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
-                                        id, board->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("wakeup subip%d-%s failed !!!\n",
+                                        id, board->subips[id]->name);
                         goto ret_wakeup;
                 }
                 /*next subip*/
@@ -271,8 +272,8 @@ static int __wakeup(ip *board)
         /*change state machine 3rd*/
         board->status = RUN;
 
-        printf("INFO: board:%s wakeup!!!!! %s, %s, %d\n",
-                        board->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- BOARD %s WAKEUP DONE -\n", board->name);
 
 ret_wakeup:
         return ret;
@@ -290,23 +291,20 @@ static int __tick(ip *board)
         int id = 0;
 
         if (unlikely(!board)) {
-                printf("ERR: board absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: board:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        board->name, tick_counter,
-                        __FILE__, __func__, __LINE__);
+        INFO("- BOARD %s TICK %llu GO... -\n",
+                        board->name, tick_counter);
 
         /*board level do 1st*/
         //FIXME: todo...
 
         /*board have no subip*/
         if (unlikely(!board->subips)) {
-                printf("ERR: board->subips absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board->subips is null !!!\n");
                 goto ret_tick;
         }
 
@@ -315,19 +313,17 @@ static int __tick(ip *board)
                 /*each subip*/
                 ret = board->subips[id]->ops->tickarrive(board->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: wakeup subip%d-%s failed! %s, %s, %d\n",
-                                        id, board->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("wakeup subip%d-%s failed !!!\n",
+                                        id, board->subips[id]->name);
                         goto ret_tick;
                 }
                 /*next subip*/
                 id++;
         }
 
-        /*done*/
-        printf("INFO: board:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        board->name, tick_counter,
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- BOARD %s TICK %llu DONE -\n",
+                        board->name, tick_counter);
 
 ret_tick:
         return ret;
@@ -344,22 +340,20 @@ static int __dump(ip *board)
         int ret = -1;
         int id = 0;
 
-        printf("DEBUG: ========== board:%s dump start !!!!! ==========\n",
-                        board->name);
-
         if (unlikely(!board)) {
-                printf("ERR: board absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP BOARD %s BEGIN ---\n", board->name);
 
         /*dump board elements 1st*/
         //FIXME: todo...
 
         /*board have no subip*/
         if (unlikely(!board->subips)) {
-                printf("ERR: board->subips absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board->subips is null !!!\n");
                 goto ret_dump;
         }
 
@@ -368,17 +362,16 @@ static int __dump(ip *board)
                 /*each subip*/
                 ret = board->subips[id]->ops->dump(board->subips[id]);
                 if (unlikely(ret)) {
-                        printf("ERR: dump subip%d-%s failed! %s, %s, %d\n",
-                                        id, board->subips[id]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("dump subip%d-%s failed !!!\n",
+                                        id, board->subips[id]->name);
                         goto ret_dump;
                 }
                 /*next subip*/
                 id++;
         }
 
-        printf("DEBUG: ========== board:%s dump end !!!!! ==========\n",
-                        board->name);
+        /*end*/
+        DEBUG("--- DUMP BOARD %s END ---\n", board->name);
 
 ret_dump:
         return ret;
@@ -410,16 +403,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./board.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: board reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file %s not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -434,7 +425,7 @@ ret_config:
 
 /**
  * board_alloc - alloc board elements
- * @board:   pointer to board
+ * @board:     pointer to board
  * @params:    init parameters
  *
  */
@@ -449,15 +440,13 @@ static int board_alloc(ip *board, param *params)
 
         /*reg list*/
         if (unlikely(!params->board_reg_count)) {
-                printf("INFO: board have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no register !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         board->reglist = malloc((params->board_reg_count + 1) * sizeof(regs *));
         if (unlikely(!board->reglist)) {
-                printf("ERR: alloc board reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)board->reglist, 0, (params->board_reg_count + 1) * sizeof(regs *));
@@ -465,8 +454,7 @@ static int board_alloc(ip *board, param *params)
         for (id = 0; id < params->board_reg_count; id++) {
                 board->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!board->reglist[id])) {
-                        printf("ERR: alloc board reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)board->reglist[id], 0, sizeof(regs));
@@ -475,15 +463,13 @@ static int board_alloc(ip *board, param *params)
         /*reg hastable*/
         board->name2reg = init_hashtable();
         if (unlikely(!board->name2reg)) {
-                printf("ERR: alloc board reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         board->addr2reg = init_hashtable();
         if (unlikely(!board->addr2reg)) {
-                printf("ERR: alloc board reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -493,8 +479,7 @@ static int board_alloc(ip *board, param *params)
                                 params->fifo_count + params->pcie_count +
                                 params->maincpu_count + 1) * sizeof(ip *));
         if (unlikely(!board->subips)) {
-                printf("ERR: board alloc subip array failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc subip array failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)board->subips, 0, (params->chip_count +
@@ -508,8 +493,7 @@ static int board_alloc(ip *board, param *params)
                                 params->maincpu_count); id++) {
                 board->subips[id] = malloc(sizeof(ip));
                 if (unlikely(!board->subips[id])) {
-                        printf("ERR: alloc board subip%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc subip%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)board->subips[id], 0, sizeof(ip));
@@ -518,15 +502,13 @@ static int board_alloc(ip *board, param *params)
         /*subips hastable*/
         board->name2subip = init_hashtable();
         if (unlikely(!board->name2subip)) {
-                printf("ERR: alloc board subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2subip failed !!!\n");
                 goto ret_alloc;
         }
 
         board->addr2subip = init_hashtable();
         if (unlikely(!board->addr2subip)) {
-                printf("ERR: alloc board subip hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2subip failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -540,7 +522,7 @@ ret_alloc:
 /**
  * board_init - init board with params
  * @father:    pointer to the board belongs to
- * @board:   pointer to board
+ * @board:     pointer to board
  * @id:        board id
  * @params:    init parameters
  *
@@ -552,20 +534,17 @@ int board_init(ip *father, ip *board, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: board init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- BOARD board%d INIT GO... -\n", id);
 
         if (unlikely(!board) || unlikely(!params)) {
-                printf("ERR: board or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board is %p, params is %p !!!\n");
                 goto ret_init;
         }
 
         /*alloc*/
         ret = board_alloc(board, params);
         if (unlikely(ret)) {
-                printf("ERR: board alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -587,8 +566,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(board->reglist);
         if (unlikely(ret)) {
-                printf("ERR: board reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("board reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -603,9 +581,8 @@ int board_init(ip *father, ip *board, int id, param *params)
                                 (void *)board->reglist[sub],
                                 board->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, board->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash reg%d:%s to name2reg failed !!!\n",
+                                        sub, board->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -613,9 +590,8 @@ int board_init(ip *father, ip *board, int id, param *params)
                 sprintf(addr2str, "0x%x", board->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)board->reglist[sub], board->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, board->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash reg%d:0x%x to addr2reg failed !!!\n",
+                                        sub, board->reglist[sub]->address);
                         goto ret_init;
                 }
         }
@@ -635,8 +611,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 /*call subip:chip init function*/
                 ret = chip_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-chip init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-chip init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -645,8 +620,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 /*call subip:chiplink init function*/
                 ret = chiplink_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-chiplink init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-chiplink init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -656,8 +630,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 /*call subip:ddr init function*/
                 ret = ddr_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-ddr init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-ddr init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -667,8 +640,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 /*call subip:fifo init function*/
                 ret = fifo_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-fifo init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-fifo init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -679,8 +651,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 /*call subip:pcie init function*/
                 ret = pcie_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-pcie init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-pcie init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -691,8 +662,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 /*call subip:maincpu init function*/
                 ret = maincpu_init(board, board->subips[sub], sub, params);
                 if (unlikely(ret)) {
-                        printf("ERR: subip%d-maincpu init failed! %s, %s, %d\n",
-                                        sub, __FILE__, __func__, __LINE__);
+                        ERROR("subip%d-maincpu init failed !!!\n", sub);
                         goto ret_init;
                 }
         }
@@ -711,9 +681,8 @@ int board_init(ip *father, ip *board, int id, param *params)
                                 (void *)board->subips[sub],
                                 board->name2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash %s to name2subip table failed! %s, %s, %d\n",
-                                        board->subips[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2subip failed !!!\n",
+                                        board->subips[sub]->name);
                         goto ret_init;
                 }
 
@@ -722,15 +691,14 @@ int board_init(ip *father, ip *board, int id, param *params)
                 ret = insert_hashtable(addr2str, (void *)board->subips[sub],
                                 board->addr2subip);
                 if (unlikely(ret)) {
-                        printf("ERR: hash boardsubip%d:0x%x to addr2subip table failed! %s, %s, %d\n",
-                                        sub, board->subips[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash 0x%x to addr2subip failed !!!\n",
+                                        board->subips[sub]->address);
                         goto ret_init;
                 }
         }
 
-        printf("INFO: board init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*begin*/
+        INFO("- BOARD board%d INIT DONE -\n", board);
 
 ret_init:
         return ret;

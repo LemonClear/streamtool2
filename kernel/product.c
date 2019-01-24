@@ -544,7 +544,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        INFO("- PRODUCT INIT GO... -\n");
+        INFO("- PRODUCT product%d INIT GO... -\n", id);
 
         if (unlikely(!product) || unlikely(!params)) {
                 ERROR("product is %p, params is %p !!!\n",
@@ -665,7 +665,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         }
 
         /*end*/
-        INFO("- PRODUCT INIT DONE -\n");
+        INFO("- PRODUCT product%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
