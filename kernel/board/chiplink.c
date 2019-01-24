@@ -71,8 +71,7 @@ static int __off(ip *chiplink)
         int ret = -1;
 
         if (unlikely(!chiplink)) {
-                ERROR("chiplink absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is null !!!\n");
                 goto ret_off;
         }
 
