@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,10 +35,12 @@ static int __on(ip *chiplink)
         int ret = -1;
 
         if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- CHIPLINK %s POWER ON GO... -\n", chiplink->name);
 
         /*chiplink level do 1st*/
         //FIXME: todo...
@@ -49,8 +52,8 @@ static int __on(ip *chiplink)
         /*change state machine 3rd*/
         chiplink->status = RUN;
 
-        printf("INFO: chiplink:%s power on!!!!! %s, %s, %d\n",
-                        chiplink->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIPLINK %s POWER ON DONE -\n", chiplink->name);
 
         ret = 0;
 ret_on:
@@ -68,10 +71,13 @@ static int __off(ip *chiplink)
         int ret = -1;
 
         if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
+                ERROR("chiplink absent, please check! %s, %s, %d\n",
                                 __FILE__, __func__, __LINE__);
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- CHIPLINK %s POWER OFF GO... -\n", chiplink->name);
 
         /*power off subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -83,8 +89,8 @@ static int __off(ip *chiplink)
         /*change state machine 3rd*/
         chiplink->status = OFF;
 
-        printf("INFO: chiplink:%s power off!!!!! %s, %s, %d\n",
-                        chiplink->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIPLINK %s POWER OFF DONE -\n", chiplink->name);
 
         ret = 0;
 ret_off:
@@ -102,10 +108,12 @@ static int __idle(ip *chiplink)
         int ret = -1;
 
         if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- CHIPLINK %s IDLE GO... -\n", chiplink->name);
 
         /*idle subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -117,8 +125,8 @@ static int __idle(ip *chiplink)
         /*change state machine 3rd*/
         chiplink->status = IDLE;
 
-        printf("INFO: chiplink:%s idle!!!!! %s, %s, %d\n",
-                        chiplink->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIPLINK %s IDLE DONE -\n", chiplink->name);
 
         ret = 0;
 ret_idle:
@@ -136,10 +144,12 @@ static int __sleep(ip *chiplink)
         int ret = -1;
 
         if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- CHIPLINK %s SLEEP GO... -\n", chiplink->name);
 
         /*sleep subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -151,8 +161,8 @@ static int __sleep(ip *chiplink)
         /*change state machine 3rd*/
         chiplink->status = SLEEP;
 
-        printf("INFO: chiplink:%s sleep!!!!! %s, %s, %d\n",
-                        chiplink->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIPLINK %s SLEEP DONE -\n", chiplink->name);
 
         ret = 0;
 ret_sleep:
@@ -170,10 +180,12 @@ static int __wakeup(ip *chiplink)
         int ret = -1;
 
         if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- CHIPLINK %s WAKEUP GO... -\n", chiplink->name);
 
         /*chiplink level do 1st*/
         //FIXME: todo...
@@ -185,8 +197,8 @@ static int __wakeup(ip *chiplink)
         /*change state machine 3rd*/
         chiplink->status = RUN;
 
-        printf("INFO: chiplink:%s wakeup!!!!! %s, %s, %d\n",
-                        chiplink->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIPLINK %s WAKEUP DONE -\n", chiplink->name);
 
         ret = 0;
 ret_wakeup:
@@ -204,14 +216,13 @@ static int __tick(ip *chiplink)
         int ret = -1;
 
         if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: chiplink:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        chiplink->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- CHIPLINK %s TICK %llu GO... -\n",
+                        chiplink->name, tick_counter);
 
         /*chiplink level do 1st*/
         //FIXME: todo...
@@ -222,8 +233,8 @@ static int __tick(ip *chiplink)
         //No subips
 
         /*done*/
-        printf("INFO: chiplink:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        chiplink->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- CHIPLINK %s TICK %llu DONE -\n",
+                        chiplink->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -240,14 +251,13 @@ static int __dump(ip *chiplink)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== chiplink:%s dump start !!!!! ==========\n",
-                        chiplink->name);
-
         if (unlikely(!chiplink)) {
-                printf("ERR: chiplink absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP CHIPLINK %s BEGIN ---\n", chiplink->name);
 
         /*dump chiplink elements 1st*/
         //FIXME: todo...
@@ -256,8 +266,8 @@ static int __dump(ip *chiplink)
         //FIXME: DO NOTHING!!!
         //No subips
 
-        printf("DEBUG: ========== chiplink:%s dump end !!!!! ==========\n",
-                        chiplink->name);
+        /*end*/
+        DEBUG("--- DUMP CHIPLINK %s END ---\n", chiplink->name);
 
         ret = 0;
 ret_dump:
@@ -290,15 +300,13 @@ static int parse_regconfig(regs **reglist)
         char *config = "./chiplink.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: chiplink reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -327,16 +335,14 @@ static int chiplink_alloc(ip *chiplink, param *params)
 
         /*reg list*/
         if (unlikely(!params->chiplink_reg_count)) {
-                printf("INFO: chiplink have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no register !!!\n");
         }
 
         //Trick: malloc(0)!=NULL, if have no reg,
         //the chiplink->reglist value can also mark as this ip's address
         chiplink->reglist = malloc((params->chiplink_reg_count + 1) * sizeof(regs *));
         if (unlikely(!chiplink->reglist)) {
-                printf("ERR: alloc chiplink reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)chiplink->reglist, 0, (params->chiplink_reg_count + 1) * sizeof(regs *));
@@ -344,8 +350,7 @@ static int chiplink_alloc(ip *chiplink, param *params)
         for (id = 0; id < params->chiplink_reg_count; id++) {
                 chiplink->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!chiplink->reglist[id])) {
-                        printf("ERR: alloc chiplink reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)chiplink->reglist[id], 0, sizeof(regs));
@@ -354,15 +359,13 @@ static int chiplink_alloc(ip *chiplink, param *params)
         /*reg hastable*/
         chiplink->name2reg = init_hashtable();
         if (unlikely(!chiplink->name2reg)) {
-                printf("ERR: alloc chiplink reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         chiplink->addr2reg = init_hashtable();
         if (unlikely(!chiplink->addr2reg)) {
-                printf("ERR: alloc chiplink reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -396,20 +399,18 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: chiplink init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- CHIPLINK chiplink%d INIT GO... -\n", id);
 
         if (unlikely(!chiplink) || unlikely(!params)) {
-                printf("ERR: chiplink or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink is %p, params is %p !!!\n",
+                                chiplink, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = chiplink_alloc(chiplink, params);
         if (unlikely(ret)) {
-                printf("ERR: chiplink alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("chiplink alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -431,8 +432,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(chiplink->reglist);
         if (unlikely(ret)) {
-                printf("ERR: chiplink reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -447,9 +447,8 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
                                 (void *)chiplink->reglist[sub],
                                 chiplink->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, chiplink->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        chiplink->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -457,9 +456,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
                 sprintf(addr2str, "0x%x", chiplink->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)chiplink->reglist[sub], chiplink->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, chiplink->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -482,8 +479,8 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         //FIXME: DO NOTHING!!!
         //No subips
 
-        printf("INFO: chiplink init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- CHIPLINK chiplink%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
