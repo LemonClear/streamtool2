@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,10 +35,12 @@ static int __on(ip *maincpu)
         int ret = -1;
 
         if (unlikely(!maincpu)) {
-                printf("ERR: maincpu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- MAINCPU %s POWER ON GO... -\n", maincpu->name);
 
         /*maincpu level do 1st*/
         //FIXME: todo...
@@ -48,8 +51,8 @@ static int __on(ip *maincpu)
         /*change state machine 3rd*/
         maincpu->status = RUN;
 
-        printf("INFO: maincpu:%s power on!!!!! %s, %s, %d\n",
-                        maincpu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MAINCPU %s POWER ON DONE -\n", maincpu->name);
 
         ret = 0;
 ret_on:
@@ -67,10 +70,12 @@ static int __off(ip *maincpu)
         int ret = -1;
 
         if (unlikely(!maincpu)) {
-                printf("ERR: maincpu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- MAINCPU %s POWER OFF GO... -\n", maincpu->name);
 
         /*power off subips 1st*/
         //No subips
@@ -81,8 +86,8 @@ static int __off(ip *maincpu)
         /*change state machine 3rd*/
         maincpu->status = OFF;
 
-        printf("INFO: maincpu:%s power off!!!!! %s, %s, %d\n",
-                        maincpu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MAINCPU %s POWER OFF DONE -\n", maincpu->name);
 
         ret = 0;
 ret_off:
@@ -100,10 +105,12 @@ static int __idle(ip *maincpu)
         int ret = -1;
 
         if (unlikely(!maincpu)) {
-                printf("ERR: maincpu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- MAINCPU %s IDLE GO... -\n", maincpu->name);
 
         /*idle subips 1st*/
         //No subips
@@ -114,8 +121,8 @@ static int __idle(ip *maincpu)
         /*change state machine 3rd*/
         maincpu->status = IDLE;
 
-        printf("INFO: maincpu:%s idle!!!!! %s, %s, %d\n",
-                        maincpu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MAINCPU %s IDLE DONE -\n", maincpu->name);
 
         ret = 0;
 ret_idle:
@@ -133,10 +140,12 @@ static int __sleep(ip *maincpu)
         int ret = -1;
 
         if (unlikely(!maincpu)) {
-                printf("ERR: maincpu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- MAINCPU %s SLEEP GO... -\n", maincpu->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -147,8 +156,8 @@ static int __sleep(ip *maincpu)
         /*change state machine 3rd*/
         maincpu->status = SLEEP;
 
-        printf("INFO: maincpu:%s sleep!!!!! %s, %s, %d\n",
-                        maincpu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MAINCPU %s SLEEP DONE -\n", maincpu->name);
 
         ret = 0;
 ret_sleep:
@@ -166,10 +175,12 @@ static int __wakeup(ip *maincpu)
         int ret = -1;
 
         if (unlikely(!maincpu)) {
-                printf("ERR: maincpu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- MAINCPU %s WAKEUP GO... -\n", maincpu->name);
 
         /*maincpu level do 1st*/
         //FIXME: todo...
@@ -180,8 +191,8 @@ static int __wakeup(ip *maincpu)
         /*change state machine 3rd*/
         maincpu->status = RUN;
 
-        printf("INFO: maincpu:%s wakeup!!!!! %s, %s, %d\n",
-                        maincpu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MAINCPU %s WAKEUP DONE -\n", maincpu->name);
 
         ret = 0;
 ret_wakeup:
@@ -199,14 +210,13 @@ static int __tick(ip *maincpu)
         int ret = -1;
 
         if (unlikely(!maincpu)) {
-                printf("ERR: maincpu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: maincpu:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        maincpu->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- MAINCPU %s TICK %llu GO... -\n",
+                        maincpu->name, tick_counter);
 
         /*maincpu level do 1st*/
         //FIXME: todo...
@@ -214,9 +224,9 @@ static int __tick(ip *maincpu)
         /*tick trigger subips 2nd*/
         //No subips
 
-        /*done*/
-        printf("INFO: maincpu:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        maincpu->name, tick_counter, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MAINCPU %s TICK %llu DONE -\n",
+                        maincpu->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -233,14 +243,13 @@ static int __dump(ip *maincpu)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== maincpu:%s dump start !!!!! ==========\n",
-                        maincpu->name);
-
         if (unlikely(!maincpu)) {
-                printf("ERR: maincpu absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP MAINCPU %s BEGIN ---\n", maincpu->name);
 
         /*dump maincpu elements 1st*/
         //FIXME: todo...
@@ -248,8 +257,8 @@ static int __dump(ip *maincpu)
         /*dump subips 2nd*/
         //No subips
 
-        printf("DEBUG: ========== maincpu:%s dump end !!!!! ==========\n",
-                        maincpu->name);
+        /*end*/
+        DEBUG("--- DUMP MAINCPU %s END ---\n", maincpu->name);
 
         ret = 0;
 ret_dump:
@@ -282,16 +291,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./maincpu.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: maincpu reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -319,15 +326,13 @@ static int maincpu_alloc(ip *maincpu, param *params)
 
         /*reg list*/
         if (unlikely(!params->maincpu_reg_count)) {
-                printf("INFO: maincpu have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no regster !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         maincpu->reglist = malloc((params->maincpu_reg_count + 1) * sizeof(regs *));
         if (unlikely(!maincpu->reglist)) {
-                printf("ERR: alloc maincpu reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)maincpu->reglist, 0, (params->maincpu_reg_count + 1 ) * sizeof(regs *));
@@ -335,8 +340,7 @@ static int maincpu_alloc(ip *maincpu, param *params)
         for (id = 0; id < params->maincpu_reg_count; id++) {
                 maincpu->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!maincpu->reglist[id])) {
-                        printf("ERR: alloc maincpu reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)maincpu->reglist[id], 0, sizeof(regs));
@@ -345,15 +349,13 @@ static int maincpu_alloc(ip *maincpu, param *params)
         /*reg hastable*/
         maincpu->name2reg = init_hashtable();
         if (unlikely(!maincpu->name2reg)) {
-                printf("ERR: alloc maincpu reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         maincpu->addr2reg = init_hashtable();
         if (unlikely(!maincpu->addr2reg)) {
-                printf("ERR: alloc maincpu reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -385,20 +387,18 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: maincpu init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- MAINCPU maincpu%d INIT GO... -\n", id);
 
         if (unlikely(!maincpu) || unlikely(!params)) {
-                printf("ERR: maincpu or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu is %p, params is %p\n",
+                                maincpu, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = maincpu_alloc(maincpu, params);
         if (unlikely(ret)) {
-                printf("ERR: maincpu alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("maincpu alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -420,8 +420,7 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(maincpu->reglist);
         if (unlikely(ret)) {
-                printf("ERR: maincpu reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -436,19 +435,18 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
                                 (void *)maincpu->reglist[sub],
                                 maincpu->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, maincpu->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        maincpu->reglist[sub]->name);
                         goto ret_init;
                 }
 
                 /*table addr2reg*/
                 sprintf(addr2str, "0x%x", maincpu->reglist[sub]->address);
-                ret = insert_hashtable(addr2str, (void *)maincpu->reglist[sub], maincpu->addr2reg);
+                ret = insert_hashtable(addr2str,
+                                (void *)maincpu->reglist[sub],
+                                maincpu->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, maincpu->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -469,8 +467,8 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
         /*subips: hashtable*/
         //No subips
 
-        printf("INFO: maincpu init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MAINCPU maincpu%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
