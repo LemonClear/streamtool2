@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,10 +35,12 @@ static int __on(ip *pcie)
         int ret = -1;
 
         if (unlikely(!pcie)) {
-                printf("ERR: pcie absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- PCIE %s POWER ON GO... -\n", pcie->name);
 
         /*pcie level do 1st*/
         //FIXME: todo...
@@ -49,8 +52,8 @@ static int __on(ip *pcie)
         /*change state machine 3rd*/
         pcie->status = RUN;
 
-        printf("INFO: pcie:%s power on!!!!! %s, %s, %d\n",
-                        pcie->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- PCIE %s POWER ON DONE -\n", pcie->name);
 
         ret = 0;
 ret_on:
@@ -68,10 +71,12 @@ static int __off(ip *pcie)
         int ret = -1;
 
         if (unlikely(!pcie)) {
-                printf("ERR: pcie absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- PCIE %s POWER OFF GO... -\n", pcie->name);
 
         /*power off subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -83,8 +88,8 @@ static int __off(ip *pcie)
         /*change state machine 3rd*/
         pcie->status = OFF;
 
-        printf("INFO: pcie:%s power off!!!!! %s, %s, %d\n",
-                        pcie->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- PCIE %s POWER OFF DONE -\n", pcie->name);
 
         ret = 0;
 ret_off:
@@ -102,10 +107,12 @@ static int __idle(ip *pcie)
         int ret = -1;
 
         if (unlikely(!pcie)) {
-                printf("ERR: pcie absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- PCIE %s IDLE GO... -\n", pcie->name);
 
         /*idle subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -117,8 +124,8 @@ static int __idle(ip *pcie)
         /*change state machine 3rd*/
         pcie->status = IDLE;
 
-        printf("INFO: pcie:%s idle!!!!! %s, %s, %d\n",
-                        pcie->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- PCIE %s IDLE DONE -\n", pcie->name);
 
         ret = 0;
 ret_idle:
@@ -136,10 +143,12 @@ static int __sleep(ip *pcie)
         int ret = -1;
 
         if (unlikely(!pcie)) {
-                printf("ERR: pcie absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- PCIE %s SLEEP GO... -\n", pcie->name);
 
         /*sleep subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -151,8 +160,8 @@ static int __sleep(ip *pcie)
         /*change state machine 3rd*/
         pcie->status = SLEEP;
 
-        printf("INFO: pcie:%s sleep!!!!! %s, %s, %d\n",
-                        pcie->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- PCIE %s SLEEP DONE -\n", pcie->name);
 
         ret = 0;
 ret_sleep:
@@ -170,10 +179,12 @@ static int __wakeup(ip *pcie)
         int ret = -1;
 
         if (unlikely(!pcie)) {
-                printf("ERR: pcie absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- PCIE %s WAKEUP GO... -\n", pcie->name);
 
         /*pcie level do 1st*/
         //FIXME: todo...
@@ -185,8 +196,8 @@ static int __wakeup(ip *pcie)
         /*change state machine 3rd*/
         pcie->status = RUN;
 
-        printf("INFO: pcie:%s wakeup!!!!! %s, %s, %d\n",
-                        pcie->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- PCIE %s WAKEUP DONE -\n", pcie->name);
 
         ret = 0;
 ret_wakeup:
@@ -204,14 +215,13 @@ static int __tick(ip *pcie)
         int ret = -1;
 
         if (unlikely(!pcie)) {
-                printf("ERR: pcie absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: pcie:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        pcie->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- PCIE %s TICK %llu GO... -\n",
+                        pcie->name, tick_counter);
 
         /*pcie level do 1st*/
         //FIXME: todo...
@@ -221,8 +231,8 @@ static int __tick(ip *pcie)
         //No subips
 
         /*done*/
-        printf("INFO: pcie:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        pcie->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- PCIE %s TICK %llu DONE -\n",
+                        pcie->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -239,14 +249,14 @@ static int __dump(ip *pcie)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== pcie:%s dump start !!!!! ==========\n",
-                        pcie->name);
 
         if (unlikely(!pcie)) {
-                printf("ERR: pcie absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP PCIE %s BEGIN ---\n", pcie->name);
 
         /*dump pcie elements 1st*/
         //FIXME: todo...
@@ -254,8 +264,8 @@ static int __dump(ip *pcie)
         /*dump subips 2nd*/
         //No subips
 
-        printf("DEBUG: ========== pcie:%s dump end !!!!! ==========\n",
-                        pcie->name);
+        /*end*/
+        DEBUG("--- DUMP PCIE %s END ---\n", pcie->name);
 
         ret = 0;
 ret_dump:
@@ -288,15 +298,13 @@ static int parse_regconfig(regs **reglist)
         char *config = "./pcie.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: pcie reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         if (unlikely(access(config, F_OK))) {
-                printf("WARN: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -324,16 +332,14 @@ static int pcie_alloc(ip *pcie, param *params)
 
         /*reg list*/
         if (unlikely(!params->pcie_reg_count)) {
-                printf("INFO: pcie have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no register !!!\n");
         }
 
         //Trick: malloc(0)!=NULL, if have no reg,
         //the pcie->reglist value can also mark as this ip's address
         pcie->reglist = malloc((params->pcie_reg_count + 1) * sizeof(regs *));
         if (unlikely(!pcie->reglist)) {
-                printf("ERR: alloc pcie reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)pcie->reglist, 0, (params->pcie_reg_count + 1) * sizeof(regs *));
@@ -341,8 +347,7 @@ static int pcie_alloc(ip *pcie, param *params)
         for (id = 0; id < params->pcie_reg_count; id++) {
                 pcie->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!pcie->reglist[id])) {
-                        printf("ERR: alloc pcie reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)pcie->reglist[id], 0, sizeof(regs));
@@ -351,15 +356,13 @@ static int pcie_alloc(ip *pcie, param *params)
         /*reg hastable*/
         pcie->name2reg = init_hashtable();
         if (unlikely(!pcie->name2reg)) {
-                printf("ERR: alloc pcie reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         pcie->addr2reg = init_hashtable();
         if (unlikely(!pcie->addr2reg)) {
-                printf("ERR: alloc pcie reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -391,20 +394,18 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: pcie init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- PCIE pcie%d INIT GO... -\n", id);
 
         if (unlikely(!pcie) || unlikely(!params)) {
-                printf("ERR: pcie or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie is %p, params is %p !!!\n",
+                                pcie, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = pcie_alloc(pcie, params);
         if (unlikely(ret)) {
-                printf("ERR: pcie alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("pcie alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -426,8 +427,7 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(pcie->reglist);
         if (unlikely(ret)) {
-                printf("ERR: pcie reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -442,9 +442,8 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
                                 (void *)pcie->reglist[sub],
                                 pcie->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, pcie->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        pcie->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -452,9 +451,7 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
                 sprintf(addr2str, "0x%x", pcie->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)pcie->reglist[sub], pcie->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, pcie->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -475,8 +472,8 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
         /*subips: hashtable*/
         //No subips
 
-        printf("INFO: pcie init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- PCIE pcie%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
