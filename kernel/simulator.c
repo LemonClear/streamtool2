@@ -141,7 +141,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         int ret = -1;
 
         /*begin*/
-        INFO("-- SIMULATOR INIT GO... --\n");
+        INFO("- SIMULATOR INIT GO... -\n");
 
         if (unlikely(!simulator)) {
                 ERROR("simulator struct is null !!!\n");
@@ -161,14 +161,14 @@ static int simu_init(int argc, char *argv[], simu *simulator)
                 WARNING("ignore commandline parameters !!!\n");
         }
 
-        /*init: the whole product*/
+        /*init: the product0*/
         ret = product_init(NULL, simulator->product, 0, simulator->params);
         if (unlikely(ret)) {
                 ERROR("product init failed !!!\n");
                 goto ret_init;
         }
 
-        INFO("-- SIMULATOR INIT DONE --\n");
+        INFO("- SIMULATOR INIT DONE -\n");
 
 ret_init:
         return ret;
@@ -185,7 +185,7 @@ static int simu_run(simu *simulator)
         int ret = -1;
 
         /*begin*/
-        INFO("-- SIMULATOR RUN GO... --\n");
+        INFO("- SIMULATOR RUN GO... -\n");
 
         if (unlikely(!simulator)) {
                 ERROR("simulator struct is null !!!\n");
@@ -199,7 +199,7 @@ static int simu_run(simu *simulator)
                 goto ret_run;
         }
 
-        INFO("-- SIMULATOR RUN DONE --\n");
+        INFO("- SIMULATOR RUN DONE -\n");
 
 ret_run:
         return ret;
@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
         simu *simulator = NULL;
 
         /*begin*/
-        INFO("----- SIMULATOR EXEC START -----\n");
+        INFO("-------- SIMULATOR EXEC START --------\n");
 
         /*create*/
         simulator = simu_alloc();
@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
         }
 
         /*end*/
-        INFO("----- SIMULATOR EXEC END -----\n");
+        INFO("-------- SIMULATOR EXEC END --------\n");
 
         exit(EXIT_SUCCESS);
 
