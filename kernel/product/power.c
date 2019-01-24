@@ -32,12 +32,16 @@ int power_on(ip *product)
 {
         int ret = -1;
 
+        INFO("- POWER ON GO... -\n");
+
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
                 goto ret_power_on;
         }
 
         //FIXME: todo...
+
+        INFO("- POWER ON DONE -\n");
 
 ret_power_on:
         return ret;
@@ -53,12 +57,16 @@ int power_off(ip *product)
 {
         int ret = -1;
 
+        INFO("- POWER OFF GO... -\n");
+
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
                 goto ret_power_off;
         }
 
         //FIXME: todo...
+
+        INFO("- POWER OFF DONE -\n");
 
 ret_power_off:
         return ret;
@@ -74,12 +82,16 @@ int power_idle(ip *product)
 {
         int ret = -1;
 
+        INFO("- IDLE GO... -\n");
+
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
                 goto ret_power_idle;
         }
 
         //FIXME: todo...
+
+        INFO("- IDLE DONE -\n");
 
 ret_power_idle:
         return ret;
@@ -95,12 +107,16 @@ int power_sleep(ip *product)
 {
         int ret = -1;
 
+        INFO("- SLEEP GO... -\n");
+
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
                 goto ret_power_sleep;
         }
 
         //FIXME: todo...
+
+        INFO("- SLEEP DONE -\n");
 
 ret_power_sleep:
         return ret;
