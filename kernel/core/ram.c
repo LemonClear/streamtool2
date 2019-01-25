@@ -25,6 +25,7 @@
 #include <malloc.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -52,8 +53,7 @@ static int load_image_bd(ip *ram, address32_t offset)
                 //FIXME: may load different image
                 fd = open(image, O_RDONLY);
                 if (unlikely(-1 == fd)) {
-                        printf("ERR: open image file:%s failed, please check! %s, %s, %d\n",
-                                        image, __FILE__, __func__, __LINE__);
+                        ERROR("open image file {%s} failed !!!\n", image);
                         goto ret_load;
                 }
 
@@ -81,18 +81,18 @@ static int __on(ip *ram)
         int ret = -1;
         address32_t offset = 0;
 
-        /*begin*/
         if (unlikely(!ram)) {
-                printf("ERR: ram absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- RAM %s POWER ON GO >>> -\n", ram->name);
 
         /*ram level do 1st*/
         ret = load_image_bd(ram, offset);
         if (unlikely(!ret)) {
-                printf("ERR: ram load image backdoor failed, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram load image backdoor failed !!!\n");
                 goto ret_on;
         }
         //FIXME: todo...
@@ -104,8 +104,7 @@ static int __on(ip *ram)
         ram->status = RUN;
 
         /*end*/
-        printf("INFO: ram:%s power on!!!!! %s, %s, %d\n",
-                        ram->name, __FILE__, __func__, __LINE__);
+        INFO("- RAM %s POWER ON DONE -\n", ram->name);
 
 ret_on:
         return ret;
@@ -122,10 +121,12 @@ static int __off(ip *ram)
         int ret = -1;
 
         if (unlikely(!ram)) {
-                printf("ERR: ram absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- RAM %s POWER OFF GO >>> -\n", ram->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -136,8 +137,8 @@ static int __off(ip *ram)
         /*change state machine 3rd*/
         ram->status = OFF;
 
-        printf("INFO: ram:%s power off!!!!! %s, %s, %d\n",
-                        ram->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- RAM %s POWER OFF DONE -\n", ram->name);
 
         ret = 0;
 ret_off:
@@ -155,10 +156,12 @@ static int __idle(ip *ram)
         int ret = -1;
 
         if (unlikely(!ram)) {
-                printf("ERR: ram absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- RAM %s IDLE GO >>> -\n", ram->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -169,8 +172,8 @@ static int __idle(ip *ram)
         /*change state machine 3rd*/
         ram->status = IDLE;
 
-        printf("INFO: ram:%s idle!!!!! %s, %s, %d\n",
-                        ram->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- RAM %s IDLE DONE -\n", ram->name);
 
         ret = 0;
 ret_idle:
@@ -188,10 +191,12 @@ static int __sleep(ip *ram)
         int ret = -1;
 
         if (unlikely(!ram)) {
-                printf("ERR: ram absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- RAM %s SLEEP GO >>> -\n", ram->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -202,8 +207,8 @@ static int __sleep(ip *ram)
         /*change state machine 3rd*/
         ram->status = SLEEP;
 
-        printf("INFO: ram:%s sleep!!!!! %s, %s, %d\n",
-                        ram->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- RAM %s SLEEP DONE -\n", ram->name);
 
         ret = 0;
 ret_sleep:
@@ -221,10 +226,12 @@ static int __wakeup(ip *ram)
         int ret = -1;
 
         if (unlikely(!ram)) {
-                printf("ERR: ram absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- RAM %s WAKEUP GO >>> -\n", ram->name);
 
         /*ram level do 1st*/
         //FIXME: todo...
@@ -235,8 +242,8 @@ static int __wakeup(ip *ram)
         /*change state machine 3rd*/
         ram->status = RUN;
 
-        printf("INFO: ram:%s wakeup!!!!! %s, %s, %d\n",
-                        ram->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- RAM %s WAKEUP DONE -\n", ram->name);
 
         ret = 0;
 ret_wakeup:
@@ -278,6 +285,7 @@ ret_write:
 
 /**
  * __readreg - read ip registers
+ * @ram:   pointer to ram
  * @addr:  register address
  * @name:  register name
  *
@@ -286,14 +294,19 @@ static reg32_t __readreg(ip* ram, address32_t addr, char *name)
 {
         reg32_t ret = 0;
 
+        if (unlikely(!ram)) {
+                ERROR("ram is null !!!\n");
+                goto ret_readreg;
+        }
+
         /*name == NULL, use addr*/
         if (likely(!name)) {
-                printf("\n");
-                //ret = ;
+                ret = 0;
                 goto ret_readreg;
         }
 
         /*name != NULL, use name*/
+        WARNING("use register name to query !!!\n");
 
 
 ret_readreg:
@@ -312,17 +325,21 @@ static int __writereg(ip *ram, address32_t addr, char *name, reg32_t value)
 {
         int ret = -1;
 
+        if (unlikely(!ram)) {
+                ERROR("ram is null !!!\n");
+                goto ret_writereg;
+        }
+
         /*name == NULL, use addr*/
         if (likely(!name)) {
-                printf("\n");
                 ret = 0;
                 goto ret_writereg;
         }
 
         /*name != NULL, use name*/
+        WARNING("use register name to query !!!\n");
 
 
-        ret = 0;
 ret_writereg:
         return ret;
 }
@@ -338,14 +355,13 @@ static int __tick(ip *ram)
         int ret = -1;
 
         if (unlikely(!ram)) {
-                printf("ERR: ram absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: ram:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        ram->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- RAM %s TICK %llu GO >>> -\n",
+                        ram->name, tick_counter);
 
         /*ram level do 1st*/
         //FIXME: todo...
@@ -355,8 +371,8 @@ static int __tick(ip *ram)
         //NO subips
 
         /*done*/
-        printf("INFO: ram:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        ram->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- RAM %s TICK %llu DONE -\n",
+                        ram->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -373,14 +389,13 @@ static int __dump(ip *ram)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== ram:%s dump start !!!!! ==========\n",
-                        ram->name);
-
         if (unlikely(!ram)) {
-                printf("ERR: ram absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP RAM %s BEGIN ---\n", ram->name);
 
         /*dump ram elements 1st*/
         //FIXME: todo...
@@ -388,8 +403,8 @@ static int __dump(ip *ram)
         /*dump subips 2nd*/
         //NO subips
 
-        printf("DEBUG: ========== ram:%s dump end !!!!! ==========\n",
-                        ram->name);
+        /*end*/
+        DEBUG("--- DUMP RAM %s END ---\n", ram->name);
 
         ret = 0;
 ret_dump:
@@ -428,16 +443,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./ram.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: ram reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -463,8 +476,7 @@ static int ram_alloc(ip *ram, param *params)
         /*memory*/
         ram->memory = malloc((params->ram_count + 1) * sizeof(address32_t *));
         if (unlikely(!ram->memory)) {
-                printf("ERR: alloc ram memory failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc memory failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)ram->memory, 0, (params->ram_count + 1) * sizeof(address32_t *));
@@ -472,23 +484,19 @@ static int ram_alloc(ip *ram, param *params)
         for (id = 0; id < params->ram_count; id++) {
                 ram->memory[id] = malloc(params->ram_size); //ATT: memory[id]++ is 4bytes
                 if (unlikely(!ram->memory[id])) {
-                        printf("ERR: alloc ram mem%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc mem%d failed !!!\n", id);
                         goto ret_alloc;
                 }
         }
 
         /*reg list*/
-        if (unlikely(!params->ram_reg_count)) {
-                printf("INFO: ram have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
-        }
+        if (unlikely(!params->ram_reg_count))
+                WARNING("have no register !!!\n");
 
         //Trick: malloc(0)!=NULL
         ram->reglist = malloc((params->ram_reg_count + 1) * sizeof(regs *));
         if (unlikely(!ram->reglist)) {
-                printf("ERR: alloc ram reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)ram->reglist, 0, (params->ram_reg_count + 1) * sizeof(regs *));
@@ -496,8 +504,7 @@ static int ram_alloc(ip *ram, param *params)
         for (id = 0; id < params->ram_reg_count; id++) {
                 ram->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!ram->reglist[id])) {
-                        printf("ERR: alloc ram reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)ram->reglist[id], 0, sizeof(regs));
@@ -506,15 +513,13 @@ static int ram_alloc(ip *ram, param *params)
         /*reg hastable*/
         ram->name2reg = init_hashtable();
         if (unlikely(!ram->name2reg)) {
-                printf("ERR: alloc ram reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         ram->addr2reg = init_hashtable();
         if (unlikely(!ram->addr2reg)) {
-                printf("ERR: alloc ram reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -546,20 +551,17 @@ int ram_init(ip *father, ip *ram, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        printf("INFO: ram init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- RAM ram%d INIT GO >>> -\n", id);
 
         if (unlikely(!ram) || unlikely(!params)) {
-                printf("ERR: ram or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram is %p, params is %p\n", ram, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = ram_alloc(ram, params);
         if (unlikely(ret)) {
-                printf("ERR: ram alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ram alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -581,8 +583,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(ram->reglist);
         if (unlikely(ret)) {
-                printf("ERR: ram reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -597,9 +598,8 @@ int ram_init(ip *father, ip *ram, int id, param *params)
                                 (void *)ram->reglist[sub],
                                 ram->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, ram->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        ram->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -607,9 +607,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
                 addr2str = hexdui2s(ram->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)ram->reglist[sub], ram->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, ram->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -630,8 +628,8 @@ int ram_init(ip *father, ip *ram, int id, param *params)
         /*subips: hashtable*/
         //NO subips
 
-        printf("INFO: ram init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- RAM ram%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
