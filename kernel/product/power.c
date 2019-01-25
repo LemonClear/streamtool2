@@ -32,7 +32,7 @@ int power_on(ip *product)
 {
         int ret = -1;
 
-        INFO("- POWER ON GO... -\n");
+        INFO("- POWER ON GO>>> -\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
@@ -57,7 +57,7 @@ int power_off(ip *product)
 {
         int ret = -1;
 
-        INFO("- POWER OFF GO... -\n");
+        INFO("- POWER OFF GO>>> -\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
@@ -82,7 +82,7 @@ int power_idle(ip *product)
 {
         int ret = -1;
 
-        INFO("- IDLE GO... -\n");
+        INFO("- IDLE GO>>> -\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
@@ -107,7 +107,7 @@ int power_sleep(ip *product)
 {
         int ret = -1;
 
-        INFO("- SLEEP GO... -\n");
+        INFO("- SLEEP GO>>> -\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");

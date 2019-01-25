@@ -40,7 +40,7 @@ static int __on(ip *ncp)
         }
 
         /*begin*/
-        INFO("- NCP %s POWER ON GO >>> -\n", ncp->name);
+        INFO("- NCP %s POWER ON GO>>> -\n", ncp->name);
 
         /*ncp level do 1st*/
         //FIXME: todo...
@@ -75,7 +75,7 @@ static int __off(ip *ncp)
         }
 
         /*begin*/
-        INFO("- NCP %s POWER OFF GO >>> -\n", ncp->name);
+        INFO("- NCP %s POWER OFF GO>>> -\n", ncp->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -110,7 +110,7 @@ static int __idle(ip *ncp)
         }
 
         /*begin*/
-        INFO("- NCP %s IDLE GO >>> -\n", ncp->name);
+        INFO("- NCP %s IDLE GO>>> -\n", ncp->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -145,7 +145,7 @@ static int __sleep(ip *ncp)
         }
 
         /*begin*/
-        INFO("- NCP %s SLEEP GO >>> -\n", ncp->name);
+        INFO("- NCP %s SLEEP GO>>> -\n", ncp->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -181,7 +181,7 @@ static int __wakeup(ip *ncp)
         }
 
         /*begin*/
-        INFO("- NCP %s WAKEUP GO >>> -\n", ncp->name);
+        INFO("- NCP %s WAKEUP GO>>> -\n", ncp->name);
 
         /*ncp level do 1st*/
         //FIXME: todo...
@@ -216,7 +216,7 @@ static int __tick(ip *ncp)
         }
 
         /*begin*/
-        INFO("- NCP %s TICK %llu GO >>> -\n",
+        INFO("- NCP %s TICK %llu GO>>> -\n",
                         ncp->name, tick_counter);
 
         /*ncp level do 1st*/
@@ -392,7 +392,7 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- NCP ncp%d INIT GO >>> -\n", id);
+        INFO("- NCP ncp%d INIT GO>>> -\n", id);
 
         if (unlikely(!ncp) || unlikely(!params)) {
                 ERROR("ncp is %p, params is %p\n", ncp, params);

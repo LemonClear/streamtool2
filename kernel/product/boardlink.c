@@ -40,7 +40,7 @@ static int __on(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s POWER ON GO... -\n", boardlink->name);
+        INFO("- BOARDLINK %s POWER ON GO>>> -\n", boardlink->name);
 
         /*boardlink level do 1st*/
         //FIXME: Transparent Transmission temporally on this level
@@ -75,7 +75,7 @@ static int __off(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s POWER OFF GO... -\n", boardlink->name);
+        INFO("- BOARDLINK %s POWER OFF GO>>> -\n", boardlink->name);
 
         /*power off subips 1st*/
         //No subips
@@ -110,7 +110,7 @@ static int __idle(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s IDLE GO... -\n", boardlink->name);
+        INFO("- BOARDLINK %s IDLE GO>>> -\n", boardlink->name);
 
         /*idle subips 1st*/
         //No subips
@@ -145,7 +145,7 @@ static int __sleep(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s SLEEP GO... -\n", boardlink->name);
+        INFO("- BOARDLINK %s SLEEP GO>>> -\n", boardlink->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -180,7 +180,7 @@ static int __wakeup(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s WAKEUP GO... -\n", boardlink->name);
+        INFO("- BOARDLINK %s WAKEUP GO>>> -\n", boardlink->name);
 
         /*boardlink level do 1st*/
         //FIXME: Transparent Transmission temporally on this level
@@ -215,7 +215,7 @@ static int __tick(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s TICK %llu GO... -\n",
+        INFO("- BOARDLINK %s TICK %llu GO>>> -\n",
                         boardlink->name, tick_counter);
 
         /*boardlink level do 1st*/
@@ -391,7 +391,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- BOARDLINK boardlink%d INIT GO... -\n", id);
+        INFO("- BOARDLINK boardlink%d INIT GO>>> -\n", id);
 
         if (unlikely(!boardlink) || unlikely(!params)) {
                 ERROR("boardlink is %p, params is %p !!!\n", boardlink, params);

@@ -40,7 +40,7 @@ static int __on(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s POWER ON GO... -\n", mcu->name);
+        INFO("- MCU %s POWER ON GO>>> -\n", mcu->name);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -75,7 +75,7 @@ static int __off(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s POWER OFF GO... -\n", mcu->name);
+        INFO("- MCU %s POWER OFF GO>>> -\n", mcu->name);
 
         /*power off subips 1st*/
         //No subips
@@ -110,7 +110,7 @@ static int __idle(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s IDLE GO... -\n", mcu->name);
+        INFO("- MCU %s IDLE GO>>> -\n", mcu->name);
 
         /*idle subips 1st*/
         //No subips
@@ -145,7 +145,7 @@ static int __sleep(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s SLEEP GO... -\n", mcu->name);
+        INFO("- MCU %s SLEEP GO>>> -\n", mcu->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -180,7 +180,7 @@ static int __wakeup(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s WAKEUP GO... -\n", mcu->name);
+        INFO("- MCU %s WAKEUP GO>>> -\n", mcu->name);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -215,7 +215,7 @@ static int __tick(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s TICK %llu GO >>> -\n",
+        INFO("- MCU %s TICK %llu GO>>> -\n",
                         mcu->name, tick_counter);
 
         /*mcu level do 1st*/
@@ -387,7 +387,7 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- MCU mcu%d INIT GO >>> -\n", id);
+        INFO("- MCU mcu%d INIT GO>>> -\n", id);
 
         if (unlikely(!mcu) || unlikely(!params)) {
                 ERROR("mcu is %p, params is %p\n",

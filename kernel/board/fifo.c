@@ -42,7 +42,7 @@ static int __on(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s POWER ON GO... -\n", fifo->name);
+        INFO("- FIFO %s POWER ON GO>>> -\n", fifo->name);
 
         /*fifo level do 1st*/
         //FIXME: todo...
@@ -77,7 +77,7 @@ static int __off(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s POWER OFF GO... -\n", fifo->name);
+        INFO("- FIFO %s POWER OFF GO>>> -\n", fifo->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -112,7 +112,7 @@ static int __idle(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s IDLE GO... -\n", fifo->name);
+        INFO("- FIFO %s IDLE GO>>> -\n", fifo->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -147,7 +147,7 @@ static int __sleep(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s SLEEP GO... -\n", fifo->name);
+        INFO("- FIFO %s SLEEP GO>>> -\n", fifo->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -182,7 +182,7 @@ static int __wakeup(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s WAKEUP GO... -\n", fifo->name);
+        INFO("- FIFO %s WAKEUP GO>>> -\n", fifo->name);
 
         /*fifo level do 1st*/
         //FIXME: todo...
@@ -217,7 +217,7 @@ static int __tick(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s TICK %llu GO... -\n",
+        INFO("- FIFO %s TICK %llu GO>>> -\n",
                         fifo->name, tick_counter);
 
         /*fifo level do 1st*/
@@ -403,7 +403,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- FIFO fifo%d INIT GO... -\n", id);
+        INFO("- FIFO fifo%d INIT GO>>> -\n", id);
 
         if (unlikely(!fifo) || unlikely(!params)) {
                 ERROR("fifo is %p, params is %p !!!\n",

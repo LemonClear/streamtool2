@@ -40,7 +40,7 @@ static int __on(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s POWER ON GO... -\n", pcie->name);
+        INFO("- PCIE %s POWER ON GO>>> -\n", pcie->name);
 
         /*pcie level do 1st*/
         //FIXME: todo...
@@ -76,7 +76,7 @@ static int __off(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s POWER OFF GO... -\n", pcie->name);
+        INFO("- PCIE %s POWER OFF GO>>> -\n", pcie->name);
 
         /*power off subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -112,7 +112,7 @@ static int __idle(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s IDLE GO... -\n", pcie->name);
+        INFO("- PCIE %s IDLE GO>>> -\n", pcie->name);
 
         /*idle subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -148,7 +148,7 @@ static int __sleep(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s SLEEP GO... -\n", pcie->name);
+        INFO("- PCIE %s SLEEP GO>>> -\n", pcie->name);
 
         /*sleep subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -184,7 +184,7 @@ static int __wakeup(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s WAKEUP GO... -\n", pcie->name);
+        INFO("- PCIE %s WAKEUP GO>>> -\n", pcie->name);
 
         /*pcie level do 1st*/
         //FIXME: todo...
@@ -220,7 +220,7 @@ static int __tick(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s TICK %llu GO... -\n",
+        INFO("- PCIE %s TICK %llu GO>>> -\n",
                         pcie->name, tick_counter);
 
         /*pcie level do 1st*/
@@ -394,7 +394,7 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- PCIE pcie%d INIT GO... -\n", id);
+        INFO("- PCIE pcie%d INIT GO>>> -\n", id);
 
         if (unlikely(!pcie) || unlikely(!params)) {
                 ERROR("pcie is %p, params is %p !!!\n",

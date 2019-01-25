@@ -141,7 +141,7 @@ static int simu_init(int argc, char *argv[], simu *simulator)
         int ret = -1;
 
         /*begin*/
-        INFO("- SIMULATOR INIT GO... -\n");
+        INFO("- SIMULATOR INIT GO>>> -\n");
 
         if (unlikely(!simulator)) {
                 ERROR("simulator struct is null !!!\n");
@@ -185,7 +185,7 @@ static int simu_run(simu *simulator)
         int ret = -1;
 
         /*begin*/
-        INFO("- SIMULATOR RUN GO... -\n");
+        INFO("- SIMULATOR RUN GO>>> -\n");
 
         if (unlikely(!simulator)) {
                 ERROR("simulator struct is null !!!\n");

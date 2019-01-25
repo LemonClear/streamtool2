@@ -41,7 +41,7 @@ static int __on(ip *core)
         }
 
         /*begin*/
-        INFO("- CORE %s POWER ON GO... -\n", core->name);
+        INFO("- CORE %s POWER ON GO>>> -\n", core->name);
 
         /*core level do 1st*/
         //FIXME: todo...
@@ -91,7 +91,7 @@ static int __off(ip *core)
         }
 
         /*begin*/
-        INFO("- CORE %s POWER OFF GO... -\n", core->name);
+        INFO("- CORE %s POWER OFF GO>>> -\n", core->name);
 
         if (unlikely(!core->subips)) {
                 ERROR("core->subips is null !!!\n");
@@ -141,7 +141,7 @@ static int __idle(ip *core)
         }
 
         /*begin*/
-        INFO("- CORE %s IDLE GO... -\n", core->name);
+        INFO("- CORE %s IDLE GO>>> -\n", core->name);
 
         if (unlikely(!core->subips)) {
                 ERROR("core->subips is null !!!\n");
@@ -191,7 +191,7 @@ static int __sleep(ip *core)
         }
 
         /*begin*/
-        INFO("- CORE %s SLEEP GO... -\n", core->name);
+        INFO("- CORE %s SLEEP GO>>> -\n", core->name);
 
         if (unlikely(!core->subips)) {
                 ERROR("core->subips is null !!!\n");
@@ -241,7 +241,7 @@ static int __wakeup(ip *core)
         }
 
         /*begin*/
-        INFO("- CORE %s WAKEUP GO... -\n", core->name);
+        INFO("- CORE %s WAKEUP GO>>> -\n", core->name);
 
         /*core level do 1st*/
         //FIXME: todo...
@@ -291,7 +291,7 @@ static int __tick(ip *core)
         }
 
         /*begin*/
-        INFO("- CORE %s TICK %llu GO... -\n",
+        INFO("- CORE %s TICK %llu GO>>> -\n",
                         core->name, tick_counter);
 
         /*core level do 1st*/
@@ -519,7 +519,7 @@ int core_init(ip *father, ip *core, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- CORE core%d INIT GO... -\n", id);
+        INFO("- CORE core%d INIT GO>>> -\n", id);
 
         if (unlikely(!core) || unlikely(!params)) {
                 ERROR("core is %p, params is %p\n",

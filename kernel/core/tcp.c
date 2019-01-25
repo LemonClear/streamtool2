@@ -40,7 +40,7 @@ static int __on(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s POWER ON GO >>> -\n", tcp->name);
+        INFO("- TCP %s POWER ON GO>>> -\n", tcp->name);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -75,7 +75,7 @@ static int __off(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s POWER OFF GO >>> -\n", tcp->name);
+        INFO("- TCP %s POWER OFF GO>>> -\n", tcp->name);
 
         /*power off subips 1st*/
         //No subips
@@ -110,7 +110,7 @@ static int __idle(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s IDLE GO >>> -\n", tcp->name);
+        INFO("- TCP %s IDLE GO>>> -\n", tcp->name);
 
         /*idle subips 1st*/
         //No subips
@@ -145,7 +145,7 @@ static int __sleep(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s SLEEP GO >>> -\n", tcp->name);
+        INFO("- TCP %s SLEEP GO>>> -\n", tcp->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -180,7 +180,7 @@ static int __wakeup(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s WAKEUP GO >>> -\n", tcp->name);
+        INFO("- TCP %s WAKEUP GO>>> -\n", tcp->name);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -215,7 +215,7 @@ static int __tick(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s TICK %llu GO >>> -\n",
+        INFO("- TCP %s TICK %llu GO>>> -\n",
                         tcp->name, tick_counter);
 
         /*tcp level do 1st*/
@@ -390,7 +390,7 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- TCP tcp%d INIT GO >>> -\n", id);
+        INFO("- TCP tcp%d INIT GO>>> -\n", id);
 
         if (unlikely(!tcp) || unlikely(!params)) {
                 ERROR("tcp is %p, params is %p\n", tcp, params);

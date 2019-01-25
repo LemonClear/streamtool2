@@ -87,7 +87,7 @@ static int __on(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s POWER ON GO >>> -\n", ram->name);
+        INFO("- RAM %s POWER ON GO>>> -\n", ram->name);
 
         /*ram level do 1st*/
         ret = load_image_bd(ram, offset);
@@ -126,7 +126,7 @@ static int __off(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s POWER OFF GO >>> -\n", ram->name);
+        INFO("- RAM %s POWER OFF GO>>> -\n", ram->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -161,7 +161,7 @@ static int __idle(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s IDLE GO >>> -\n", ram->name);
+        INFO("- RAM %s IDLE GO>>> -\n", ram->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -196,7 +196,7 @@ static int __sleep(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s SLEEP GO >>> -\n", ram->name);
+        INFO("- RAM %s SLEEP GO>>> -\n", ram->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -231,7 +231,7 @@ static int __wakeup(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s WAKEUP GO >>> -\n", ram->name);
+        INFO("- RAM %s WAKEUP GO>>> -\n", ram->name);
 
         /*ram level do 1st*/
         //FIXME: todo...
@@ -360,7 +360,7 @@ static int __tick(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s TICK %llu GO >>> -\n",
+        INFO("- RAM %s TICK %llu GO>>> -\n",
                         ram->name, tick_counter);
 
         /*ram level do 1st*/
@@ -551,7 +551,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- RAM ram%d INIT GO >>> -\n", id);
+        INFO("- RAM ram%d INIT GO>>> -\n", id);
 
         if (unlikely(!ram) || unlikely(!params)) {
                 ERROR("ram is %p, params is %p\n", ram, params);

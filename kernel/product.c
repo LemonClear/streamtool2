@@ -57,7 +57,7 @@ static int __on(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s POWER ON GO... -\n", product->name);
+        INFO("- PRODUCT %s POWER ON GO>>> -\n", product->name);
 
         /*product level do 1st*/
         //FIXME: todo...
@@ -108,7 +108,7 @@ static int __off(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s POWER OFF GO... -\n", product->name);
+        INFO("- PRODUCT %s POWER OFF GO>>> -\n", product->name);
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
@@ -159,7 +159,7 @@ static int __idle(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s IDLE GO... -\n", product->name);
+        INFO("- PRODUCT %s IDLE GO>>> -\n", product->name);
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
@@ -210,7 +210,7 @@ static int __sleep(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s SLEEP GO... -\n", product->name);
+        INFO("- PRODUCT %s SLEEP GO>>> -\n", product->name);
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
@@ -261,7 +261,7 @@ static int __wakeup(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s WAKEUP GO... -\n", product->name);
+        INFO("- PRODUCT %s WAKEUP GO>>> -\n", product->name);
 
         /*product level do 1st*/
         //FIXME: todo...
@@ -312,7 +312,7 @@ static int __tick(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s TICK:%llu GO... -\n",
+        INFO("- PRODUCT %s TICK:%llu GO>>> -\n",
                         product->name, tick_counter);
 
         /*product level do 1st*/
@@ -544,7 +544,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- PRODUCT product%d INIT GO... -\n", id);
+        INFO("- PRODUCT product%d INIT GO>>> -\n", id);
 
         if (unlikely(!product) || unlikely(!params)) {
                 ERROR("product is %p, params is %p !!!\n",
@@ -685,7 +685,7 @@ int product_run(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s RUN GO... -\n", product->name);
+        INFO("- PRODUCT %s RUN GO>>> -\n", product->name);
 
         /*power on*/
         ret = power_on(product); //power start

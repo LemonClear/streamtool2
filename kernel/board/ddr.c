@@ -87,7 +87,7 @@ static int __on(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s POWER ON GO... -\n", ddr->name);
+        INFO("- DDR %s POWER ON GO>>> -\n", ddr->name);
 
         /*ddr level do 1st*/
         ret = load_image_bd(ddr, offset);
@@ -126,7 +126,7 @@ static int __off(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s POWER OFF GO... -\n", ddr->name);
+        INFO("- DDR %s POWER OFF GO>>> -\n", ddr->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -161,7 +161,7 @@ static int __idle(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s IDLE GO... -\n", ddr->name);
+        INFO("- DDR %s IDLE GO>>> -\n", ddr->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -196,7 +196,7 @@ static int __sleep(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s SLEEP GO... -\n", ddr->name);
+        INFO("- DDR %s SLEEP GO>>> -\n", ddr->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -231,7 +231,7 @@ static int __wakeup(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s WAKEUP GO... -\n", ddr->name);
+        INFO("- DDR %s WAKEUP GO>>> -\n", ddr->name);
 
         /*ddr level do 1st*/
         //FIXME: todo...
@@ -266,7 +266,7 @@ static int __tick(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s TICK %llu GO... -\n",
+        INFO("- DDR %s TICK %llu GO>>> -\n",
                         ddr->name, tick_counter);
 
         /*ddr level do 1st*/
@@ -452,7 +452,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- DDR ddr%d INIT GO... -\n", id);
+        INFO("- DDR ddr%d INIT GO>>> -\n", id);
 
         if (unlikely(!ddr) || unlikely(!params)) {
                 ERROR("ddr is %p, params is %p !!!\n",

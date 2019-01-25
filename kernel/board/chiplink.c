@@ -40,7 +40,7 @@ static int __on(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s POWER ON GO... -\n", chiplink->name);
+        INFO("- CHIPLINK %s POWER ON GO>>> -\n", chiplink->name);
 
         /*chiplink level do 1st*/
         //FIXME: todo...
@@ -76,7 +76,7 @@ static int __off(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s POWER OFF GO... -\n", chiplink->name);
+        INFO("- CHIPLINK %s POWER OFF GO>>> -\n", chiplink->name);
 
         /*power off subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -112,7 +112,7 @@ static int __idle(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s IDLE GO... -\n", chiplink->name);
+        INFO("- CHIPLINK %s IDLE GO>>> -\n", chiplink->name);
 
         /*idle subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -148,7 +148,7 @@ static int __sleep(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s SLEEP GO... -\n", chiplink->name);
+        INFO("- CHIPLINK %s SLEEP GO>>> -\n", chiplink->name);
 
         /*sleep subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -184,7 +184,7 @@ static int __wakeup(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s WAKEUP GO... -\n", chiplink->name);
+        INFO("- CHIPLINK %s WAKEUP GO>>> -\n", chiplink->name);
 
         /*chiplink level do 1st*/
         //FIXME: todo...
@@ -220,7 +220,7 @@ static int __tick(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s TICK %llu GO... -\n",
+        INFO("- CHIPLINK %s TICK %llu GO>>> -\n",
                         chiplink->name, tick_counter);
 
         /*chiplink level do 1st*/
@@ -398,7 +398,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- CHIPLINK chiplink%d INIT GO... -\n", id);
+        INFO("- CHIPLINK chiplink%d INIT GO>>> -\n", id);
 
         if (unlikely(!chiplink) || unlikely(!params)) {
                 ERROR("chiplink is %p, params is %p !!!\n",
