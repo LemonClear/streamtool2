@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,10 +35,12 @@ static int __on(ip *mcu)
         int ret = -1;
 
         if (unlikely(!mcu)) {
-                printf("ERR: mcu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- MCU %s POWER ON GO... -\n", mcu->name);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -48,8 +51,8 @@ static int __on(ip *mcu)
         /*change state machine 3rd*/
         mcu->status = RUN;
 
-        printf("INFO: mcu:%s power on!!!!! %s, %s, %d\n",
-                        mcu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MCU %s POWER ON DONE -\n", mcu->name);
 
         ret = 0;
 ret_on:
@@ -67,10 +70,12 @@ static int __off(ip *mcu)
         int ret = -1;
 
         if (unlikely(!mcu)) {
-                printf("ERR: mcu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- MCU %s POWER OFF GO... -\n", mcu->name);
 
         /*power off subips 1st*/
         //No subips
@@ -81,8 +86,8 @@ static int __off(ip *mcu)
         /*change state machine 3rd*/
         mcu->status = OFF;
 
-        printf("INFO: mcu:%s power off!!!!! %s, %s, %d\n",
-                        mcu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MCU %s POWER OFF DONE -\n", mcu->name);
 
         ret = 0;
 ret_off:
@@ -100,10 +105,12 @@ static int __idle(ip *mcu)
         int ret = -1;
 
         if (unlikely(!mcu)) {
-                printf("ERR: mcu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- MCU %s IDLE GO... -\n", mcu->name);
 
         /*idle subips 1st*/
         //No subips
@@ -114,8 +121,8 @@ static int __idle(ip *mcu)
         /*change state machine 3rd*/
         mcu->status = IDLE;
 
-        printf("INFO: mcu:%s idle!!!!! %s, %s, %d\n",
-                        mcu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MCU %s IDLE DONE -\n", mcu->name);
 
         ret = 0;
 ret_idle:
@@ -133,10 +140,12 @@ static int __sleep(ip *mcu)
         int ret = -1;
 
         if (unlikely(!mcu)) {
-                printf("ERR: mcu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- MCU %s SLEEP GO... -\n", mcu->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -147,8 +156,8 @@ static int __sleep(ip *mcu)
         /*change state machine 3rd*/
         mcu->status = SLEEP;
 
-        printf("INFO: mcu:%s sleep!!!!! %s, %s, %d\n",
-                        mcu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MCU %s SLEEP DONE -\n", mcu->name);
 
         ret = 0;
 ret_sleep:
@@ -166,10 +175,12 @@ static int __wakeup(ip *mcu)
         int ret = -1;
 
         if (unlikely(!mcu)) {
-                printf("ERR: mcu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- MCU %s WAKEUP GO... -\n", mcu->name);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -180,8 +191,8 @@ static int __wakeup(ip *mcu)
         /*change state machine 3rd*/
         mcu->status = RUN;
 
-        printf("INFO: mcu:%s wakeup!!!!! %s, %s, %d\n",
-                        mcu->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MCU %s WAKEUP DONE -\n", mcu->name);
 
         ret = 0;
 ret_wakeup:
@@ -199,14 +210,13 @@ static int __tick(ip *mcu)
         int ret = -1;
 
         if (unlikely(!mcu)) {
-                printf("ERR: mcu absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: mcu:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        mcu->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- MCU %s TICK %llu GO >>> -\n",
+                        mcu->name, tick_counter);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -215,8 +225,8 @@ static int __tick(ip *mcu)
         //No subips
 
         /*done*/
-        printf("INFO: mcu:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        mcu->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- MCU %s TICK %llu DONE -\n",
+                        mcu->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -233,14 +243,13 @@ static int __dump(ip *mcu)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== mcu:%s dump start !!!!! ==========\n",
-                        mcu->name);
-
         if (unlikely(!mcu)) {
-                printf("ERR: mcu absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP MCU %s BEGIN ---\n", mcu->name);
 
         /*dump mcu elements 1st*/
         //FIXME: todo...
@@ -248,8 +257,8 @@ static int __dump(ip *mcu)
         /*dump subips 2nd*/
         //No subips
 
-        printf("DEBUG: ========== mcu:%s dump end !!!!! ==========\n",
-                        mcu->name);
+        /*end*/
+        DEBUG("--- DUMP MCU %s END ---\n", mcu->name);
 
         ret = 0;
 ret_dump:
@@ -282,16 +291,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./mcu.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: mcu reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -319,15 +326,13 @@ static int mcu_alloc(ip *mcu, param *params)
 
         /*reg list*/
         if (unlikely(!params->mcu_reg_count)) {
-                printf("INFO: mcu have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no regster !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         mcu->reglist = malloc((params->mcu_reg_count + 1) * sizeof(regs *));
         if (unlikely(!mcu->reglist)) {
-                printf("ERR: alloc mcu reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)mcu->reglist, 0, (params->mcu_reg_count + 1 ) * sizeof(regs *));
@@ -335,8 +340,7 @@ static int mcu_alloc(ip *mcu, param *params)
         for (id = 0; id < params->mcu_reg_count; id++) {
                 mcu->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!mcu->reglist[id])) {
-                        printf("ERR: alloc mcu reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)mcu->reglist[id], 0, sizeof(regs));
@@ -345,15 +349,13 @@ static int mcu_alloc(ip *mcu, param *params)
         /*reg hastable*/
         mcu->name2reg = init_hashtable();
         if (unlikely(!mcu->name2reg)) {
-                printf("ERR: alloc mcu reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         mcu->addr2reg = init_hashtable();
         if (unlikely(!mcu->addr2reg)) {
-                printf("ERR: alloc mcu reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -385,20 +387,18 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        printf("INFO: mcu init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- MCU mcu%d INIT GO >>> -\n", id);
 
         if (unlikely(!mcu) || unlikely(!params)) {
-                printf("ERR: mcu or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu is %p, params is %p\n",
+                                mcu, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = mcu_alloc(mcu, params);
         if (unlikely(ret)) {
-                printf("ERR: mcu alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("mcu alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -420,8 +420,7 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(mcu->reglist);
         if (unlikely(ret)) {
-                printf("ERR: mcu reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -436,9 +435,8 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
                                 (void *)mcu->reglist[sub],
                                 mcu->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, mcu->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        mcu->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -446,9 +444,7 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
                 addr2str = hexdui2s(mcu->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)mcu->reglist[sub], mcu->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, mcu->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -469,8 +465,8 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
         /*subips: hashtable*/
         //No subips
 
-        printf("INFO: mcu init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- MCU mcu%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
