@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,10 +35,12 @@ static int __on(ip *tcp)
         int ret = -1;
 
         if (unlikely(!tcp)) {
-                printf("ERR: tcp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- TCP %s POWER ON GO >>> -\n", tcp->name);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -48,8 +51,8 @@ static int __on(ip *tcp)
         /*change state machine 3rd*/
         tcp->status = RUN;
 
-        printf("INFO: tcp:%s power on!!!!! %s, %s, %d\n",
-                        tcp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- TCP %s POWER ON DONE -\n", tcp->name);
 
         ret = 0;
 ret_on:
@@ -67,10 +70,12 @@ static int __off(ip *tcp)
         int ret = -1;
 
         if (unlikely(!tcp)) {
-                printf("ERR: tcp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- TCP %s POWER OFF GO >>> -\n", tcp->name);
 
         /*power off subips 1st*/
         //No subips
@@ -81,8 +86,8 @@ static int __off(ip *tcp)
         /*change state machine 3rd*/
         tcp->status = OFF;
 
-        printf("INFO: tcp:%s power off!!!!! %s, %s, %d\n",
-                        tcp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- TCP %s POWER OFF DONE -\n", tcp->name);
 
         ret = 0;
 ret_off:
@@ -100,10 +105,12 @@ static int __idle(ip *tcp)
         int ret = -1;
 
         if (unlikely(!tcp)) {
-                printf("ERR: tcp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- TCP %s IDLE GO >>> -\n", tcp->name);
 
         /*idle subips 1st*/
         //No subips
@@ -114,8 +121,8 @@ static int __idle(ip *tcp)
         /*change state machine 3rd*/
         tcp->status = IDLE;
 
-        printf("INFO: tcp:%s idle!!!!! %s, %s, %d\n",
-                        tcp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- TCP %s IDLE DONE -\n", tcp->name);
 
         ret = 0;
 ret_idle:
@@ -133,10 +140,12 @@ static int __sleep(ip *tcp)
         int ret = -1;
 
         if (unlikely(!tcp)) {
-                printf("ERR: tcp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- TCP %s SLEEP GO >>> -\n", tcp->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -147,8 +156,8 @@ static int __sleep(ip *tcp)
         /*change state machine 3rd*/
         tcp->status = SLEEP;
 
-        printf("INFO: tcp:%s sleep!!!!! %s, %s, %d\n",
-                        tcp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- TCP %s SLEEP DONE -\n", tcp->name);
 
         ret = 0;
 ret_sleep:
@@ -166,10 +175,12 @@ static int __wakeup(ip *tcp)
         int ret = -1;
 
         if (unlikely(!tcp)) {
-                printf("ERR: tcp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- TCP %s WAKEUP GO >>> -\n", tcp->name);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -180,8 +191,8 @@ static int __wakeup(ip *tcp)
         /*change state machine 3rd*/
         tcp->status = RUN;
 
-        printf("INFO: tcp:%s wakeup!!!!! %s, %s, %d\n",
-                        tcp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- TCP %s WAKEUP DONE -\n", tcp->name);
 
         ret = 0;
 ret_wakeup:
@@ -199,14 +210,13 @@ static int __tick(ip *tcp)
         int ret = -1;
 
         if (unlikely(!tcp)) {
-                printf("ERR: tcp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: tcp:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        tcp->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- TCP %s TICK %llu GO >>> -\n",
+                        tcp->name, tick_counter);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -215,8 +225,8 @@ static int __tick(ip *tcp)
         //No subips
 
         /*done*/
-        printf("INFO: tcp:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        tcp->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- TCP %s TICK %llu DONE -\n",
+                        tcp->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -234,14 +244,13 @@ static int __dump(ip *tcp)
         int ret = -1;
         int id = 0;
 
-        printf("DEBUG: ========== tcp:%s dump start !!!!! ==========\n",
-                        tcp->name);
-
         if (unlikely(!tcp)) {
-                printf("ERR: tcp absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP TCP %s BEGIN ---\n", tcp->name);
 
         /*dump tcp elements 1st*/
         //FIXME: todo...
@@ -249,8 +258,8 @@ static int __dump(ip *tcp)
         /*dump subips 2nd*/
         //No subips
 
-        printf("DEBUG: ========== tcp:%s dump end !!!!! ==========\n",
-                        tcp->name);
+        /*end*/
+        DEBUG("--- DUMP TCP %s END ---\n", tcp->name);
 
         ret = 0;
 ret_dump:
@@ -285,16 +294,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./tcp.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: tcp reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -321,16 +328,14 @@ static int tcp_alloc(ip *tcp, param *params)
         //NO need on tcp level!!!
 
         /*reg list*/
-        if (unlikely(!params->tcp_reg_count)) { //FIXME: should separate ips reg count
-                printf("INFO: tcp have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+        if (unlikely(!params->tcp_reg_count)) {
+                WARNING("have no register !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         tcp->reglist = malloc((params->tcp_reg_count + 1) * sizeof(regs *));
         if (unlikely(!tcp->reglist)) {
-                printf("ERR: alloc tcp reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)tcp->reglist, 0, (params->tcp_reg_count + 1 ) * sizeof(regs *));
@@ -338,8 +343,7 @@ static int tcp_alloc(ip *tcp, param *params)
         for (id = 0; id < params->tcp_reg_count; id++) {
                 tcp->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!tcp->reglist[id])) {
-                        printf("ERR: alloc tcp reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)tcp->reglist[id], 0, sizeof(regs));
@@ -348,15 +352,13 @@ static int tcp_alloc(ip *tcp, param *params)
         /*reg hastable*/
         tcp->name2reg = init_hashtable();
         if (unlikely(!tcp->name2reg)) {
-                printf("ERR: alloc tcp reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         tcp->addr2reg = init_hashtable();
         if (unlikely(!tcp->addr2reg)) {
-                printf("ERR: alloc tcp reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -388,20 +390,17 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        printf("INFO: tcp init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- TCP tcp%d INIT GO >>> -\n", id);
 
         if (unlikely(!tcp) || unlikely(!params)) {
-                printf("ERR: tcp or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp is %p, params is %p\n", tcp, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = tcp_alloc(tcp, params);
         if (unlikely(ret)) {
-                printf("ERR: tcp alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("tcp alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -423,8 +422,7 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(tcp->reglist);
         if (unlikely(ret)) {
-                printf("ERR: tcp reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -439,9 +437,8 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
                                 (void *)tcp->reglist[sub],
                                 tcp->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, tcp->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        tcp->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -449,9 +446,7 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
                 addr2str = hexdui2s(tcp->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)tcp->reglist[sub], tcp->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, tcp->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -472,8 +467,8 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
         /*subips: hashtable*/
         //No subips
 
-        printf("INFO: tcp init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- TCP tcp%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
