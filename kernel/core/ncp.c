@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,10 +35,12 @@ static int __on(ip *ncp)
         int ret = -1;
 
         if (unlikely(!ncp)) {
-                printf("ERR: ncp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- NCP %s POWER ON GO >>> -\n", ncp->name);
 
         /*ncp level do 1st*/
         //FIXME: todo...
@@ -48,8 +51,8 @@ static int __on(ip *ncp)
         /*change state machine 3rd*/
         ncp->status = RUN;
 
-        printf("INFO: ncp:%s power on!!!!! %s, %s, %d\n",
-                        ncp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NCP %s POWER ON DONE -\n", ncp->name);
 
         ret = 0;
 ret_on:
@@ -67,10 +70,12 @@ static int __off(ip *ncp)
         int ret = -1;
 
         if (unlikely(!ncp)) {
-                printf("ERR: ncp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- NCP %s POWER OFF GO >>> -\n", ncp->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -81,8 +86,8 @@ static int __off(ip *ncp)
         /*change state machine 3rd*/
         ncp->status = OFF;
 
-        printf("INFO: ncp:%s power off!!!!! %s, %s, %d\n",
-                        ncp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NCP %s POWER OFF DONE -\n", ncp->name);
 
         ret = 0;
 ret_off:
@@ -100,10 +105,12 @@ static int __idle(ip *ncp)
         int ret = -1;
 
         if (unlikely(!ncp)) {
-                printf("ERR: ncp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- NCP %s IDLE GO >>> -\n", ncp->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -114,8 +121,8 @@ static int __idle(ip *ncp)
         /*change state machine 3rd*/
         ncp->status = IDLE;
 
-        printf("INFO: ncp:%s idle!!!!! %s, %s, %d\n",
-                        ncp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NCP %s IDLE DONE -\n", ncp->name);
 
         ret = 0;
 ret_idle:
@@ -133,10 +140,12 @@ static int __sleep(ip *ncp)
         int ret = -1;
 
         if (unlikely(!ncp)) {
-                printf("ERR: ncp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- NCP %s SLEEP GO >>> -\n", ncp->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -147,8 +156,8 @@ static int __sleep(ip *ncp)
         /*change state machine 3rd*/
         ncp->status = SLEEP;
 
-        printf("INFO: ncp:%s sleep!!!!! %s, %s, %d\n",
-                        ncp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NCP %s SLEEP DONE -\n", ncp->name);
 
         ret = 0;
 ret_sleep:
@@ -167,10 +176,12 @@ static int __wakeup(ip *ncp)
         int id = -1;
 
         if (unlikely(!ncp)) {
-                printf("ERR: ncp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- NCP %s WAKEUP GO >>> -\n", ncp->name);
 
         /*ncp level do 1st*/
         //FIXME: todo...
@@ -181,8 +192,8 @@ static int __wakeup(ip *ncp)
         /*change state machine 3rd*/
         ncp->status = RUN;
 
-        printf("INFO: ncp:%s wakeup!!!!! %s, %s, %d\n",
-                        ncp->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NCP %s WAKEUP DONE -\n", ncp->name);
 
         ret = 0;
 ret_wakeup:
@@ -200,14 +211,13 @@ static int __tick(ip *ncp)
         int ret = -1;
 
         if (unlikely(!ncp)) {
-                printf("ERR: ncp absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: ncp:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        ncp->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- NCP %s TICK %llu GO >>> -\n",
+                        ncp->name, tick_counter);
 
         /*ncp level do 1st*/
         //FIXME: todo...
@@ -217,8 +227,8 @@ static int __tick(ip *ncp)
         //NO subips
 
         /*done*/
-        printf("INFO: ncp:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        ncp->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- NCP %s TICK %llu DONE -\n",
+                        ncp->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -236,14 +246,13 @@ static int __dump(ip *ncp)
         int ret = -1;
         int id = -1;
 
-        printf("DEBUG: ========== ncp:%s dump start !!!!! ==========\n",
-                        ncp->name);
-
         if (unlikely(!ncp)) {
-                printf("ERR: ncp absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP NCP %s BEGIN ---\n", ncp->name);
 
         /*dump ncp elements 1st*/
         //FIXME: todo...
@@ -251,8 +260,8 @@ static int __dump(ip *ncp)
         /*dump subips 2nd*/
         //NO subips
 
-        printf("DEBUG: ========== ncp:%s dump end !!!!! ==========\n",
-                        ncp->name);
+        /*end*/
+        DEBUG("--- DUMP NCP %s END ---\n", ncp->name);
 
         ret = 0;
 ret_dump:
@@ -287,16 +296,14 @@ static int parse_regconfig(regs **reglist)
         char *config = "./ncp.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: ncp reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         /*begin*/
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -323,16 +330,14 @@ static int ncp_alloc(ip *ncp, param *params)
         //NO need on ncp level!!!
 
         /*reg list*/
-        if (unlikely(!params->ncp_reg_count)) { //FIXME: should separate ips reg count
-                printf("INFO: ncp have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+        if (unlikely(!params->ncp_reg_count)) {
+                WARNING("have no register !!!\n");
         }
 
         //Trick: malloc(0)!=NULL
         ncp->reglist = malloc((params->ncp_reg_count + 1) * sizeof(regs *));
         if (unlikely(!ncp->reglist)) {
-                printf("ERR: alloc ncp reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)ncp->reglist, 0, (params->ncp_reg_count + 1 ) * sizeof(regs *));
@@ -340,8 +345,7 @@ static int ncp_alloc(ip *ncp, param *params)
         for (id = 0; id < params->ncp_reg_count; id++) {
                 ncp->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!ncp->reglist[id])) {
-                        printf("ERR: alloc ncp reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)ncp->reglist[id], 0, sizeof(regs));
@@ -350,15 +354,13 @@ static int ncp_alloc(ip *ncp, param *params)
         /*reg hastable*/
         ncp->name2reg = init_hashtable();
         if (unlikely(!ncp->name2reg)) {
-                printf("ERR: alloc ncp reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         ncp->addr2reg = init_hashtable();
         if (unlikely(!ncp->addr2reg)) {
-                printf("ERR: alloc ncp reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -390,20 +392,17 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        printf("INFO: ncp init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- NCP ncp%d INIT GO >>> -\n", id);
 
         if (unlikely(!ncp) || unlikely(!params)) {
-                printf("ERR: ncp or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp is %p, params is %p\n", ncp, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = ncp_alloc(ncp, params);
         if (unlikely(ret)) {
-                printf("ERR: ncp alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("ncp alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -425,8 +424,7 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(ncp->reglist);
         if (unlikely(ret)) {
-                printf("ERR: ncp reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -441,9 +439,8 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
                                 (void *)ncp->reglist[sub],
                                 ncp->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, ncp->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        ncp->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -451,9 +448,7 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
                 addr2str = hexdui2s(ncp->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)ncp->reglist[sub], ncp->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, ncp->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -474,8 +469,8 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
         /*subips: hashtable*/
         //No subips
 
-        printf("INFO: ncp init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NCP ncp%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
