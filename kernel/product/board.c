@@ -531,7 +531,7 @@ int board_init(ip *father, ip *board, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- BOARD board%d INIT GO... -\n", id);
@@ -587,7 +587,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", board->reglist[sub]->address);
+                addr2str = hexdui2s(board->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)board->reglist[sub], board->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);
@@ -686,7 +686,7 @@ int board_init(ip *father, ip *board, int id, param *params)
                 }
 
                 /*table addr2subip*/
-                sprintf(addr2str, "0x%x", board->subips[sub]->address);
+                addr2str = hexdui2s(board->subips[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)board->subips[sub],
                                 board->addr2subip);
                 if (unlikely(ret)) {

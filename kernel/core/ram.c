@@ -543,7 +543,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         printf("INFO: ram init start!!!!! %s, %s, %d\n",
@@ -604,7 +604,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", ram->reglist[sub]->address);
+                addr2str = hexdui2s(ram->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)ram->reglist[sub], ram->addr2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",

@@ -400,7 +400,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- FIFO fifo%d INIT GO... -\n", id);
@@ -457,7 +457,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", fifo->reglist[sub]->address);
+                addr2str = hexdui2s(fifo->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)fifo->reglist[sub], fifo->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);

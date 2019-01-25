@@ -385,7 +385,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- NOC noc%d INIT GO... -\n", id);
@@ -442,7 +442,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", noc->reglist[sub]->address);
+                addr2str = hexdui2s(noc->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)noc->reglist[sub], noc->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);

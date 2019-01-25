@@ -74,4 +74,20 @@ void dump_hashtable(hashtable *table);
 int del_hashtable(hashtable *table);
 
 
+/*cstring functions*/
+char *hexdi2s(int num);
+char *hexdui2s(unsigned int num);
+char *hexdl2s(long num);
+char *hexdul2s(unsigned long num);
+char *hexdll2s(long long num);
+char *hexdull2s(unsigned long long num);
+
+char *decdi2s(int num);
+char *decdui2s(unsigned int num);
+char *decdl2s(long num);
+char *decdul2s(unsigned long num);
+char *decdll2s(long long num);
+char *decdull2s(unsigned long long num);
+
+
 #endif

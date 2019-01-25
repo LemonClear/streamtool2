@@ -385,7 +385,7 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         printf("INFO: tcp init start!!!!! %s, %s, %d\n",
@@ -446,7 +446,7 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", tcp->reglist[sub]->address);
+                addr2str = hexdui2s(tcp->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)tcp->reglist[sub], tcp->addr2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",

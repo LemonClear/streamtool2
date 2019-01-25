@@ -449,7 +449,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- DDR ddr%d INIT GO... -\n", id);
@@ -506,7 +506,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", ddr->reglist[sub]->address);
+                addr2str = hexdui2s(ddr->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)ddr->reglist[sub], ddr->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);

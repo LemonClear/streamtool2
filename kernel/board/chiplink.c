@@ -395,7 +395,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- CHIPLINK chiplink%d INIT GO... -\n", id);
@@ -452,7 +452,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", chiplink->reglist[sub]->address);
+                addr2str = hexdui2s(chiplink->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)chiplink->reglist[sub], chiplink->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);

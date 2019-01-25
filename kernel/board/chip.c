@@ -524,7 +524,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- CHIP chip%d INIT GO... -\n", id);
@@ -581,7 +581,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", chip->reglist[sub]->address);
+                addr2str = hexdui2s(chip->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)chip->reglist[sub], chip->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);
@@ -636,7 +636,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
                 }
 
                 /*table addr2subip*/
-                sprintf(addr2str, "0x%x", chip->subips[sub]->address);
+                addr2str = hexdui2s(chip->subips[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)chip->subips[sub],
                                 chip->addr2subip);
                 if (unlikely(ret)) {

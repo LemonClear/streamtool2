@@ -516,7 +516,7 @@ int core_init(ip *father, ip *core, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- CORE core%d INIT GO... -\n", id);
@@ -573,7 +573,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", core->reglist[sub]->address);
+                addr2str = hexdui2s(core->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)core->reglist[sub], core->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);
@@ -648,7 +648,7 @@ int core_init(ip *father, ip *core, int id, param *params)
                 }
 
                 /*table addr2subip*/
-                sprintf(addr2str, "0x%x", core->subips[sub]->address);
+                addr2str = hexdui2s(core->subips[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)core->subips[sub],
                                 core->addr2subip);
                 if (unlikely(ret)) {

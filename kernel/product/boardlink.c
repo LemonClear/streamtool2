@@ -388,7 +388,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- BOARDLINK boardlink%d INIT GO... -\n", id);
@@ -445,7 +445,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", boardlink->reglist[sub]->address);
+                addr2str = hexdui2s(boardlink->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)boardlink->reglist[sub], boardlink->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);

@@ -387,7 +387,7 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         printf("INFO: ncp init start!!!!! %s, %s, %d\n",
@@ -448,7 +448,7 @@ int ncp_init(ip *father, ip *ncp, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", ncp->reglist[sub]->address);
+                addr2str = hexdui2s(ncp->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)ncp->reglist[sub], ncp->addr2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",

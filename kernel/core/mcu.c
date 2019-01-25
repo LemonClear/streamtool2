@@ -382,7 +382,7 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         printf("INFO: mcu init start!!!!! %s, %s, %d\n",
@@ -443,7 +443,7 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", mcu->reglist[sub]->address);
+                addr2str = hexdui2s(mcu->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)mcu->reglist[sub], mcu->addr2reg);
                 if (unlikely(ret)) {
                         printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",

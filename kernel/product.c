@@ -541,7 +541,7 @@ int product_init(ip *father, ip *product, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- PRODUCT product%d INIT GO... -\n", id);
@@ -598,7 +598,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", product->reglist[sub]->address);
+                addr2str = hexdui2s(product->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)product->reglist[sub], product->addr2reg);
                 if (unlikely(ret)) {
                         ERROR("hash %s to addr2reg failed !!!\n", addr2str);
@@ -653,7 +653,7 @@ int product_init(ip *father, ip *product, int id, param *params)
                 }
 
                 /*table addr2subip*/
-                sprintf(addr2str, "0x%x", product->subips[sub]->address);
+                addr2str = hexdui2s(product->subips[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)product->subips[sub],
                                 product->addr2subip);
                 if (unlikely(ret)) {

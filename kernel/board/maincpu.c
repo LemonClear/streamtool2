@@ -384,7 +384,7 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
 {
         int ret = -1;
         int sub = -1;
-        char addr2str[32] = {0};
+        char *addr2str = NULL;
 
         /*begin*/
         INFO("- MAINCPU maincpu%d INIT GO... -\n", id);
@@ -441,7 +441,7 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
                 }
 
                 /*table addr2reg*/
-                sprintf(addr2str, "0x%x", maincpu->reglist[sub]->address);
+                addr2str = hexdui2s(maincpu->reglist[sub]->address);
                 ret = insert_hashtable(addr2str,
                                 (void *)maincpu->reglist[sub],
                                 maincpu->addr2reg);
