@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include "common.h"
 #include "of.h"
+#include "logger.h"
 
 
 /**
@@ -34,10 +35,12 @@ static int __on(ip *noc)
         int ret = -1;
 
         if (unlikely(!noc)) {
-                printf("ERR: noc absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is null !!!\n");
                 goto ret_on;
         }
+
+        /*begin*/
+        INFO("- NOC %s POWER ON GO... -\n", noc->name);
 
         /*noc level do 1st*/
         //FIXME: todo...
@@ -48,8 +51,8 @@ static int __on(ip *noc)
         /*change state machine 3rd*/
         noc->status = RUN;
 
-        printf("INFO: noc:%s power on!!!!! %s, %s, %d\n",
-                        noc->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NOC %s POWER ON DONE -\n", noc->name);
 
         ret = 0;
 ret_on:
@@ -67,10 +70,12 @@ static int __off(ip *noc)
         int ret = -1;
 
         if (unlikely(!noc)) {
-                printf("ERR: noc absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is null !!!\n");
                 goto ret_off;
         }
+
+        /*begin*/
+        INFO("- NOC %s POWER OFF GO... -\n", noc->name);
 
         /*power off subips 1st*/
         //No subips
@@ -81,8 +86,8 @@ static int __off(ip *noc)
         /*change state machine 3rd*/
         noc->status = OFF;
 
-        printf("INFO: noc:%s power off!!!!! %s, %s, %d\n",
-                        noc->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NOC %s POWER OFF DONE -\n", noc->name);
 
         ret = 0;
 ret_off:
@@ -100,10 +105,12 @@ static int __idle(ip *noc)
         int ret = -1;
 
         if (unlikely(!noc)) {
-                printf("ERR: noc absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is null !!!\n");
                 goto ret_idle;
         }
+
+        /*begin*/
+        INFO("- NOC %s IDLE GO... -\n", noc->name);
 
         /*idle subips 1st*/
         //No subips
@@ -114,8 +121,8 @@ static int __idle(ip *noc)
         /*change state machine 3rd*/
         noc->status = IDLE;
 
-        printf("INFO: noc:%s idle!!!!! %s, %s, %d\n",
-                        noc->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NOC %s IDLE DONE -\n", noc->name);
 
         ret = 0;
 ret_idle:
@@ -133,10 +140,12 @@ static int __sleep(ip *noc)
         int ret = -1;
 
         if (unlikely(!noc)) {
-                printf("ERR: noc absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is null !!!\n");
                 goto ret_sleep;
         }
+
+        /*begin*/
+        INFO("- NOC %s SLEEP GO... -\n", noc->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -147,8 +156,8 @@ static int __sleep(ip *noc)
         /*change state machine 3rd*/
         noc->status = SLEEP;
 
-        printf("INFO: noc:%s sleep!!!!! %s, %s, %d\n",
-                        noc->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NOC %s SLEEP DONE -\n", noc->name);
 
         ret = 0;
 ret_sleep:
@@ -166,10 +175,12 @@ static int __wakeup(ip *noc)
         int ret = -1;
 
         if (unlikely(!noc)) {
-                printf("ERR: noc absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is null !!!\n");
                 goto ret_wakeup;
         }
+
+        /*begin*/
+        INFO("- NOC %s WAKEUP GO... -\n", noc->name);
 
         /*noc level do 1st*/
         //FIXME: todo...
@@ -180,8 +191,8 @@ static int __wakeup(ip *noc)
         /*change state machine 3rd*/
         noc->status = RUN;
 
-        printf("INFO: noc:%s wakeup!!!!! %s, %s, %d\n",
-                        noc->name, __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NOC %s WAKEUP DONE -\n", noc->name);
 
         ret = 0;
 ret_wakeup:
@@ -199,14 +210,13 @@ static int __tick(ip *noc)
         int ret = -1;
 
         if (unlikely(!noc)) {
-                printf("ERR: noc absent, please check! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is null !!!\n");
                 goto ret_tick;
         }
 
         /*begin*/
-        printf("INFO: noc:%s tick:%llu come!!!!! %s, %s, %d\n",
-                        noc->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- NOC %s TICK %llu GO... -\n",
+                        noc->name, tick_counter);
 
         /*noc level do 1st*/
         //FIXME: todo...
@@ -216,8 +226,8 @@ static int __tick(ip *noc)
         //No subips
 
         /*done*/
-        printf("INFO: noc:%s tick:%llu done!!!!! %s, %s, %d\n",
-                        noc->name, tick_counter, __FILE__, __func__, __LINE__);
+        INFO("- NOC %s TICK %llu DONE -\n",
+                        noc->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -234,14 +244,13 @@ static int __dump(ip *noc)
 {
         int ret = -1;
 
-        printf("DEBUG: ========== noc:%s dump start !!!!! ==========\n",
-                        noc->name);
-
         if (unlikely(!noc)) {
-                printf("ERR: noc absent, dump failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is null !!!\n");
                 goto ret_dump;
         }
+
+        /*begin*/
+        DEBUG("--- DUMP NOC %s BEGIN ---\n", noc->name);
 
         /*dump noc elements 1st*/
         //FIXME: todo...
@@ -249,8 +258,8 @@ static int __dump(ip *noc)
         /*dump subips 2nd*/
         //No subips
 
-        printf("DEBUG: ========== noc:%s dump end !!!!! ==========\n",
-                        noc->name);
+        /*end*/
+        DEBUG("--- DUMP NOC %s END ---\n", noc->name);
 
         ret = 0;
 ret_dump:
@@ -283,15 +292,13 @@ static int parse_regconfig(regs **reglist)
         char *config = "./noc.reg";
 
         if (unlikely(!reglist)) {
-                printf("ERR: noc reglist absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
         if (unlikely(access(config, F_OK))) {
-                printf("INFO: config file %s absent! \
-                                use default no reg config! %s, %s, %d\n",
-                                config, __FILE__, __func__, __LINE__);
+                WARNING("config file {%s} not exist !!! use default config !!!\n",
+                                config);
                 ret = 0;
                 goto ret_config;
         }
@@ -319,16 +326,14 @@ static int noc_alloc(ip *noc, param *params)
 
         /*reg list*/
         if (unlikely(!params->noc_reg_count)) {
-                printf("INFO: noc have no reg!!! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                WARNING("have no register !!!\n");
         }
 
         //Trick: malloc(0)!=NULL, if have no reg,
         //the noc->reglist value can also mark as this ip's address
         noc->reglist = malloc((params->noc_reg_count + 1) * sizeof(regs *));
         if (unlikely(!noc->reglist)) {
-                printf("ERR: alloc noc reglist failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc reglist failed !!!\n");
                 goto ret_alloc;
         }
         memset((void *)noc->reglist, 0, (params->noc_reg_count + 1) * sizeof(regs *));
@@ -336,8 +341,7 @@ static int noc_alloc(ip *noc, param *params)
         for (id = 0; id < params->noc_reg_count; id++) {
                 noc->reglist[id] = malloc(sizeof(regs));
                 if (unlikely(!noc->reglist[id])) {
-                        printf("ERR: alloc noc reg%d failed! %s, %s, %d\n",
-                                        id, __FILE__, __func__, __LINE__);
+                        ERROR("alloc reg%d failed !!!\n", id);
                         goto ret_alloc;
                 }
                 memset((void *)noc->reglist[id], 0, sizeof(regs));
@@ -346,15 +350,13 @@ static int noc_alloc(ip *noc, param *params)
         /*reg hastable*/
         noc->name2reg = init_hashtable();
         if (unlikely(!noc->name2reg)) {
-                printf("ERR: alloc noc reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable name2reg failed !!!\n");
                 goto ret_alloc;
         }
 
         noc->addr2reg = init_hashtable();
         if (unlikely(!noc->addr2reg)) {
-                printf("ERR: alloc noc reg hashtable failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("alloc hashtable addr2reg failed !!!\n");
                 goto ret_alloc;
         }
 
@@ -386,20 +388,18 @@ int noc_init(ip *father, ip *noc, int id, param *params)
         char addr2str[32] = {0};
 
         /*begin*/
-        printf("INFO: noc init start!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        INFO("- NOC noc%d INIT GO... -\n", id);
 
         if (unlikely(!noc) || unlikely(!params)) {
-                printf("ERR: noc or params is absent! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc is %p, params is %p !!!\n",
+                                noc, params);
                 goto ret_init;
         }
 
         /*alloc*/
         ret = noc_alloc(noc, params);
         if (unlikely(ret)) {
-                printf("ERR: noc alloc elements failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("noc alloc elements failed !!!\n");
                 goto ret_init;
         }
 
@@ -421,8 +421,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
         /*reg list*/
         ret = parse_regconfig(noc->reglist);
         if (unlikely(ret)) {
-                printf("ERR: noc reglist init failed! %s, %s, %d\n",
-                                __FILE__, __func__, __LINE__);
+                ERROR("reglist init failed !!!\n");
                 goto ret_init;
         }
 
@@ -437,9 +436,8 @@ int noc_init(ip *father, ip *noc, int id, param *params)
                                 (void *)noc->reglist[sub],
                                 noc->name2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:%s to name2reg table failed! %s, %s, %d\n",
-                                        sub, noc->reglist[sub]->name,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to name2reg failed !!!\n",
+                                        noc->reglist[sub]->name);
                         goto ret_init;
                 }
 
@@ -447,9 +445,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
                 sprintf(addr2str, "0x%x", noc->reglist[sub]->address);
                 ret = insert_hashtable(addr2str, (void *)noc->reglist[sub], noc->addr2reg);
                 if (unlikely(ret)) {
-                        printf("ERR: hash reg%d:0x%x to addr2reg table failed! %s, %s, %d\n",
-                                        sub, noc->reglist[sub]->address,
-                                        __FILE__, __func__, __LINE__);
+                        ERROR("hash %s to addr2reg failed !!!\n", addr2str);
                         goto ret_init;
                 }
         }
@@ -470,8 +466,8 @@ int noc_init(ip *father, ip *noc, int id, param *params)
         /*subips: hashtable*/
         //No subips
 
-        printf("INFO: noc init end!!!!! %s, %s, %d\n",
-                        __FILE__, __func__, __LINE__);
+        /*end*/
+        INFO("- NOC noc%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
