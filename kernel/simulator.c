@@ -26,7 +26,7 @@
 
 
 /**
- * parse_defconfigs - parse the config file
+ * parse_defconfigs - parse the defconfig file
  * @params:     param struct
  *
  * FIXME: to be replaced by kconfig/kbuild
@@ -34,8 +34,17 @@
 static int parse_defconfigs(param *params)
 {
         int ret = -1;
+        char *defconfig = "./configs/simu_defconfig";
+
         FILE *stream = NULL;
-        char *config = "./demo.defconfig";
+        char *line = NULL;
+        size_t len = 0;
+        ssize_t nread = 0;
+
+        char *ptr = NULL;
+        char ch = '=';
+        ssize_t name_bytes = 0;
+        ssize_t value_bytes = 0;
 
         if (unlikely(!params)) {
                 ERROR("param struct is null !!!\n");
@@ -43,14 +52,35 @@ static int parse_defconfigs(param *params)
         }
 
         /*begin*/
-        if (unlikely(access(config, F_OK))) {
-                WARNING("config file {%s} not exist !!! use default config !!!\n",
-                                config);
-                ret = 0;
+        if (unlikely(access(defconfig, F_OK))) {
+                ERROR("defconfig file {%s} not exist !!!\n", defconfig);
                 goto ret_config;
         }
 
-        //FIXME: getline(stream);
+        /*open*/
+        stream = fopen(defconfig, "r");
+        if (unlikely(!stream)) {
+                ERROR("fopen file {%s} failed !!!\n", defconfig);
+                goto ret_config;
+        }
+
+        /*parse each line*/
+        while (-1 != (nread = getline(&line, &len, stream))) {
+                /*the position of '='*/
+                ptr = strchr(line, ch);
+                name_bytes = ptr - line;
+                value_bytes = nread - name_bytes - 1;
+
+                ptr++;
+
+                if (strstr(line, "PRODUCT_REG_COUNT")) {
+                        params->product_reg_count = atoi(ptr);
+                } else if (strstr(line, "BOARDLINK_COUNT")) {
+                        params->boardlink_count = atoi(ptr);
+                } else if (strstr(line, "BOARDLINK_REG_COUNT")) {
+                        params->boardlink_reg_count = atoi(ptr);
+                }
+        }
 
 ret_config:
         return ret;
@@ -134,7 +164,6 @@ ret_simu:
  * @argv: commandline parameters
  * @simulator: pointer to the simulator
  *
- * FIXME: demo.config need to be dynamic or further no-need
  */
 static int simu_init(int argc, char *argv[], simu *simulator)
 {
@@ -148,10 +177,10 @@ static int simu_init(int argc, char *argv[], simu *simulator)
                 goto ret_init;
         }
 
-        /*parse: config file*/
+        /*parse: defconfig file*/
         ret = parse_defconfigs(simulator->params);
         if (unlikely(ret)) {
-                ERROR("parse config file failed !!!\n");
+                ERROR("parse defconfig file failed !!!\n");
                 goto ret_init;
         }
 
