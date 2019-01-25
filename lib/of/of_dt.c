@@ -19,6 +19,11 @@
 #include "logger.h"
 
 
+/**
+ * of_dt -
+ * @:
+ *
+ */
 void of_dt()
 {
         char* name = "of_dt";
