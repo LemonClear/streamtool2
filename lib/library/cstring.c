@@ -51,9 +51,7 @@ inline char *hexdi2s(int num)
         int pure_size = 0;
 
         pure_size = (sizeof(int) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "0x%d", num);
 
 ret_s:
@@ -72,9 +70,7 @@ inline char *hexdui2s(unsigned int num)
         int pure_size = 0;
 
         pure_size = (sizeof(unsigned int) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "0x%u", num);
 
 ret_s:
@@ -93,9 +89,7 @@ inline char *hexdl2s(long num)
         int pure_size = 0;
 
         pure_size = (sizeof(long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "0x%ld", num);
 
 ret_s:
@@ -114,9 +108,7 @@ inline char *hexdul2s(unsigned long num)
         int pure_size = 0;
 
         pure_size = (sizeof(unsigned long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "0x%lu", num);
 
 ret_s:
@@ -135,9 +127,7 @@ inline char *hexdll2s(long long num)
         int pure_size = 0;
 
         pure_size = (sizeof(long long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "0x%lld", num);
 
 ret_s:
@@ -156,9 +146,7 @@ inline char *hexdull2s(unsigned long long num)
         int pure_size = 0;
 
         pure_size = (sizeof(unsigned long long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "0x%llu", num);
 
 ret_s:
@@ -177,9 +165,7 @@ inline char *decdi2s(int num)
         int pure_size = 0;
 
         pure_size = (sizeof(int) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "%d", num);
 
 ret_s:
@@ -198,9 +184,7 @@ inline char *decdui2s(unsigned int num)
         int pure_size = 0;
 
         pure_size = (sizeof(unsigned int) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "%u", num);
 
 ret_s:
@@ -219,9 +203,7 @@ inline char *decdl2s(long num)
         int pure_size = 0;
 
         pure_size = (sizeof(long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "%ld", num);
 
 ret_s:
@@ -240,9 +222,7 @@ inline char *decdul2s(unsigned long num)
         int pure_size = 0;
 
         pure_size = (sizeof(unsigned long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "%lu", num);
 
 ret_s:
@@ -261,9 +241,7 @@ inline char *decdll2s(long long num)
         int pure_size = 0;
 
         pure_size = (sizeof(long long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "%lld", num);
 
 ret_s:
@@ -282,9 +260,7 @@ inline char *decdull2s(unsigned long long num)
         int pure_size = 0;
 
         pure_size = (sizeof(unsigned long long) * __CHAR_BIT__) / 4;
-
         zmalloc();
-
         sprintf(s, "%llu", num);
 
 ret_s:
