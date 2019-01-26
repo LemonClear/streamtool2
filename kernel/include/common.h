@@ -100,52 +100,52 @@ typedef struct device {
 /*parameter*/
 typedef struct parameter {
         /*product*/
-        int product_reg_count;
+        long product_reg_count;
         /*boardlink*/
-        int boardlink_count;
-        int boardlink_reg_count;
+        long boardlink_count;
+        long boardlink_reg_count;
         /*board*/
-        int board_count;
-        int board_reg_count;
+        long board_count;
+        long board_reg_count;
         /*chiplink*/
-        int chiplink_count;
-        int chiplink_reg_count;
+        long chiplink_count;
+        long chiplink_reg_count;
         /*chip*/
-        int chip_count;
-        int chip_reg_count;
+        long chip_count;
+        long chip_reg_count;
         /*ddr*/
-        int ddr_count;
-        int ddr_reg_count;
-        int *ddr_size;
+        long ddr_count;
+        long ddr_reg_count;
+        long *ddr_size;
         /*fifo*/
-        int fifo_count;
-        int fifo_reg_count;
-        int *fifo_size;
+        long fifo_count;
+        long fifo_reg_count;
+        long *fifo_size;
         /*fifo*/
-        int pcie_count;
-        int pcie_reg_count;
+        long pcie_count;
+        long pcie_reg_count;
         /*main cpu*/
-        int maincpu_count;
-        int maincpu_reg_count;
+        long maincpu_count;
+        long maincpu_reg_count;
         /*noc*/
-        int noc_count;
-        int noc_reg_count;
+        long noc_count;
+        long noc_reg_count;
         /*core*/
-        int core_count;
-        int core_reg_count;
+        long core_count;
+        long core_reg_count;
         /*mcu*/
-        int mcu_count;
-        int mcu_reg_count;
+        long mcu_count;
+        long mcu_reg_count;
         /*ncp*/
-        int ncp_count;
-        int ncp_reg_count;
+        long ncp_count;
+        long ncp_reg_count;
         /*tcp*/
-        int tcp_count;
-        int tcp_reg_count;
+        long tcp_count;
+        long tcp_reg_count;
         /*ram*/
-        int ram_count;
-        int ram_reg_count;
-        int *ram_size;
+        long ram_count;
+        long ram_reg_count;
+        long *ram_size;
 }param;
 
 /*simulator*/

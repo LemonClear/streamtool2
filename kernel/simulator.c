@@ -43,8 +43,6 @@ static int parse_defconfigs(param *params)
 
         char *ptr = NULL;
         char ch = '=';
-        ssize_t name_bytes = 0;
-        ssize_t value_bytes = 0;
 
         if (unlikely(!params)) {
                 ERROR("param struct is null !!!\n");
@@ -66,21 +64,113 @@ static int parse_defconfigs(param *params)
 
         /*parse each line*/
         while (-1 != (nread = getline(&line, &len, stream))) {
-                /*the position of '='*/
-                ptr = strchr(line, ch);
-                name_bytes = ptr - line;
-                value_bytes = nread - name_bytes - 1;
+                /*bypass '#' lines*/
+                if (unlikely('#' == *line)) continue;
 
-                ptr++;
+                /*the position of value start is '=' + 1*/
+                ptr = strchr(line, ch) + 1;
 
+                /*product*/
                 if (strstr(line, "PRODUCT_REG_COUNT")) {
-                        params->product_reg_count = atoi(ptr);
+                        params->product_reg_count = atol(ptr);
+                /*boardlink*/
                 } else if (strstr(line, "BOARDLINK_COUNT")) {
-                        params->boardlink_count = atoi(ptr);
+                        params->boardlink_count = atol(ptr);
                 } else if (strstr(line, "BOARDLINK_REG_COUNT")) {
-                        params->boardlink_reg_count = atoi(ptr);
+                        params->boardlink_reg_count = atol(ptr);
+                /*board*/
+                } else if (strstr(line, "BOARD_COUNT")) {
+                        params->board_count = atol(ptr);
+                } else if (strstr(line, "BOARD_REG_COUNT")) {
+                        params->board_reg_count = atol(ptr);
+                /*chiplink*/
+                } else if (strstr(line, "CHIPLINK_COUNT")) {
+                        params->chiplink_count = atol(ptr);
+                } else if (strstr(line, "CHIPLINK_REG_COUNT")) {
+                        params->chiplink_reg_count = atol(ptr);
+                /*chip*/
+                } else if (strstr(line, "CHIP_COUNT")) {
+                        params->chip_count = atol(ptr);
+                } else if (strstr(line, "CHIP_REG_COUNT")) {
+                        params->chip_reg_count = atol(ptr);
+                /*ddr*/
+                } else if (strstr(line, "DDR_COUNT")) {
+                        params->ddr_count = atol(ptr);
+                        params->ddr_size = malloc(params->ddr_count);
+                } else if (strstr(line, "DDR_REG_COUNT")) {
+                        params->ddr_reg_count = atol(ptr);
+                } else if (strstr(line, "DDR0_SIZE")) {
+                        params->ddr_size[0] = atol(ptr);
+                } else if (strstr(line, "DDR1_SIZE")) {
+                        params->ddr_size[1] = atol(ptr);
+                /*fifo*/
+                } else if (strstr(line, "FIFO_COUNT")) {
+                        params->fifo_count = atol(ptr);
+                        params->fifo_size = malloc(params->fifo_count);
+                } else if (strstr(line, "FIFO_REG_COUNT")) {
+                        params->fifo_reg_count = atol(ptr);
+                } else if (strstr(line, "FIFO0_SIZE")) {
+                        params->fifo_size[0] = atol(ptr);
+                } else if (strstr(line, "FIFO1_SIZE")) {
+                        params->fifo_size[1] = atol(ptr);
+                /*pcie*/
+                } else if (strstr(line, "PCIE_COUNT")) {
+                        params->pcie_count = atol(ptr);
+                } else if (strstr(line, "PCIE_REG_COUNT")) {
+                        params->pcie_reg_count = atol(ptr);
+                /*main cpu*/
+                } else if (strstr(line, "MAINCPU_COUNT")) {
+                        params->maincpu_count = atol(ptr);
+                } else if (strstr(line, "MAINCPU_REG_COUNT")) {
+                        params->maincpu_reg_count = atol(ptr);
+                /*noc*/
+                } else if (strstr(line, "NOC_COUNT")) {
+                        params->noc_count = atol(ptr);
+                } else if (strstr(line, "NOC_REG_COUNT")) {
+                        params->noc_reg_count = atol(ptr);
+                /*core*/
+                } else if (strstr(line, "CORE_COUNT")) {
+                        params->core_count = atol(ptr);
+                } else if (strstr(line, "CORE_REG_COUNT")) {
+                        params->core_reg_count = atol(ptr);
+                /*mcu*/
+                } else if (strstr(line, "MCU_COUNT")) {
+                        params->mcu_count = atol(ptr);
+                } else if (strstr(line, "MCU_REG_COUNT")) {
+                        params->mcu_reg_count = atol(ptr);
+                /*ncp*/
+                } else if (strstr(line, "NCP_COUNT")) {
+                        params->ncp_count = atol(ptr);
+                } else if (strstr(line, "NCP_REG_COUNT")) {
+                        params->ncp_reg_count = atol(ptr);
+                /*tcp*/
+                } else if (strstr(line, "TCP_COUNT")) {
+                        params->tcp_count = atol(ptr);
+                } else if (strstr(line, "TCP_REG_COUNT")) {
+                        params->tcp_reg_count = atol(ptr);
+                /*ram*/
+                } else if (strstr(line, "RAM_COUNT")) {
+                        params->ram_count = atol(ptr);
+                        params->ram_size = malloc(params->ram_count);
+                } else if (strstr(line, "RAM_REG_COUNT")) {
+                        params->ram_reg_count = atol(ptr);
+                } else if (strstr(line, "RAM0_SIZE")) {
+                        params->ram_size[0] = atol(ptr);
+                } else if (strstr(line, "RAM1_SIZE")) {
+                        params->ram_size[1] = atol(ptr);
+                } else if (strstr(line, "RAM2_SIZE")) {
+                        params->ram_size[2] = atol(ptr);
+                } else if (strstr(line, "RAM3_SIZE")) {
+                        params->ram_size[3] = atol(ptr);
+                } else if (strstr(line, "RAM4_SIZE")) {
+                        params->ram_size[4] = atol(ptr);
+                } else {
+                        WARNING("unknown type !!!\n");
                 }
         }
+
+        /*end*/
+        ret = 0;
 
 ret_config:
         return ret;
