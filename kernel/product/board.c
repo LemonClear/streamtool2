@@ -617,7 +617,8 @@ int board_init(ip *father, ip *board, int id, param *params)
         /*subips: chiplink 2nd*/
         for (; sub < (params->chip_count + params->chiplink_count); sub++) {
                 /*call subip:chiplink init function*/
-                ret = chiplink_init(board, board->subips[sub], sub, params);
+                ret = chiplink_init(board, board->subips[sub],
+                                sub - params->chip_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-chiplink init failed !!!\n", sub);
                         goto ret_init;
@@ -627,7 +628,8 @@ int board_init(ip *father, ip *board, int id, param *params)
         for (; sub < (params->chip_count + params->chiplink_count +
                                 params->ddr_count); sub++) {
                 /*call subip:ddr init function*/
-                ret = ddr_init(board, board->subips[sub], sub, params);
+                ret = ddr_init(board, board->subips[sub],
+                                sub - params->chip_count - params->chiplink_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-ddr init failed !!!\n", sub);
                         goto ret_init;
@@ -637,7 +639,9 @@ int board_init(ip *father, ip *board, int id, param *params)
         for (; sub < (params->chip_count + params->chiplink_count +
                                 params->ddr_count + params->fifo_count); sub++) {
                 /*call subip:fifo init function*/
-                ret = fifo_init(board, board->subips[sub], sub, params);
+                ret = fifo_init(board, board->subips[sub],
+                                sub - params->chip_count - params->chiplink_count -
+                                params->ddr_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-fifo init failed !!!\n", sub);
                         goto ret_init;
@@ -648,7 +652,9 @@ int board_init(ip *father, ip *board, int id, param *params)
                                 params->ddr_count + params->fifo_count +
                                 params->pcie_count); sub++) {
                 /*call subip:pcie init function*/
-                ret = pcie_init(board, board->subips[sub], sub, params);
+                ret = pcie_init(board, board->subips[sub],
+                                sub - params->chip_count - params->chiplink_count -
+                                params->ddr_count - params->fifo_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-pcie init failed !!!\n", sub);
                         goto ret_init;
@@ -659,7 +665,10 @@ int board_init(ip *father, ip *board, int id, param *params)
                                 params->ddr_count + params->fifo_count +
                                 params->pcie_count + params->maincpu_count); sub++) {
                 /*call subip:maincpu init function*/
-                ret = maincpu_init(board, board->subips[sub], sub, params);
+                ret = maincpu_init(board, board->subips[sub],
+                                sub - params->chip_count - params->chiplink_count -
+                                params->ddr_count - params->fifo_count -
+                                params->pcie_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-maincpu init failed !!!\n", sub);
                         goto ret_init;

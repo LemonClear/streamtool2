@@ -628,7 +628,8 @@ int product_init(ip *father, ip *product, int id, param *params)
         /*subips: boardlink 2nd*/
         for (; sub < (params->board_count + params->boardlink_count); sub++) {
                 /*call subip:boardlink init function*/
-                ret = boardlink_init(product, product->subips[sub], sub, params);
+                ret = boardlink_init(product, product->subips[sub],
+                                sub - params->board_count, params);
                 if (unlikely(ret)) {
                         ERROR("boardlink%d init failed !!!\n", sub);
                         goto ret_init;

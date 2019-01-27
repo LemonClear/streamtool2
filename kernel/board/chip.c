@@ -611,7 +611,8 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         /*subips: noc 2nd*/
         for (; sub < (params->core_count + params->noc_count); sub++) {
                 /*call subip:noc init function*/
-                ret = noc_init(chip, chip->subips[sub], sub, params);
+                ret = noc_init(chip, chip->subips[sub],
+                                sub - params->core_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-noc init failed !!!\n",sub);
                         goto ret_init;

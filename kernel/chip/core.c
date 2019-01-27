@@ -603,7 +603,8 @@ int core_init(ip *father, ip *core, int id, param *params)
         /*subips: tcp 2nd*/
         for (; sub < (params->ncp_count + params->tcp_count); sub++) {
                 /*call subip:tcp init function*/
-                ret = tcp_init(core, core->subips[sub], sub, params);
+                ret = tcp_init(core, core->subips[sub],
+                                sub - params->ncp_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-tcp init failed !!!\n", sub);
                         goto ret_init;
@@ -613,7 +614,8 @@ int core_init(ip *father, ip *core, int id, param *params)
         for (; sub < (params->ncp_count + params->tcp_count +
                                 params->mcu_count); sub++) {
                 /*call subip:mcu init function*/
-                ret = mcu_init(core, core->subips[sub], sub, params);
+                ret = mcu_init(core, core->subips[sub],
+                                sub - params->ncp_count - params->tcp_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-mcu init failed !!!\n", sub);
                         goto ret_init;
@@ -623,7 +625,9 @@ int core_init(ip *father, ip *core, int id, param *params)
         for (; sub < (params->ncp_count + params->tcp_count +
                                 params->mcu_count + params->ram_count); sub++) {
                 /*call subip:ram init function*/
-                ret = ram_init(core, core->subips[sub], sub, params);
+                ret = ram_init(core, core->subips[sub],
+                                sub - params->ncp_count - params->tcp_count -
+                                params->mcu_count, params);
                 if (unlikely(ret)) {
                         ERROR("subip%d-ram init failed !!!\n", sub);
                         goto ret_init;
