@@ -31,12 +31,12 @@
  */
 #define zmalloc() \
         do { \
-                s = malloc(pure_size + 3); \
+                s = malloc(hex_size + 3); \
                 if (unlikely(!s)) { \
                         ERROR("malloc string space failed !!!\n"); \
                         goto ret_s; \
                 } \
-                memset(s, 0, pure_size + 3); \
+                memset(s, 0, hex_size + 3); \
         } while(0)
 
 
@@ -48,11 +48,11 @@
 inline char *hexdi2s(int num)
 {
         char *s = NULL;
-        int pure_size = 0;
+        int hex_size = 0;
 
-        pure_size = (sizeof(int) * __CHAR_BIT__) / 4;
+        hex_size = (sizeof(int) * __CHAR_BIT__) / 4;
         zmalloc();
-        sprintf(s, "0x%d", num);
+        sprintf(s, "0x%x", num);
 
 ret_s:
         return s;
@@ -67,11 +67,11 @@ ret_s:
 inline char *hexdui2s(unsigned int num)
 {
         char *s = NULL;
-        int pure_size = 0;
+        int hex_size = 0;
 
-        pure_size = (sizeof(unsigned int) * __CHAR_BIT__) / 4;
+        hex_size = (sizeof(unsigned int) * __CHAR_BIT__) / 4;
         zmalloc();
-        sprintf(s, "0x%u", num);
+        sprintf(s, "0x%x", num);
 
 ret_s:
         return s;
@@ -86,11 +86,11 @@ ret_s:
 inline char *hexdl2s(long num)
 {
         char *s = NULL;
-        int pure_size = 0;
+        int hex_size = 0;
 
-        pure_size = (sizeof(long) * __CHAR_BIT__) / 4;
+        hex_size = (sizeof(long) * __CHAR_BIT__) / 4;
         zmalloc();
-        sprintf(s, "0x%ld", num);
+        sprintf(s, "0x%lx", num);
 
 ret_s:
         return s;
@@ -105,11 +105,11 @@ ret_s:
 inline char *hexdul2s(unsigned long num)
 {
         char *s = NULL;
-        int pure_size = 0;
+        int hex_size = 0;
 
-        pure_size = (sizeof(unsigned long) * __CHAR_BIT__) / 4;
+        hex_size = (sizeof(unsigned long) * __CHAR_BIT__) / 4;
         zmalloc();
-        sprintf(s, "0x%lu", num);
+        sprintf(s, "0x%lx", num);
 
 ret_s:
         return s;
@@ -124,11 +124,11 @@ ret_s:
 inline char *hexdll2s(long long num)
 {
         char *s = NULL;
-        int pure_size = 0;
+        int hex_size = 0;
 
-        pure_size = (sizeof(long long) * __CHAR_BIT__) / 4;
+        hex_size = (sizeof(long long) * __CHAR_BIT__) / 4;
         zmalloc();
-        sprintf(s, "0x%lld", num);
+        sprintf(s, "0x%llx", num);
 
 ret_s:
         return s;
@@ -143,125 +143,11 @@ ret_s:
 inline char *hexdull2s(unsigned long long num)
 {
         char *s = NULL;
-        int pure_size = 0;
+        int hex_size = 0;
 
-        pure_size = (sizeof(unsigned long long) * __CHAR_BIT__) / 4;
+        hex_size = (sizeof(unsigned long long) * __CHAR_BIT__) / 4;
         zmalloc();
-        sprintf(s, "0x%llu", num);
-
-ret_s:
-        return s;
-}
-
-
-/**
- * decdi2s - change int to dec string
- * @num: digital of int type
- *
- */
-inline char *decdi2s(int num)
-{
-        char *s = NULL;
-        int pure_size = 0;
-
-        pure_size = (sizeof(int) * __CHAR_BIT__) / 4;
-        zmalloc();
-        sprintf(s, "%d", num);
-
-ret_s:
-        return s;
-}
-
-
-/**
- * decdui2s - change unsigned int to string
- * @num: digital of unsigned int type
- *
- */
-inline char *decdui2s(unsigned int num)
-{
-        char *s = NULL;
-        int pure_size = 0;
-
-        pure_size = (sizeof(unsigned int) * __CHAR_BIT__) / 4;
-        zmalloc();
-        sprintf(s, "%u", num);
-
-ret_s:
-        return s;
-}
-
-
-/**
- * decdl2s - change long to string
- * @num: digital of long type
- *
- */
-inline char *decdl2s(long num)
-{
-        char *s = NULL;
-        int pure_size = 0;
-
-        pure_size = (sizeof(long) * __CHAR_BIT__) / 4;
-        zmalloc();
-        sprintf(s, "%ld", num);
-
-ret_s:
-        return s;
-}
-
-
-/**
- * decdul2s - change unsigned long to string
- * @num: digital of unsigned long type
- *
- */
-inline char *decdul2s(unsigned long num)
-{
-        char *s = NULL;
-        int pure_size = 0;
-
-        pure_size = (sizeof(unsigned long) * __CHAR_BIT__) / 4;
-        zmalloc();
-        sprintf(s, "%lu", num);
-
-ret_s:
-        return s;
-}
-
-
-/**
- * decdll2s - change long long to string
- * @num: digital of long long type
- *
- */
-inline char *decdll2s(long long num)
-{
-        char *s = NULL;
-        int pure_size = 0;
-
-        pure_size = (sizeof(long long) * __CHAR_BIT__) / 4;
-        zmalloc();
-        sprintf(s, "%lld", num);
-
-ret_s:
-        return s;
-}
-
-
-/**
- * decdull2s - change unsigned long long to string
- * @num: digital of unsigned long long type
- *
- */
-inline char *decdull2s(unsigned long long num)
-{
-        char *s = NULL;
-        int pure_size = 0;
-
-        pure_size = (sizeof(unsigned long long) * __CHAR_BIT__) / 4;
-        zmalloc();
-        sprintf(s, "%llu", num);
+        sprintf(s, "0x%llx", num);
 
 ret_s:
         return s;
