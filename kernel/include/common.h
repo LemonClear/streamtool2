@@ -116,11 +116,11 @@ typedef struct parameter {
         /*ddr*/
         long ddr_count;
         long ddr_reg_count;
-        long *ddr_size;
+        long ddr_size;
         /*fifo*/
         long fifo_count;
         long fifo_reg_count;
-        long *fifo_size;
+        long fifo_size;
         /*fifo*/
         long pcie_count;
         long pcie_reg_count;
@@ -145,7 +145,7 @@ typedef struct parameter {
         /*ram*/
         long ram_count;
         long ram_reg_count;
-        long *ram_size;
+        long ram_size;
 }param;
 
 /*simulator*/
