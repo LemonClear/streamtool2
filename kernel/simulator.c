@@ -96,23 +96,17 @@ static int parse_defconfigs(param *params)
                 /*ddr*/
                 } else if (strstr(line, "DDR_COUNT")) {
                         params->ddr_count = atol(ptr);
-                        params->ddr_size = malloc(params->ddr_count);
                 } else if (strstr(line, "DDR_REG_COUNT")) {
                         params->ddr_reg_count = atol(ptr);
-                } else if (strstr(line, "DDR0_SIZE")) {
-                        params->ddr_size[0] = atol(ptr);
-                } else if (strstr(line, "DDR1_SIZE")) {
-                        params->ddr_size[1] = atol(ptr);
+                } else if (strstr(line, "DDR_SIZE")) {
+                        params->ddr_size = atol(ptr);
                 /*fifo*/
                 } else if (strstr(line, "FIFO_COUNT")) {
                         params->fifo_count = atol(ptr);
-                        params->fifo_size = malloc(params->fifo_count);
                 } else if (strstr(line, "FIFO_REG_COUNT")) {
                         params->fifo_reg_count = atol(ptr);
-                } else if (strstr(line, "FIFO0_SIZE")) {
-                        params->fifo_size[0] = atol(ptr);
-                } else if (strstr(line, "FIFO1_SIZE")) {
-                        params->fifo_size[1] = atol(ptr);
+                } else if (strstr(line, "FIFO_SIZE")) {
+                        params->fifo_size = atol(ptr);
                 /*pcie*/
                 } else if (strstr(line, "PCIE_COUNT")) {
                         params->pcie_count = atol(ptr);
@@ -151,19 +145,10 @@ static int parse_defconfigs(param *params)
                 /*ram*/
                 } else if (strstr(line, "RAM_COUNT")) {
                         params->ram_count = atol(ptr);
-                        params->ram_size = malloc(params->ram_count);
                 } else if (strstr(line, "RAM_REG_COUNT")) {
                         params->ram_reg_count = atol(ptr);
-                } else if (strstr(line, "RAM0_SIZE")) {
-                        params->ram_size[0] = atol(ptr);
-                } else if (strstr(line, "RAM1_SIZE")) {
-                        params->ram_size[1] = atol(ptr);
-                } else if (strstr(line, "RAM2_SIZE")) {
-                        params->ram_size[2] = atol(ptr);
-                } else if (strstr(line, "RAM3_SIZE")) {
-                        params->ram_size[3] = atol(ptr);
-                } else if (strstr(line, "RAM4_SIZE")) {
-                        params->ram_size[4] = atol(ptr);
+                } else if (strstr(line, "RAM_SIZE")) {
+                        params->ram_size = atol(ptr);
                 } else {
                         WARNING("unknown type !!!\n");
                 }
