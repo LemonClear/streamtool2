@@ -157,7 +157,8 @@ do_rehash_core:
         table[hashid].string = string;
 
 
-        WARNING("hash conflicts count is %d\n", count);
+        WARNING("hashtable-%p, string-%s, conflicts count is %d\n",
+                        table, string, count);
 
 ret_hashid:
         return hashid;
@@ -223,6 +224,7 @@ void * lookfor_hashtable(const char *string, hashtable *table)
                 goto ret_element;
         }
 
+        /*compute hashid*/
         hashid = hashfunc(hashkey);
         element = table[hashid].element;
         /*NULL means empty, miss!*/
@@ -247,6 +249,7 @@ do_rehash_find:
         do {
                 count++;
 
+                /*recompute hashkey and hashid*/
                 hashkey = hashrandom(hashkey);
                 hashid = hashfunc(hashkey);
 
@@ -254,12 +257,20 @@ do_rehash_find:
                 if (unlikely(!hashkey))
                         continue;
 
-                /*got*/
+                element = table[hashid].element;
+                /*NULL means empty, miss!*/
+                if (unlikely(!element)) {
+                        WARNING("MISS: element %s not hashed in table %p !\n",
+                                        string, table);
+                        goto ret_element;
+                }
+
+                /*got element*/
                 if (likely(hashkey == table[hashid].hashkey) &&
                                 likely(!strcmp(string, table[hashid].string))) {
-                        element = table[hashid].element;
 
-                        WARNING("hash conflicts count %d\n", count);
+                        WARNING("hashtable-%p, string-%s, conflicts count is %d\n",
+                                        table, string, count);
                         goto ret_element;
                 }
 
