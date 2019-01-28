@@ -22,49 +22,50 @@
 #include <unistd.h>
 #include "compiler.h"
 #include "logger.h"
+#include "common.h" /*FIXME: to be removed*/
 
 
 /**
- * of - 
- * @:
+ * of_defconfig - parse xxxx_defconfig
+ * @path:       defconfig file path
+ * @params:     param struct
  *
  */
-void of()
+int of_defconfig(const char *path, param *params)
 {
-        char* name = "of";
-
-        DEBUG("My name = %s\n", name);
-}
-
-
-/**
- * parseline - parse a line of strings
- * @line:  pointer to a line of strings
- * @sep:   pointer to the delimit separator
- *
- */
-int parseline(const char *line, char *sep)
-{
-        FILE *stream = NULL;
         int ret = -1;
-        char *config = "./product.reg";
 
-        if (unlikely(!line)) {
-                WARNING("line is empty\n");
-                goto ret_config;
-        }
+        FILE *stream = NULL;
+        char *line = NULL;
+        size_t len = 0;
+        ssize_t nread = 0;
+
+        char *ptr = NULL;
+        char ch = '=';
 
         /*begin*/
-        if (unlikely(access(config, F_OK))) {
-                WARNING("register config file %s is null !!! use default config !!!\n",
-                                config);
-                ret = 0;
+        if (unlikely(!params)) {
+                ERROR("param struct is null !!!\n");
+                goto ret_defconfig;
+        }
+
+        if (unlikely(!path)) {
+                ERROR("path is null !!!\n");
+                goto ret_defconfig;
+        }
+
+        if (unlikely(access(path, F_OK))) {
+                ERROR("defconfig file {%s} not exist !!!\n", path);
+                goto ret_defconfig;
+        }
+
+        /*open*/
+        stream = fopen(path, "r");
+        if (unlikely(!stream)) {
+                ERROR("fopen file {%s} failed !!!\n", path);
                 goto ret_config;
         }
 
-        //FIXME: todo...
-        //FIXME: getline(stream);
-
-ret_config:
+ret_defconfig:
         return ret;
 }

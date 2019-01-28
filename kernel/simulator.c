@@ -36,31 +36,13 @@ static int parse_defconfigs(param *params)
         int ret = -1;
         char *defconfig = "./configs/simu_defconfig";
 
-        FILE *stream = NULL;
-        char *line = NULL;
-        size_t len = 0;
-        ssize_t nread = 0;
-
-        char *ptr = NULL;
-        char ch = '=';
-
         if (unlikely(!params)) {
                 ERROR("param struct is null !!!\n");
                 goto ret_config;
         }
 
-        /*begin*/
-        if (unlikely(access(defconfig, F_OK))) {
-                ERROR("defconfig file {%s} not exist !!!\n", defconfig);
-                goto ret_config;
-        }
+        ret = of_defconfig(defconfig, params);
 
-        /*open*/
-        stream = fopen(defconfig, "r");
-        if (unlikely(!stream)) {
-                ERROR("fopen file {%s} failed !!!\n", defconfig);
-                goto ret_config;
-        }
 
         /*parse each line*/
         while (-1 != (nread = getline(&line, &len, stream))) {
