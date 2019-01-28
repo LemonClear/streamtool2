@@ -15,6 +15,7 @@ Release Notes:
 9. add product init
 10. all process-related c file done
 11. add logger feature, use INFO/WARNING/ERROR/DEBUG instead printf
+12. add defconfig file parse fucntions in simulator.c
 
 #################################
 
