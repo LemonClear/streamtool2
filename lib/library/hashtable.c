@@ -39,8 +39,8 @@
  * Hash Table ID Counts
  *
  */
-#define HASHTABLE_COUNT_BIT 8
-#define HASHTABLE_MAXID ((1 << HASHTABLE_COUNT_BIT) - 1) //255
+#define HASHTABLE_COUNT_BIT 11
+#define HASHTABLE_MAXID ((1 << HASHTABLE_COUNT_BIT) - 1) //2047
 
 
 /**
@@ -82,14 +82,21 @@ static inline int hashfunc(int hashkey)
 
 
 /**
- * hashrandom - get new hashkey by random compute the old hashid and hashkey
+ * hashrandom - generate new hashkey
  * @hashkey: old hashkey
- * @hashid: old hashid
  *
  */
-static inline int hashrandom(int hashkey, int hashid)
+static inline int hashrandom(int hashkey)
 {
-        return (hashid + hashkey%10 + 1);
+        /*Thomas Wang's 32 bit Mix Function method*/
+        hashkey = ~hashkey + (hashkey << 15);
+        hashkey = hashkey ^ (hashkey >> 12);
+        hashkey = hashkey + (hashkey << 2);
+        hashkey = hashkey ^ (hashkey >> 4);
+        hashkey = hashkey * 2057;
+        hashkey = hashkey ^ (hashkey >> 16);
+
+        return hashkey;
 }
 
 
@@ -121,7 +128,7 @@ static int hashcore(const char *string, hashtable *table)
 
         hashid = hashfunc(hashkey);
 
-        /*FIXME:avoid hashkey == 0*/
+        /*ATT: must avoid hashkey == 0*/
         if (unlikely(!hashkey))
                 goto do_rehash_core;
 
@@ -137,10 +144,10 @@ do_rehash_core:
         do {
                 count++;
 
-                hashkey = hashrandom(hashkey, hashid);
+                hashkey = hashrandom(hashkey);
                 hashid = hashfunc(hashkey);
 
-                /*FIXME:avoid hashkey == 0*/
+                /*ATT: must avoid hashkey == 0*/
                 if (unlikely(!hashkey))
                         continue;
 
@@ -150,7 +157,7 @@ do_rehash_core:
         table[hashid].string = string;
 
 
-        DEBUG("hash conflicts count is %d\n", count);
+        WARNING("hash conflicts count is %d\n", count);
 
 ret_hashid:
         return hashid;
@@ -225,7 +232,7 @@ void * lookfor_hashtable(const char *string, hashtable *table)
                 goto ret_element;
         }
 
-        /*FIXME:avoid hashkey == 0*/
+        /*ATT: must avoid hashkey == 0*/
         if (unlikely(!hashkey))
                 goto do_rehash_find;
 
@@ -240,10 +247,10 @@ do_rehash_find:
         do {
                 count++;
 
-                hashkey = hashrandom(hashkey, hashid);
+                hashkey = hashrandom(hashkey);
                 hashid = hashfunc(hashkey);
 
-                /*FIXME:avoid hashkey == 0*/
+                /*ATT: must avoid hashkey == 0*/
                 if (unlikely(!hashkey))
                         continue;
 
@@ -252,7 +259,7 @@ do_rehash_find:
                                 likely(!strcmp(string, table[hashid].string))) {
                         element = table[hashid].element;
 
-                        DEBUG("hash conflicts count %d\n", count);
+                        WARNING("hash conflicts count %d\n", count);
                         goto ret_element;
                 }
 
