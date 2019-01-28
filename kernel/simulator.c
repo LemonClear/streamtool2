@@ -346,7 +346,7 @@ int main(int argc, char *argv[])
         }
 
         /*end*/
-        INFO("-------- SIMULATOR EXEC END --------\n");
+        INFO("-------- SIMULATOR EXEC STOP --------\n");
 
         exit(EXIT_SUCCESS);
 

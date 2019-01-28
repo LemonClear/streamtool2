@@ -479,7 +479,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         //NO subips
 
         /*end*/
-        INFO("- FIFO fifo%d INIT END -\n", id);
+        INFO("- FIFO fifo%d INIT DONE -\n", id);
 
 ret_init:
         return ret;
