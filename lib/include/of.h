@@ -25,8 +25,7 @@
 #include "cerr.h"
 
 
-void of();
-void of_dt();
+int of_defconfig(const char *path, param *params);
 
 
 
