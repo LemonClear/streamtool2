@@ -23,7 +23,6 @@
 
 
 #include "type.h"
-#include "config.h"
 #include "library.h"
 
 
