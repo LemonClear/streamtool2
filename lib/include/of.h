@@ -25,8 +25,8 @@
 #include "cerr.h"
 
 
-int of_defconfig(const char *path, param *params);
-
+int of_defconfig(const char *path, param *params, char delimit);
+int of_regconfig(const char *path, regs **reglist, char delimit);
 
 
 

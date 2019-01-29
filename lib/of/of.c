@@ -28,10 +28,10 @@
 /**
  * of_defconfig - parse xxxx_defconfig
  * @path:       defconfig file path
- * @params:     param struct
+ * @params:     pointer to param struct
  *
  */
-int of_defconfig(const char *path, param *params)
+int of_defconfig(const char *path, param *params, char delimit)
 {
         int ret = -1;
 
@@ -41,7 +41,6 @@ int of_defconfig(const char *path, param *params)
         ssize_t nread = 0;
 
         char *ptr = NULL;
-        char delimit = '=';
 
         /*begin*/
         if (unlikely(!params)) {
@@ -58,6 +57,9 @@ int of_defconfig(const char *path, param *params)
                 ERROR("defconfig file {%s} not exist !!!\n", path);
                 goto ret_defconfig;
         }
+
+        /*default delimit*/
+        if (unlikely(!delimit)) delimit = '\t';
 
         /*open*/
         stream = fopen(path, "r");
@@ -154,7 +156,7 @@ int of_defconfig(const char *path, param *params)
                 } else if (strstr(line, "RAM_SIZE")) {
                         params->ram_size = atol(ptr);
                 } else {
-                        WARNING("unknown type !!!\n");
+                        WARNING("unknown type: {%s} !!!\n", line);
                 }
         }
 
