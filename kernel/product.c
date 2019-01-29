@@ -413,7 +413,6 @@ static const ip_operations product_ops = {
  * parse_regconfig - parse regconfig file regconfig.xxx
  * @reglist:   pointer to reglist
  *
- * FIXME: to be replace by dt
  */
 static int parse_regconfig(regs **reglist)
 {

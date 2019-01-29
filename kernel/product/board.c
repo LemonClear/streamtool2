@@ -401,7 +401,6 @@ static int parse_regconfig(regs **reglist)
         int ret = -1;
         char *regconfig = "./configs/regconfig.board";
         char delimit = 0;
-        int id = 0;
 
         INFO("- PARSE REGCONFIG {%s} GO>>> -\n", regconfig);
 
@@ -410,11 +409,9 @@ static int parse_regconfig(regs **reglist)
                 goto ret_config;
         }
 
-        /*begin*/
-        if (unlikely(access(config, F_OK))) {
-                WARNING("config file {%s} not exist !!! use default config !!!\n",
-                                config);
-                ret = 0;
+        ret = of_regconfig(regconfig, reglist, delimit);
+        if (unlikely(ret)) {
+                ERROR("parse regconfig file {%s} failed !!!\n", regconfig);
                 goto ret_config;
         }
 
