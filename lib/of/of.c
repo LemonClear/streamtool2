@@ -31,6 +31,7 @@
  * @params:     pointer to param struct
  * @delimit:    delimit charactor
  *
+ * FIXME: to be replace by dt parse
  */
 int of_defconfig(const char *path, param *params, char delimit)
 {

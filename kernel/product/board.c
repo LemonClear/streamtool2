@@ -395,12 +395,15 @@ static const ip_operations board_ops = {
  * parse_regconfig - parse reg config file xxx.reg
  * @reglist:   pointer to reglist
  *
- * FIXME: to be replace by dt
  */
 static int parse_regconfig(regs **reglist)
 {
         int ret = -1;
-        char *config = "./board.reg";
+        char *regconfig = "./configs/regconfig.board";
+        char delimit = 0;
+        int id = 0;
+
+        INFO("- PARSE REGCONFIG {%s} GO>>> -\n", regconfig);
 
         if (unlikely(!reglist)) {
                 ERROR("reglist is null !!!\n");
@@ -415,8 +418,7 @@ static int parse_regconfig(regs **reglist)
                 goto ret_config;
         }
 
-
-        //FIXME: todo...
+        INFO("- PARSE REGCONFIG {%s} DONE -\n", regconfig);
 
 ret_config:
         return ret;
@@ -435,8 +437,7 @@ static int board_alloc(ip *board, param *params)
         int id = -1;
 
         /*memory*/
-        //FIXME: DO NOTHING!!!
-        //NO NEED on board level!!!
+        //NO need on board level!!!
 
         /*reg list*/
         if (unlikely(!params->board_reg_count)) {

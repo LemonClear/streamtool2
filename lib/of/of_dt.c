@@ -31,7 +31,7 @@
  * @reglist:   pointer to regist
  * @delimit:   delimit charactor
  *
- * FIXME: to be replace by dt
+ * FIXME: to be replace by dt parse
  */
 int of_regconfig(const char *path, regs **reglist, char delimit)
 {
