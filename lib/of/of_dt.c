@@ -16,50 +16,101 @@
 #
 */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include "compiler.h"
 #include "logger.h"
+#include "common.h" /*FIXME: to be removed*/
 
 
 /**
- * of_dt -
- * @:
- *
- */
-void of_dt()
-{
-        char* name = "of_dt";
-
-        DEBUG("My name = %s\n", name);
-}
-
-
-/**
- * parse_regconfig - parse reg config file xxx.reg
- * @reglist:   pointer to reglist
+ * of_regconfig - parse regconfig.xxx
+ * @path:      regconfig file path
+ * @reglist:   pointer to regist
+ * @delimit:   delimit charactor
  *
  * FIXME: to be replace by dt
  */
-#if 0
-int parse_regconfig(regs **reglist)
+int of_regconfig(const char *path, regs **reglist, char delimit)
 {
         int ret = -1;
-        char *config = "./product.reg";
 
+        FILE *stream = NULL;
+        char *line = NULL;
+        size_t len = 0;
+        ssize_t nread = 0;
+
+        char *str = NULL;
+        size_t strlen = 0;
+        int id = 0;
+
+        /*begin*/
         if (unlikely(!reglist)) {
                 ERROR("product reglist is null !!!\n");
                 goto ret_config;
         }
 
-        /*begin*/
-        if (unlikely(access(config, F_OK))) {
-                WARNING("register config file %s is null !!! use default config !!!\n",
-                                config);
+        if (unlikely(!path)) {
+                ERROR("path is null !!!\n");
+                goto ret_config;
+        }
+
+        if (unlikely(access(path, F_OK))) {
+                /*regconfig file may absent*/
+                WARNING("regconfig file {%s} not exist !!!\n", path);
                 ret = 0;
                 goto ret_config;
         }
 
-        //FIXME: todo...
+        /*open*/
+        stream = fopen(path, "r");
+        if (unlikely(!stream)) {
+                ERROR("fopen file {%s} failed !!!\n", path);
+                goto ret_config;
+        }
+
+        /*parse each line*/
+        while (-1 != (nread = getline(&line, &len, stream))) {
+                /*bypass '#' lines*/
+                if (unlikely('#' == *line)) continue;
+
+                /*default delimit*/
+                if (unlikely(!delimit))
+                        delimit = '\t';
+                if (unlikely(!strchr(line, delimit)))
+                        delimit = ' ';
+                if (unlikely(!strchr(line, delimit))) {
+                        WARNING("wrong line format !!!\n");
+                        continue;
+                }
+
+                /*1 -> name*/
+                str = line;
+                strlen = strchr(str, delimit) - str;
+                strncpy(reglist[id]->name, str, strlen);
+
+                /*2 -> address*/
+                str = strchr(str, delimit) + 1;
+                reglist[id]->address = (address32_t)strtol(str, NULL, 16);
+
+                /*3 -> value*/
+                str = strchr(str, delimit) + 1;
+                reglist[id]->value = (reg32_t)strtol(str, NULL, 16);
+
+                /*next element in reglist*/
+                id++;
+        }
+
+        /*close*/
+        ret = fclose(stream);
+        if (unlikely(ret)) {
+                WARNING("close file {%s} failed !!!\n", path);
+                goto ret_config;
+        }
+
 
 ret_config:
         return ret;
 }
-#endif
