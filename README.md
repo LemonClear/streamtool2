@@ -16,6 +16,7 @@ Release Notes:
 10. all process-related c file done
 11. add logger feature, use INFO/WARNING/ERROR/DEBUG instead printf
 12. add defconfig file parse fucntions in simulator.c
+13. add regconfig file parse fucntions in product.c
 
 #################################
 
