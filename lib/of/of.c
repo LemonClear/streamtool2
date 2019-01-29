@@ -29,6 +29,7 @@
  * of_defconfig - parse xxxx_defconfig
  * @path:       defconfig file path
  * @params:     pointer to param struct
+ * @delimit:    delimit charactor
  *
  */
 int of_defconfig(const char *path, param *params, char delimit)
@@ -40,22 +41,22 @@ int of_defconfig(const char *path, param *params, char delimit)
         size_t len = 0;
         ssize_t nread = 0;
 
-        char *ptr = NULL;
+        char *pos = NULL;
 
         /*begin*/
         if (unlikely(!params)) {
                 ERROR("param struct is null !!!\n");
-                goto ret_defconfig;
+                goto ret_config;
         }
 
         if (unlikely(!path)) {
                 ERROR("path is null !!!\n");
-                goto ret_defconfig;
+                goto ret_config;
         }
 
         if (unlikely(access(path, F_OK))) {
                 ERROR("defconfig file {%s} not exist !!!\n", path);
-                goto ret_defconfig;
+                goto ret_config;
         }
 
         /*default delimit*/
@@ -65,7 +66,7 @@ int of_defconfig(const char *path, param *params, char delimit)
         stream = fopen(path, "r");
         if (unlikely(!stream)) {
                 ERROR("fopen file {%s} failed !!!\n", path);
-                goto ret_defconfig;
+                goto ret_config;
         }
 
         /*parse each line*/
@@ -73,88 +74,88 @@ int of_defconfig(const char *path, param *params, char delimit)
                 /*bypass '#' lines*/
                 if (unlikely('#' == *line)) continue;
 
-                /*the position of value start is '=' + 1*/
-                ptr = strchr(line, delimit) + 1;
+                /*value start position is "delimit+1"*/
+                pos = strchr(line, delimit) + 1;
 
                 /*product*/
                 if (strstr(line, "PRODUCT_REG_COUNT")) {
-                        params->product_reg_count = atol(ptr);
+                        params->product_reg_count = atol(pos);
                 /*boardlink*/
                 } else if (strstr(line, "BOARDLINK_COUNT")) {
-                        params->boardlink_count = atol(ptr);
+                        params->boardlink_count = atol(pos);
                 } else if (strstr(line, "BOARDLINK_REG_COUNT")) {
-                        params->boardlink_reg_count = atol(ptr);
+                        params->boardlink_reg_count = atol(pos);
                 /*board*/
                 } else if (strstr(line, "BOARD_COUNT")) {
-                        params->board_count = atol(ptr);
+                        params->board_count = atol(pos);
                 } else if (strstr(line, "BOARD_REG_COUNT")) {
-                        params->board_reg_count = atol(ptr);
+                        params->board_reg_count = atol(pos);
                 /*chiplink*/
                 } else if (strstr(line, "CHIPLINK_COUNT")) {
-                        params->chiplink_count = atol(ptr);
+                        params->chiplink_count = atol(pos);
                 } else if (strstr(line, "CHIPLINK_REG_COUNT")) {
-                        params->chiplink_reg_count = atol(ptr);
+                        params->chiplink_reg_count = atol(pos);
                 /*chip*/
                 } else if (strstr(line, "CHIP_COUNT")) {
-                        params->chip_count = atol(ptr);
+                        params->chip_count = atol(pos);
                 } else if (strstr(line, "CHIP_REG_COUNT")) {
-                        params->chip_reg_count = atol(ptr);
+                        params->chip_reg_count = atol(pos);
                 /*ddr*/
                 } else if (strstr(line, "DDR_COUNT")) {
-                        params->ddr_count = atol(ptr);
+                        params->ddr_count = atol(pos);
                 } else if (strstr(line, "DDR_REG_COUNT")) {
-                        params->ddr_reg_count = atol(ptr);
+                        params->ddr_reg_count = atol(pos);
                 } else if (strstr(line, "DDR_SIZE")) {
-                        params->ddr_size = atol(ptr);
+                        params->ddr_size = atol(pos);
                 /*fifo*/
                 } else if (strstr(line, "FIFO_COUNT")) {
-                        params->fifo_count = atol(ptr);
+                        params->fifo_count = atol(pos);
                 } else if (strstr(line, "FIFO_REG_COUNT")) {
-                        params->fifo_reg_count = atol(ptr);
+                        params->fifo_reg_count = atol(pos);
                 } else if (strstr(line, "FIFO_SIZE")) {
-                        params->fifo_size = atol(ptr);
+                        params->fifo_size = atol(pos);
                 /*pcie*/
                 } else if (strstr(line, "PCIE_COUNT")) {
-                        params->pcie_count = atol(ptr);
+                        params->pcie_count = atol(pos);
                 } else if (strstr(line, "PCIE_REG_COUNT")) {
-                        params->pcie_reg_count = atol(ptr);
+                        params->pcie_reg_count = atol(pos);
                 /*main cpu*/
                 } else if (strstr(line, "MAINCPU_COUNT")) {
-                        params->maincpu_count = atol(ptr);
+                        params->maincpu_count = atol(pos);
                 } else if (strstr(line, "MAINCPU_REG_COUNT")) {
-                        params->maincpu_reg_count = atol(ptr);
+                        params->maincpu_reg_count = atol(pos);
                 /*noc*/
                 } else if (strstr(line, "NOC_COUNT")) {
-                        params->noc_count = atol(ptr);
+                        params->noc_count = atol(pos);
                 } else if (strstr(line, "NOC_REG_COUNT")) {
-                        params->noc_reg_count = atol(ptr);
+                        params->noc_reg_count = atol(pos);
                 /*core*/
                 } else if (strstr(line, "CORE_COUNT")) {
-                        params->core_count = atol(ptr);
+                        params->core_count = atol(pos);
                 } else if (strstr(line, "CORE_REG_COUNT")) {
-                        params->core_reg_count = atol(ptr);
+                        params->core_reg_count = atol(pos);
                 /*mcu*/
                 } else if (strstr(line, "MCU_COUNT")) {
-                        params->mcu_count = atol(ptr);
+                        params->mcu_count = atol(pos);
                 } else if (strstr(line, "MCU_REG_COUNT")) {
-                        params->mcu_reg_count = atol(ptr);
+                        params->mcu_reg_count = atol(pos);
                 /*ncp*/
                 } else if (strstr(line, "NCP_COUNT")) {
-                        params->ncp_count = atol(ptr);
+                        params->ncp_count = atol(pos);
                 } else if (strstr(line, "NCP_REG_COUNT")) {
-                        params->ncp_reg_count = atol(ptr);
+                        params->ncp_reg_count = atol(pos);
                 /*tcp*/
                 } else if (strstr(line, "TCP_COUNT")) {
-                        params->tcp_count = atol(ptr);
+                        params->tcp_count = atol(pos);
                 } else if (strstr(line, "TCP_REG_COUNT")) {
-                        params->tcp_reg_count = atol(ptr);
+                        params->tcp_reg_count = atol(pos);
                 /*ram*/
                 } else if (strstr(line, "RAM_COUNT")) {
-                        params->ram_count = atol(ptr);
+                        params->ram_count = atol(pos);
                 } else if (strstr(line, "RAM_REG_COUNT")) {
-                        params->ram_reg_count = atol(ptr);
+                        params->ram_reg_count = atol(pos);
                 } else if (strstr(line, "RAM_SIZE")) {
-                        params->ram_size = atol(ptr);
+                        params->ram_size = atol(pos);
                 } else {
                         WARNING("unknown type: {%s} !!!\n", line);
                 }
@@ -164,9 +165,9 @@ int of_defconfig(const char *path, param *params, char delimit)
         ret = fclose(stream);
         if (unlikely(ret)) {
                 WARNING("close file {%s} failed !!!\n", path);
-                goto ret_defconfig;
+                goto ret_config;
         }
 
-ret_defconfig:
+ret_config:
         return ret;
 }
