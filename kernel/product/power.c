@@ -40,6 +40,14 @@ int power_on(ip *product)
         }
 
         //FIXME: todo...
+        //maybe something to be prepared before product power on
+
+        /*call self poweron func*/
+        ret = product->ops->poweron(product);
+        if (unlikely(ret)) {
+                ERROR("%s power on failed !!!\n", product->name);
+                goto ret_power_on;
+        }
 
         INFO("POWER ON DONE\n");
 
