@@ -53,6 +53,15 @@
 
 
 /*func definitions*/
+#ifdef EFFICIENCY //reduce exec dueration
+
+#define ERROR printf
+#define INFO printf
+#define WARNING printf
+#define DEBUG printf
+
+#else
+
 #define ERROR \
         (printf("%s[%s,%s]%s %sERROR:  %s %s[ %s, line %d, %s() ]%s ", \
                 LOG_BG_VIRDIAN, __DATE__, __TIME__, LOG_END, \
@@ -81,5 +90,6 @@
                 LOG_BG_BLACK, __FILE__, __LINE__, __func__, LOG_END), \
                 printf)
 
+#endif
 
 #endif
