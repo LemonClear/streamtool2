@@ -395,7 +395,7 @@ static int parse_regconfig(regs **reglist)
         char *regconfig = "./configs/regconfig.core";
         char delimit = 0;
 
-        INFO("- PARSE REGCONFIG {%s} GO>>> -\n", regconfig);
+        INFO("parse {%s}\n", regconfig);
 
         if (unlikely(!reglist)) {
                 ERROR("reglist is null !!!\n");
@@ -407,8 +407,6 @@ static int parse_regconfig(regs **reglist)
                 ERROR("parse regconfig file {%s} failed !!!\n", regconfig);
                 goto ret_config;
         }
-
-        INFO("- PARSE REGCONFIG {%s} DONE -\n", regconfig);
 
 ret_config:
         return ret;
