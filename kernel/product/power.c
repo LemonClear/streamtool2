@@ -32,7 +32,7 @@ int power_on(ip *product)
 {
         int ret = -1;
 
-        INFO("- POWER ON GO>>> -\n");
+        INFO("POWER ON\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
@@ -41,7 +41,7 @@ int power_on(ip *product)
 
         //FIXME: todo...
 
-        INFO("- POWER ON DONE -\n");
+        INFO("POWER ON DONE\n");
 
 ret_power_on:
         return ret;
@@ -57,7 +57,7 @@ int power_off(ip *product)
 {
         int ret = -1;
 
-        INFO("- POWER OFF GO>>> -\n");
+        INFO("POWER OFF\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
@@ -66,7 +66,7 @@ int power_off(ip *product)
 
         //FIXME: todo...
 
-        INFO("- POWER OFF DONE -\n");
+        INFO("POWER OFF DONE\n");
 
 ret_power_off:
         return ret;
@@ -82,7 +82,7 @@ int power_idle(ip *product)
 {
         int ret = -1;
 
-        INFO("- IDLE GO>>> -\n");
+        INFO("IDLE\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
@@ -91,7 +91,7 @@ int power_idle(ip *product)
 
         //FIXME: todo...
 
-        INFO("- IDLE DONE -\n");
+        INFO("IDLE DONE\n");
 
 ret_power_idle:
         return ret;
@@ -107,7 +107,7 @@ int power_sleep(ip *product)
 {
         int ret = -1;
 
-        INFO("- SLEEP GO>>> -\n");
+        INFO("SLEEP\n");
 
         if (unlikely(!product)) {
                 ERROR("product is null !!!\n");
@@ -116,7 +116,7 @@ int power_sleep(ip *product)
 
         //FIXME: todo...
 
-        INFO("- SLEEP DONE -\n");
+        INFO("SLEEP DONE\n");
 
 ret_power_sleep:
         return ret;

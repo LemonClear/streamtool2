@@ -41,7 +41,7 @@ static int __on(ip *board)
         }
 
         /*begin*/
-        INFO("- BOARD %s POWER ON GO>>> -\n", board->name);
+        INFO("BOARD %s POWER ON\n", board->name);
 
         /*board level do 1st*/
         //FIXME: todo...
@@ -69,7 +69,7 @@ static int __on(ip *board)
         board->status = RUN;
 
         /*end*/
-        INFO("- BOARD %s POWER ON DONE -\n", board->name);
+        INFO("BOARD %s POWER ON DONE\n", board->name);
 
 ret_on:
         return ret;
@@ -92,7 +92,7 @@ static int __off(ip *board)
         }
 
         /*begin*/
-        INFO("- BOARD %s POWER OFF GO>>> -\n", board->name);
+        INFO("BOARD %s POWER OFF\n", board->name);
 
         /*board have no subip*/
         if (unlikely(!board->subips)) {
@@ -120,7 +120,7 @@ static int __off(ip *board)
         board->status = OFF;
 
         /*end*/
-        INFO("- BOARD %s POWER OFF DONE -\n", board->name);
+        INFO("BOARD %s POWER OFF DONE\n", board->name);
 
 ret_off:
         return ret;
@@ -143,7 +143,7 @@ static int __idle(ip *board)
         }
 
         /*begin*/
-        INFO("- BOARD %s IDLE GO>>> -\n", board->name);
+        INFO("BOARD %s IDLE\n", board->name);
 
         /*board have no subip*/
         if (unlikely(!board->subips)) {
@@ -171,7 +171,7 @@ static int __idle(ip *board)
         board->status = IDLE;
 
         /*end*/
-        INFO("- BOARD %s IDLE DONE -\n", board->name);
+        INFO("BOARD %s IDLE DONE\n", board->name);
 
 ret_idle:
         return ret;
@@ -194,7 +194,7 @@ static int __sleep(ip *board)
         }
 
         /*begin*/
-        INFO("- BOARD %s SLEEP GO>>> -\n", board->name);
+        INFO("BOARD %s SLEEP\n", board->name);
 
         /*board have no subip*/
         if (unlikely(!board->subips)) {
@@ -222,7 +222,7 @@ static int __sleep(ip *board)
         board->status = SLEEP;
 
         /*end*/
-        INFO("- BOARD %s SLEEP DONE -\n", board->name);
+        INFO("BOARD %s SLEEP DONE\n", board->name);
 
 ret_sleep:
         return ret;
@@ -245,7 +245,7 @@ static int __wakeup(ip *board)
         }
 
         /*begin*/
-        INFO("- BOARD %s WAKEUP GO>>> -\n", board->name);
+        INFO("BOARD %s WAKEUP\n", board->name);
 
         /*board level do 1st*/
         //FIXME: todo...
@@ -273,7 +273,7 @@ static int __wakeup(ip *board)
         board->status = RUN;
 
         /*end*/
-        INFO("- BOARD %s WAKEUP DONE -\n", board->name);
+        INFO("BOARD %s WAKEUP DONE\n", board->name);
 
 ret_wakeup:
         return ret;
@@ -296,7 +296,7 @@ static int __tick(ip *board)
         }
 
         /*begin*/
-        INFO("- BOARD %s TICK %llu GO>>> -\n",
+        INFO("BOARD %s TICK %llu\n",
                         board->name, tick_counter);
 
         /*board level do 1st*/
@@ -322,7 +322,7 @@ static int __tick(ip *board)
         }
 
         /*end*/
-        INFO("- BOARD %s TICK %llu DONE -\n",
+        INFO("BOARD %s TICK %llu DONE\n",
                         board->name, tick_counter);
 
 ret_tick:
@@ -530,7 +530,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- BOARD board%d INIT GO>>> -\n", id);
+        INFO("BOARD%d INIT\n", id);
 
         if (unlikely(!board) || unlikely(!params)) {
                 ERROR("board is %p, params is %p !!!\n", board, params);
@@ -701,7 +701,7 @@ int board_init(ip *father, ip *board, int id, param *params)
         }
 
         /*end*/
-        INFO("- BOARD board%d INIT DONE -\n", id);
+        INFO("BOARD%d INIT DONE\n", id);
 
 ret_init:
         return ret;

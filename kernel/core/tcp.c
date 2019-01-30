@@ -40,7 +40,7 @@ static int __on(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s POWER ON GO>>> -\n", tcp->name);
+        INFO("TCP %s POWER ON\n", tcp->name);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -52,7 +52,7 @@ static int __on(ip *tcp)
         tcp->status = RUN;
 
         /*end*/
-        INFO("- TCP %s POWER ON DONE -\n", tcp->name);
+        INFO("TCP %s POWER ON DONE\n", tcp->name);
 
         ret = 0;
 ret_on:
@@ -75,7 +75,7 @@ static int __off(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s POWER OFF GO>>> -\n", tcp->name);
+        INFO("TCP %s POWER OFF\n", tcp->name);
 
         /*power off subips 1st*/
         //No subips
@@ -87,7 +87,7 @@ static int __off(ip *tcp)
         tcp->status = OFF;
 
         /*end*/
-        INFO("- TCP %s POWER OFF DONE -\n", tcp->name);
+        INFO("TCP %s POWER OFF DONE\n", tcp->name);
 
         ret = 0;
 ret_off:
@@ -110,7 +110,7 @@ static int __idle(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s IDLE GO>>> -\n", tcp->name);
+        INFO("TCP %s IDLE\n", tcp->name);
 
         /*idle subips 1st*/
         //No subips
@@ -122,7 +122,7 @@ static int __idle(ip *tcp)
         tcp->status = IDLE;
 
         /*end*/
-        INFO("- TCP %s IDLE DONE -\n", tcp->name);
+        INFO("TCP %s IDLE DONE\n", tcp->name);
 
         ret = 0;
 ret_idle:
@@ -145,7 +145,7 @@ static int __sleep(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s SLEEP GO>>> -\n", tcp->name);
+        INFO("TCP %s SLEEP\n", tcp->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -157,7 +157,7 @@ static int __sleep(ip *tcp)
         tcp->status = SLEEP;
 
         /*end*/
-        INFO("- TCP %s SLEEP DONE -\n", tcp->name);
+        INFO("TCP %s SLEEP DONE\n", tcp->name);
 
         ret = 0;
 ret_sleep:
@@ -180,7 +180,7 @@ static int __wakeup(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s WAKEUP GO>>> -\n", tcp->name);
+        INFO("TCP %s WAKEUP\n", tcp->name);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -192,7 +192,7 @@ static int __wakeup(ip *tcp)
         tcp->status = RUN;
 
         /*end*/
-        INFO("- TCP %s WAKEUP DONE -\n", tcp->name);
+        INFO("TCP %s WAKEUP DONE\n", tcp->name);
 
         ret = 0;
 ret_wakeup:
@@ -215,8 +215,7 @@ static int __tick(ip *tcp)
         }
 
         /*begin*/
-        INFO("- TCP %s TICK %llu GO>>> -\n",
-                        tcp->name, tick_counter);
+        INFO("TCP %s TICK %llu\n", tcp->name, tick_counter);
 
         /*tcp level do 1st*/
         //FIXME: todo...
@@ -225,8 +224,7 @@ static int __tick(ip *tcp)
         //No subips
 
         /*done*/
-        INFO("- TCP %s TICK %llu DONE -\n",
-                        tcp->name, tick_counter);
+        INFO("TCP %s TICK %llu DONE\n", tcp->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -387,7 +385,7 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- TCP tcp%d INIT GO>>> -\n", id);
+        INFO("TCP%d INIT\n", id);
 
         if (unlikely(!tcp) || unlikely(!params)) {
                 ERROR("tcp is %p, params is %p\n", tcp, params);
@@ -465,7 +463,7 @@ int tcp_init(ip *father, ip *tcp, int id, param *params)
         //No subips
 
         /*end*/
-        INFO("- TCP tcp%d INIT DONE -\n", id);
+        INFO("TCP%d INIT DONE\n", id);
 
 ret_init:
         return ret;

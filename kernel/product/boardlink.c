@@ -40,7 +40,7 @@ static int __on(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s POWER ON GO>>> -\n", boardlink->name);
+        INFO("BOARDLINK %s POWER ON\n", boardlink->name);
 
         /*boardlink level do 1st*/
         //FIXME: Transparent Transmission temporally on this level
@@ -52,7 +52,7 @@ static int __on(ip *boardlink)
         boardlink->status = RUN;
 
         /*end*/
-        INFO("- BOARDLINK %s POWER ON DONE -\n", boardlink->name);
+        INFO("BOARDLINK %s POWER ON DONE\n", boardlink->name);
 
         ret = 0;
 ret_on:
@@ -75,7 +75,7 @@ static int __off(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s POWER OFF GO>>> -\n", boardlink->name);
+        INFO("BOARDLINK %s POWER OFF\n", boardlink->name);
 
         /*power off subips 1st*/
         //No subips
@@ -87,7 +87,7 @@ static int __off(ip *boardlink)
         boardlink->status = OFF;
 
         /*end*/
-        INFO("- BOARDLINK %s POWER OFF DONE -\n", boardlink->name);
+        INFO("BOARDLINK %s POWER OFF DONE\n", boardlink->name);
 
         ret = 0;
 ret_off:
@@ -110,7 +110,7 @@ static int __idle(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s IDLE GO>>> -\n", boardlink->name);
+        INFO("BOARDLINK %s IDLE\n", boardlink->name);
 
         /*idle subips 1st*/
         //No subips
@@ -122,7 +122,7 @@ static int __idle(ip *boardlink)
         boardlink->status = IDLE;
 
         /*end*/
-        INFO("- BOARDLINK %s IDLE DONE -\n", boardlink->name);
+        INFO("BOARDLINK %s IDLE DONE\n", boardlink->name);
 
         ret = 0;
 ret_idle:
@@ -145,7 +145,7 @@ static int __sleep(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s SLEEP GO>>> -\n", boardlink->name);
+        INFO("BOARDLINK %s SLEEP\n", boardlink->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -157,7 +157,7 @@ static int __sleep(ip *boardlink)
         boardlink->status = SLEEP;
 
         /*end*/
-        INFO("- BOARDLINK %s SLEEP DONE -\n", boardlink->name);
+        INFO("BOARDLINK %s SLEEP DONE\n", boardlink->name);
 
         ret = 0;
 ret_sleep:
@@ -180,7 +180,7 @@ static int __wakeup(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s WAKEUP GO>>> -\n", boardlink->name);
+        INFO("BOARDLINK %s WAKEUP\n", boardlink->name);
 
         /*boardlink level do 1st*/
         //FIXME: Transparent Transmission temporally on this level
@@ -192,7 +192,7 @@ static int __wakeup(ip *boardlink)
         boardlink->status = RUN;
 
         /*begin*/
-        INFO("- BOARDLINK %s WAKEUP DONE -\n", boardlink->name);
+        INFO("BOARDLINK %s WAKEUP DONE\n", boardlink->name);
 
         ret = 0;
 ret_wakeup:
@@ -215,7 +215,7 @@ static int __tick(ip *boardlink)
         }
 
         /*begin*/
-        INFO("- BOARDLINK %s TICK %llu GO>>> -\n",
+        INFO("BOARDLINK %s TICK %llu\n",
                         boardlink->name, tick_counter);
 
         /*boardlink level do 1st*/
@@ -226,7 +226,7 @@ static int __tick(ip *boardlink)
         //No subips
 
         /*end*/
-        INFO("- BOARDLINK %s TICK %llu DONE -\n",
+        INFO("BOARDLINK %s TICK %llu DONE\n",
                         boardlink->name, tick_counter);
 
         ret = 0;
@@ -389,7 +389,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- BOARDLINK boardlink%d INIT GO>>> -\n", id);
+        INFO("BOARDLINK%d INIT\n", id);
 
         if (unlikely(!boardlink) || unlikely(!params)) {
                 ERROR("boardlink is %p, params is %p !!!\n", boardlink, params);
@@ -470,7 +470,7 @@ int boardlink_init(ip *father, ip *boardlink, int id, param *params)
         //No subips
 
         /*end*/
-        INFO("- BOARDLINK boardlink%d INIT DONE -\n", id);
+        INFO("BOARDLINK%d INIT DONE\n", id);
 
 ret_init:
         return ret;

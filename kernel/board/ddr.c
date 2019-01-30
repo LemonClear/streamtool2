@@ -87,7 +87,7 @@ static int __on(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s POWER ON GO>>> -\n", ddr->name);
+        INFO("DDR %s POWER ON\n", ddr->name);
 
         /*ddr level do 1st*/
         ret = load_image_bd(ddr, offset);
@@ -104,7 +104,7 @@ static int __on(ip *ddr)
         ddr->status = RUN;
 
         /*end*/
-        INFO("- DDR %s POWER ON DONE -\n", ddr->name);
+        INFO("DDR %s POWER ON DONE\n", ddr->name);
 
 ret_on:
         return ret;
@@ -126,7 +126,7 @@ static int __off(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s POWER OFF GO>>> -\n", ddr->name);
+        INFO("DDR %s POWER OFF\n", ddr->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -138,7 +138,7 @@ static int __off(ip *ddr)
         ddr->status = OFF;
 
         /*end*/
-        INFO("- DDR %s POWER OFF DONE -\n", ddr->name);
+        INFO("DDR %s POWER OFF DONE\n", ddr->name);
 
         ret = 0;
 ret_off:
@@ -161,7 +161,7 @@ static int __idle(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s IDLE GO>>> -\n", ddr->name);
+        INFO("DDR %s IDLE\n", ddr->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -173,7 +173,7 @@ static int __idle(ip *ddr)
         ddr->status = IDLE;
 
         /*end*/
-        INFO("- DDR %s IDLE DONE -\n", ddr->name);
+        INFO("DDR %s IDLE DONE\n", ddr->name);
 
         ret = 0;
 ret_idle:
@@ -196,7 +196,7 @@ static int __sleep(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s SLEEP GO>>> -\n", ddr->name);
+        INFO("DDR %s SLEEP\n", ddr->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -208,7 +208,7 @@ static int __sleep(ip *ddr)
         ddr->status = SLEEP;
 
         /*end*/
-        INFO("- DDR %s SLEEP DONE -\n", ddr->name);
+        INFO("DDR %s SLEEP DONE\n", ddr->name);
 
         ret = 0;
 ret_sleep:
@@ -231,7 +231,7 @@ static int __wakeup(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s WAKEUP GO>>> -\n", ddr->name);
+        INFO("DDR %s WAKEUP\n", ddr->name);
 
         /*ddr level do 1st*/
         //FIXME: todo...
@@ -243,7 +243,7 @@ static int __wakeup(ip *ddr)
         ddr->status = RUN;
 
         /*end*/
-        INFO("- DDR %s WAKEUP DONE -\n", ddr->name);
+        INFO("DDR %s WAKEUP DONE\n", ddr->name);
 
         ret = 0;
 ret_wakeup:
@@ -266,7 +266,7 @@ static int __tick(ip *ddr)
         }
 
         /*begin*/
-        INFO("- DDR %s TICK %llu GO>>> -\n",
+        INFO("DDR %s TICK %llu\n",
                         ddr->name, tick_counter);
 
         /*ddr level do 1st*/
@@ -277,7 +277,7 @@ static int __tick(ip *ddr)
         //NO subips
 
         /*end*/
-        INFO("- DDR %s TICK %llu DONE -\n",
+        INFO("DDR %s TICK %llu DONE\n",
                         ddr->name, tick_counter);
 
         ret = 0;
@@ -449,7 +449,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- DDR ddr%d INIT GO>>> -\n", id);
+        INFO("DDR%d INIT\n", id);
 
         if (unlikely(!ddr) || unlikely(!params)) {
                 ERROR("ddr is %p, params is %p !!!\n",
@@ -528,7 +528,7 @@ int ddr_init(ip *father, ip *ddr, int id, param *params)
         //NO subips
 
         /*end*/
-        INFO("- DDR ddr%d INIT DONE -\n", id);
+        INFO("DDR%d INIT DONE\n", id);
 
 ret_init:
         return ret;

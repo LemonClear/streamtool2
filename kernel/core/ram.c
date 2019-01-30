@@ -87,7 +87,7 @@ static int __on(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s POWER ON GO>>> -\n", ram->name);
+        INFO("RAM %s POWER ON\n", ram->name);
 
         /*ram level do 1st*/
         ret = load_image_bd(ram, offset);
@@ -104,7 +104,7 @@ static int __on(ip *ram)
         ram->status = RUN;
 
         /*end*/
-        INFO("- RAM %s POWER ON DONE -\n", ram->name);
+        INFO("RAM %s POWER ON DONE\n", ram->name);
 
 ret_on:
         return ret;
@@ -126,7 +126,7 @@ static int __off(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s POWER OFF GO>>> -\n", ram->name);
+        INFO("RAM %s POWER OFF\n", ram->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -138,7 +138,7 @@ static int __off(ip *ram)
         ram->status = OFF;
 
         /*end*/
-        INFO("- RAM %s POWER OFF DONE -\n", ram->name);
+        INFO("RAM %s POWER OFF DONE\n", ram->name);
 
         ret = 0;
 ret_off:
@@ -161,7 +161,7 @@ static int __idle(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s IDLE GO>>> -\n", ram->name);
+        INFO("RAM %s IDLE\n", ram->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -173,7 +173,7 @@ static int __idle(ip *ram)
         ram->status = IDLE;
 
         /*end*/
-        INFO("- RAM %s IDLE DONE -\n", ram->name);
+        INFO("RAM %s IDLE DONE\n", ram->name);
 
         ret = 0;
 ret_idle:
@@ -196,7 +196,7 @@ static int __sleep(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s SLEEP GO>>> -\n", ram->name);
+        INFO("RAM %s SLEEP\n", ram->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -208,7 +208,7 @@ static int __sleep(ip *ram)
         ram->status = SLEEP;
 
         /*end*/
-        INFO("- RAM %s SLEEP DONE -\n", ram->name);
+        INFO("RAM %s SLEEP DONE\n", ram->name);
 
         ret = 0;
 ret_sleep:
@@ -231,7 +231,7 @@ static int __wakeup(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s WAKEUP GO>>> -\n", ram->name);
+        INFO("RAM %s WAKEUP\n", ram->name);
 
         /*ram level do 1st*/
         //FIXME: todo...
@@ -243,7 +243,7 @@ static int __wakeup(ip *ram)
         ram->status = RUN;
 
         /*end*/
-        INFO("- RAM %s WAKEUP DONE -\n", ram->name);
+        INFO("RAM %s WAKEUP DONE\n", ram->name);
 
         ret = 0;
 ret_wakeup:
@@ -360,8 +360,7 @@ static int __tick(ip *ram)
         }
 
         /*begin*/
-        INFO("- RAM %s TICK %llu GO>>> -\n",
-                        ram->name, tick_counter);
+        INFO("RAM %s TICK %llu\n", ram->name, tick_counter);
 
         /*ram level do 1st*/
         //FIXME: todo...
@@ -371,8 +370,7 @@ static int __tick(ip *ram)
         //NO subips
 
         /*done*/
-        INFO("- RAM %s TICK %llu DONE -\n",
-                        ram->name, tick_counter);
+        INFO("RAM %s TICK %llu DONE\n", ram->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -549,7 +547,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- RAM ram%d INIT GO>>> -\n", id);
+        INFO("RAM%d INIT\n", id);
 
         if (unlikely(!ram) || unlikely(!params)) {
                 ERROR("ram is %p, params is %p\n", ram, params);
@@ -627,7 +625,7 @@ int ram_init(ip *father, ip *ram, int id, param *params)
         //NO subips
 
         /*end*/
-        INFO("- RAM ram%d INIT DONE -\n", id);
+        INFO("RAM%d INIT DONE\n", id);
 
 ret_init:
         return ret;

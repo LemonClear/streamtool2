@@ -42,7 +42,7 @@ static int __on(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s POWER ON GO>>> -\n", fifo->name);
+        INFO("FIFO %s POWER ON\n", fifo->name);
 
         /*fifo level do 1st*/
         //FIXME: todo...
@@ -54,7 +54,7 @@ static int __on(ip *fifo)
         fifo->status = RUN;
 
         /*end*/
-        INFO("- FIFO %s POWER ON DONE -\n", fifo->name);
+        INFO("FIFO %s POWER ON DONE\n", fifo->name);
 
         ret = 0;
 ret_on:
@@ -77,7 +77,7 @@ static int __off(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s POWER OFF GO>>> -\n", fifo->name);
+        INFO("FIFO %s POWER OFF\n", fifo->name);
 
         /*power off subips 1st*/
         //NO subips
@@ -89,7 +89,7 @@ static int __off(ip *fifo)
         fifo->status = OFF;
 
         /*end*/
-        INFO("- FIFO %s POWER OFF DONE -\n", fifo->name);
+        INFO("FIFO %s POWER OFF DONE\n", fifo->name);
 
         ret = 0;
 ret_off:
@@ -112,7 +112,7 @@ static int __idle(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s IDLE GO>>> -\n", fifo->name);
+        INFO("FIFO %s IDLE\n", fifo->name);
 
         /*idle subips 1st*/
         //NO subips
@@ -124,7 +124,7 @@ static int __idle(ip *fifo)
         fifo->status = IDLE;
 
         /*end*/
-        INFO("- FIFO %s IDLE DONE -\n", fifo->name);
+        INFO("FIFO %s IDLE DONE\n", fifo->name);
 
         ret = 0;
 ret_idle:
@@ -147,7 +147,7 @@ static int __sleep(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s SLEEP GO>>> -\n", fifo->name);
+        INFO("FIFO %s SLEEP\n", fifo->name);
 
         /*sleep subips 1st*/
         //NO subips
@@ -159,7 +159,7 @@ static int __sleep(ip *fifo)
         fifo->status = SLEEP;
 
         /*end*/
-        INFO("- FIFO %s SLEEP DONE -\n", fifo->name);
+        INFO("FIFO %s SLEEP DONE\n", fifo->name);
 
         ret = 0;
 ret_sleep:
@@ -182,7 +182,7 @@ static int __wakeup(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s WAKEUP GO>>> -\n", fifo->name);
+        INFO("FIFO %s WAKEUP\n", fifo->name);
 
         /*fifo level do 1st*/
         //FIXME: todo...
@@ -194,7 +194,7 @@ static int __wakeup(ip *fifo)
         fifo->status = RUN;
 
         /*end*/
-        INFO("- FIFO %s WAKEUP DONE -\n", fifo->name);
+        INFO("FIFO %s WAKEUP DONE\n", fifo->name);
 
         ret = 0;
 ret_wakeup:
@@ -217,7 +217,7 @@ static int __tick(ip *fifo)
         }
 
         /*begin*/
-        INFO("- FIFO %s TICK %llu GO>>> -\n",
+        INFO("FIFO %s TICK %llu\n",
                         fifo->name, tick_counter);
 
         /*fifo level do 1st*/
@@ -228,7 +228,7 @@ static int __tick(ip *fifo)
         //NO subips
 
         /*done*/
-        INFO("- FIFO %s TICK %llu DONE -\n",
+        INFO("FIFO %s TICK %llu\n",
                         fifo->name, tick_counter);
 
         ret = 0;
@@ -401,7 +401,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- FIFO fifo%d INIT GO>>> -\n", id);
+        INFO("FIFO%d INIT\n", id);
 
         if (unlikely(!fifo) || unlikely(!params)) {
                 ERROR("fifo is %p, params is %p !!!\n",
@@ -477,7 +477,7 @@ int fifo_init(ip *father, ip *fifo, int id, param *params)
         //NO subips
 
         /*end*/
-        INFO("- FIFO fifo%d INIT DONE -\n", id);
+        INFO("FIFO%d INIT DONE\n", id);
 
 ret_init:
         return ret;

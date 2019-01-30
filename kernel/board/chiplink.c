@@ -40,7 +40,7 @@ static int __on(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s POWER ON GO>>> -\n", chiplink->name);
+        INFO("CHIPLINK %s POWER ON\n", chiplink->name);
 
         /*chiplink level do 1st*/
         //FIXME: todo...
@@ -53,7 +53,7 @@ static int __on(ip *chiplink)
         chiplink->status = RUN;
 
         /*end*/
-        INFO("- CHIPLINK %s POWER ON DONE -\n", chiplink->name);
+        INFO("CHIPLINK %s POWER ON DONE\n", chiplink->name);
 
         ret = 0;
 ret_on:
@@ -76,7 +76,7 @@ static int __off(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s POWER OFF GO>>> -\n", chiplink->name);
+        INFO("CHIPLINK %s POWER OFF\n", chiplink->name);
 
         /*power off subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -89,7 +89,7 @@ static int __off(ip *chiplink)
         chiplink->status = OFF;
 
         /*end*/
-        INFO("- CHIPLINK %s POWER OFF DONE -\n", chiplink->name);
+        INFO("CHIPLINK %s POWER OFF DONE\n", chiplink->name);
 
         ret = 0;
 ret_off:
@@ -112,7 +112,7 @@ static int __idle(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s IDLE GO>>> -\n", chiplink->name);
+        INFO("CHIPLINK %s IDLE\n", chiplink->name);
 
         /*idle subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -125,7 +125,7 @@ static int __idle(ip *chiplink)
         chiplink->status = IDLE;
 
         /*end*/
-        INFO("- CHIPLINK %s IDLE DONE -\n", chiplink->name);
+        INFO("CHIPLINK %s IDLE DONE\n", chiplink->name);
 
         ret = 0;
 ret_idle:
@@ -148,7 +148,7 @@ static int __sleep(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s SLEEP GO>>> -\n", chiplink->name);
+        INFO("CHIPLINK %s SLEEP\n", chiplink->name);
 
         /*sleep subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -161,7 +161,7 @@ static int __sleep(ip *chiplink)
         chiplink->status = SLEEP;
 
         /*end*/
-        INFO("- CHIPLINK %s SLEEP DONE -\n", chiplink->name);
+        INFO("CHIPLINK %s SLEEP DONE\n", chiplink->name);
 
         ret = 0;
 ret_sleep:
@@ -184,7 +184,7 @@ static int __wakeup(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s WAKEUP GO>>> -\n", chiplink->name);
+        INFO("CHIPLINK %s WAKEUP\n", chiplink->name);
 
         /*chiplink level do 1st*/
         //FIXME: todo...
@@ -197,7 +197,7 @@ static int __wakeup(ip *chiplink)
         chiplink->status = RUN;
 
         /*end*/
-        INFO("- CHIPLINK %s WAKEUP DONE -\n", chiplink->name);
+        INFO("CHIPLINK %s WAKEUP DONE\n", chiplink->name);
 
         ret = 0;
 ret_wakeup:
@@ -220,7 +220,7 @@ static int __tick(ip *chiplink)
         }
 
         /*begin*/
-        INFO("- CHIPLINK %s TICK %llu GO>>> -\n",
+        INFO("CHIPLINK %s TICK %llu\n",
                         chiplink->name, tick_counter);
 
         /*chiplink level do 1st*/
@@ -232,7 +232,7 @@ static int __tick(ip *chiplink)
         //No subips
 
         /*done*/
-        INFO("- CHIPLINK %s TICK %llu DONE -\n",
+        INFO("CHIPLINK %s TICK %llu\n",
                         chiplink->name, tick_counter);
 
         ret = 0;
@@ -397,7 +397,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- CHIPLINK chiplink%d INIT GO>>> -\n", id);
+        INFO("CHIPLINK%d INIT\n", id);
 
         if (unlikely(!chiplink) || unlikely(!params)) {
                 ERROR("chiplink is %p, params is %p !!!\n",
@@ -478,7 +478,7 @@ int chiplink_init(ip *father, ip *chiplink, int id, param *params)
         //No subips
 
         /*end*/
-        INFO("- CHIPLINK chiplink%d INIT DONE -\n", id);
+        INFO("CHIPLINK%d INIT DONE\n", id);
 
 ret_init:
         return ret;

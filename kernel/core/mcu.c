@@ -40,7 +40,7 @@ static int __on(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s POWER ON GO>>> -\n", mcu->name);
+        INFO("MCU %s POWER ON\n", mcu->name);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -52,7 +52,7 @@ static int __on(ip *mcu)
         mcu->status = RUN;
 
         /*end*/
-        INFO("- MCU %s POWER ON DONE -\n", mcu->name);
+        INFO("MCU %s POWER ON DONE\n", mcu->name);
 
         ret = 0;
 ret_on:
@@ -75,7 +75,7 @@ static int __off(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s POWER OFF GO>>> -\n", mcu->name);
+        INFO("MCU %s POWER OFF\n", mcu->name);
 
         /*power off subips 1st*/
         //No subips
@@ -87,7 +87,7 @@ static int __off(ip *mcu)
         mcu->status = OFF;
 
         /*end*/
-        INFO("- MCU %s POWER OFF DONE -\n", mcu->name);
+        INFO("MCU %s POWER OFF DONE\n", mcu->name);
 
         ret = 0;
 ret_off:
@@ -110,7 +110,7 @@ static int __idle(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s IDLE GO>>> -\n", mcu->name);
+        INFO("MCU %s IDLE\n", mcu->name);
 
         /*idle subips 1st*/
         //No subips
@@ -122,7 +122,7 @@ static int __idle(ip *mcu)
         mcu->status = IDLE;
 
         /*end*/
-        INFO("- MCU %s IDLE DONE -\n", mcu->name);
+        INFO("MCU %s IDLE DONE\n", mcu->name);
 
         ret = 0;
 ret_idle:
@@ -145,7 +145,7 @@ static int __sleep(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s SLEEP GO>>> -\n", mcu->name);
+        INFO("MCU %s SLEEP\n", mcu->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -157,7 +157,7 @@ static int __sleep(ip *mcu)
         mcu->status = SLEEP;
 
         /*end*/
-        INFO("- MCU %s SLEEP DONE -\n", mcu->name);
+        INFO("MCU %s SLEEP DONE\n", mcu->name);
 
         ret = 0;
 ret_sleep:
@@ -180,7 +180,7 @@ static int __wakeup(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s WAKEUP GO>>> -\n", mcu->name);
+        INFO("MCU %s WAKEUP\n", mcu->name);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -192,7 +192,7 @@ static int __wakeup(ip *mcu)
         mcu->status = RUN;
 
         /*end*/
-        INFO("- MCU %s WAKEUP DONE -\n", mcu->name);
+        INFO("MCU %s WAKEUP DONE\n", mcu->name);
 
         ret = 0;
 ret_wakeup:
@@ -215,8 +215,7 @@ static int __tick(ip *mcu)
         }
 
         /*begin*/
-        INFO("- MCU %s TICK %llu GO>>> -\n",
-                        mcu->name, tick_counter);
+        INFO("MCU %s TICK %llu\n", mcu->name, tick_counter);
 
         /*mcu level do 1st*/
         //FIXME: todo...
@@ -225,8 +224,7 @@ static int __tick(ip *mcu)
         //No subips
 
         /*done*/
-        INFO("- MCU %s TICK %llu DONE -\n",
-                        mcu->name, tick_counter);
+        INFO("- MCU %s TICK %llu DONE\n", mcu->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -385,7 +383,7 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- MCU mcu%d INIT GO>>> -\n", id);
+        INFO("MCU%d INIT\n", id);
 
         if (unlikely(!mcu) || unlikely(!params)) {
                 ERROR("mcu is %p, params is %p\n",
@@ -464,7 +462,7 @@ int mcu_init(ip *father, ip *mcu, int id, param *params)
         //No subips
 
         /*end*/
-        INFO("- MCU mcu%d INIT DONE -\n", id);
+        INFO("MCU%d INIT DONE\n", id);
 
 ret_init:
         return ret;

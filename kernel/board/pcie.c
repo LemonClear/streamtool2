@@ -40,7 +40,7 @@ static int __on(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s POWER ON GO>>> -\n", pcie->name);
+        INFO("PCIE %s POWER ON\n", pcie->name);
 
         /*pcie level do 1st*/
         //FIXME: todo...
@@ -53,7 +53,7 @@ static int __on(ip *pcie)
         pcie->status = RUN;
 
         /*end*/
-        INFO("- PCIE %s POWER ON DONE -\n", pcie->name);
+        INFO("PCIE %s POWER ON DONE\n", pcie->name);
 
         ret = 0;
 ret_on:
@@ -76,7 +76,7 @@ static int __off(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s POWER OFF GO>>> -\n", pcie->name);
+        INFO("PCIE %s POWER OFF\n", pcie->name);
 
         /*power off subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -89,7 +89,7 @@ static int __off(ip *pcie)
         pcie->status = OFF;
 
         /*end*/
-        INFO("- PCIE %s POWER OFF DONE -\n", pcie->name);
+        INFO("PCIE %s POWER OFF DONE\n", pcie->name);
 
         ret = 0;
 ret_off:
@@ -112,7 +112,7 @@ static int __idle(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s IDLE GO>>> -\n", pcie->name);
+        INFO("PCIE %s IDLE\n", pcie->name);
 
         /*idle subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -125,7 +125,7 @@ static int __idle(ip *pcie)
         pcie->status = IDLE;
 
         /*end*/
-        INFO("- PCIE %s IDLE DONE -\n", pcie->name);
+        INFO("PCIE %s IDLE DONE\n", pcie->name);
 
         ret = 0;
 ret_idle:
@@ -148,7 +148,7 @@ static int __sleep(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s SLEEP GO>>> -\n", pcie->name);
+        INFO("PCIE %s SLEEP\n", pcie->name);
 
         /*sleep subips 1st*/
         //FIXME: DO NOTHING!!!
@@ -161,7 +161,7 @@ static int __sleep(ip *pcie)
         pcie->status = SLEEP;
 
         /*end*/
-        INFO("- PCIE %s SLEEP DONE -\n", pcie->name);
+        INFO("PCIE %s SLEEP DONE\n", pcie->name);
 
         ret = 0;
 ret_sleep:
@@ -184,7 +184,7 @@ static int __wakeup(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s WAKEUP GO>>> -\n", pcie->name);
+        INFO("PCIE %s WAKEUP\n", pcie->name);
 
         /*pcie level do 1st*/
         //FIXME: todo...
@@ -197,7 +197,7 @@ static int __wakeup(ip *pcie)
         pcie->status = RUN;
 
         /*end*/
-        INFO("- PCIE %s WAKEUP DONE -\n", pcie->name);
+        INFO("PCIE %s WAKEUP DONE\n", pcie->name);
 
         ret = 0;
 ret_wakeup:
@@ -220,7 +220,7 @@ static int __tick(ip *pcie)
         }
 
         /*begin*/
-        INFO("- PCIE %s TICK %llu GO>>> -\n",
+        INFO("PCIE %s TICK %llu\n",
                         pcie->name, tick_counter);
 
         /*pcie level do 1st*/
@@ -231,7 +231,7 @@ static int __tick(ip *pcie)
         //No subips
 
         /*done*/
-        INFO("- PCIE %s TICK %llu DONE -\n",
+        INFO("PCIE %s TICK %llu DONE\n",
                         pcie->name, tick_counter);
 
         ret = 0;
@@ -393,7 +393,7 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- PCIE pcie%d INIT GO>>> -\n", id);
+        INFO("PCIE%d INIT\n", id);
 
         if (unlikely(!pcie) || unlikely(!params)) {
                 ERROR("pcie is %p, params is %p !!!\n",
@@ -472,7 +472,7 @@ int pcie_init(ip *father, ip *pcie, int id, param *params)
         //No subips
 
         /*end*/
-        INFO("- PCIE pcie%d INIT DONE -\n", id);
+        INFO("PCIE%d INIT DONE\n", id);
 
 ret_init:
         return ret;

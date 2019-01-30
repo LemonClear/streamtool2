@@ -57,7 +57,7 @@ static int __on(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s POWER ON GO>>> -\n", product->name);
+        INFO("PRODUCT %s POWER ON\n", product->name);
 
         /*product level do 1st*/
         //FIXME: todo...
@@ -85,7 +85,7 @@ static int __on(ip *product)
         product->status = RUN;
 
         /*end*/
-        INFO("- PRODUCT %s POWER ON DONE -\n", product->name);
+        INFO("PRODUCT %s POWER ON DONE\n", product->name);
 
 ret_on:
         return ret;
@@ -108,7 +108,7 @@ static int __off(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s POWER OFF GO>>> -\n", product->name);
+        INFO("PRODUCT %s POWER OFF\n", product->name);
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
@@ -136,7 +136,7 @@ static int __off(ip *product)
         product->status = OFF;
 
         /*end*/
-        INFO("- PRODUCT %s POWER OFF DONE -\n", product->name);
+        INFO("PRODUCT %s POWER OFF DONE\n", product->name);
 
 ret_off:
         return ret;
@@ -159,7 +159,7 @@ static int __idle(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s IDLE GO>>> -\n", product->name);
+        INFO("PRODUCT %s IDLE\n", product->name);
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
@@ -187,7 +187,7 @@ static int __idle(ip *product)
         product->status = IDLE;
 
         /*end*/
-        INFO("- PRODUCT %s IDLE DONE -\n", product->name);
+        INFO("PRODUCT %s IDLE DONE\n", product->name);
 
 ret_idle:
         return ret;
@@ -210,7 +210,7 @@ static int __sleep(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s SLEEP GO>>> -\n", product->name);
+        INFO("PRODUCT %s SLEEP\n", product->name);
 
         /*product have no subip*/
         if (unlikely(!product->subips)) {
@@ -238,7 +238,7 @@ static int __sleep(ip *product)
         product->status = SLEEP;
 
         /*end*/
-        INFO("- PRODUCT %s SLEEP DONE... -\n", product->name);
+        INFO("PRODUCT %s SLEEP DONE\n", product->name);
 
 ret_sleep:
         return ret;
@@ -261,7 +261,7 @@ static int __wakeup(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s WAKEUP GO>>> -\n", product->name);
+        INFO("PRODUCT %s WAKEUP\n", product->name);
 
         /*product level do 1st*/
         //FIXME: todo...
@@ -289,7 +289,7 @@ static int __wakeup(ip *product)
         product->status = RUN;
 
         /*end*/
-        INFO("- PRODUCT %s WAKEUP DONE -\n", product->name);
+        INFO("PRODUCT %s WAKEUP DONE\n", product->name);
 
 ret_wakeup:
         return ret;
@@ -312,7 +312,7 @@ static int __tick(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s TICK:%llu GO>>> -\n",
+        INFO("PRODUCT %s TICK:%llu\n",
                         product->name, tick_counter);
 
         /*product level do 1st*/
@@ -338,7 +338,7 @@ static int __tick(ip *product)
         }
 
         /*done*/
-        INFO("- PRODUCT %s TICK:%llu DONE -\n",
+        INFO("PRODUCT %s TICK:%llu DONE\n",
                         product->name, tick_counter);
 
 ret_tick:
@@ -542,7 +542,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- PRODUCT product%d INIT GO>>> -\n", id);
+        INFO("PRODUCT%d INIT\n", id);
 
         if (unlikely(!product) || unlikely(!params)) {
                 ERROR("product is %p, params is %p !!!\n",
@@ -662,7 +662,7 @@ int product_init(ip *father, ip *product, int id, param *params)
         }
 
         /*end*/
-        INFO("- PRODUCT product%d INIT DONE -\n", id);
+        INFO("PRODUCT%d INIT DONE\n", id);
 
 ret_init:
         return ret;
@@ -684,7 +684,7 @@ int product_run(ip *product)
         }
 
         /*begin*/
-        INFO("- PRODUCT %s RUN GO>>> -\n", product->name);
+        INFO("PRODUCT %s RUN\n", product->name);
 
         /*power on*/
         ret = power_on(product); //power start
@@ -734,7 +734,7 @@ running:
         power_off(product);
 
         /*end*/
-        INFO("- PRODUCT %s RUN DONE -\n", product->name);
+        INFO("PRODUCT %s RUN DONE\n", product->name);
 
 ret_run:
         return ret;

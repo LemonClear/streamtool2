@@ -40,7 +40,7 @@ static int __on(ip *noc)
         }
 
         /*begin*/
-        INFO("- NOC %s POWER ON GO>>> -\n", noc->name);
+        INFO("NOC %s POWER ON\n", noc->name);
 
         /*noc level do 1st*/
         //FIXME: todo...
@@ -52,7 +52,7 @@ static int __on(ip *noc)
         noc->status = RUN;
 
         /*end*/
-        INFO("- NOC %s POWER ON DONE -\n", noc->name);
+        INFO("NOC %s POWER ON DONE\n", noc->name);
 
         ret = 0;
 ret_on:
@@ -75,7 +75,7 @@ static int __off(ip *noc)
         }
 
         /*begin*/
-        INFO("- NOC %s POWER OFF GO>>> -\n", noc->name);
+        INFO("NOC %s POWER OFF\n", noc->name);
 
         /*power off subips 1st*/
         //No subips
@@ -87,7 +87,7 @@ static int __off(ip *noc)
         noc->status = OFF;
 
         /*end*/
-        INFO("- NOC %s POWER OFF DONE -\n", noc->name);
+        INFO("NOC %s POWER OFF DONE\n", noc->name);
 
         ret = 0;
 ret_off:
@@ -110,7 +110,7 @@ static int __idle(ip *noc)
         }
 
         /*begin*/
-        INFO("- NOC %s IDLE GO>>> -\n", noc->name);
+        INFO("NOC %s IDLE\n", noc->name);
 
         /*idle subips 1st*/
         //No subips
@@ -122,7 +122,7 @@ static int __idle(ip *noc)
         noc->status = IDLE;
 
         /*end*/
-        INFO("- NOC %s IDLE DONE -\n", noc->name);
+        INFO("NOC %s IDLE DONE\n", noc->name);
 
         ret = 0;
 ret_idle:
@@ -145,7 +145,7 @@ static int __sleep(ip *noc)
         }
 
         /*begin*/
-        INFO("- NOC %s SLEEP GO>>> -\n", noc->name);
+        INFO("NOC %s SLEEP\n", noc->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -157,7 +157,7 @@ static int __sleep(ip *noc)
         noc->status = SLEEP;
 
         /*end*/
-        INFO("- NOC %s SLEEP DONE -\n", noc->name);
+        INFO("NOC %s SLEEP DONE\n", noc->name);
 
         ret = 0;
 ret_sleep:
@@ -180,7 +180,7 @@ static int __wakeup(ip *noc)
         }
 
         /*begin*/
-        INFO("- NOC %s WAKEUP GO>>> -\n", noc->name);
+        INFO("NOC %s WAKEUP\n", noc->name);
 
         /*noc level do 1st*/
         //FIXME: todo...
@@ -192,7 +192,7 @@ static int __wakeup(ip *noc)
         noc->status = RUN;
 
         /*end*/
-        INFO("- NOC %s WAKEUP DONE -\n", noc->name);
+        INFO("NOC %s WAKEUP DONE\n", noc->name);
 
         ret = 0;
 ret_wakeup:
@@ -215,8 +215,7 @@ static int __tick(ip *noc)
         }
 
         /*begin*/
-        INFO("- NOC %s TICK %llu GO>>> -\n",
-                        noc->name, tick_counter);
+        INFO("NOC %s TICK %llu\n", noc->name, tick_counter);
 
         /*noc level do 1st*/
         //FIXME: todo...
@@ -226,8 +225,7 @@ static int __tick(ip *noc)
         //No subips
 
         /*done*/
-        INFO("- NOC %s TICK %llu DONE -\n",
-                        noc->name, tick_counter);
+        INFO("NOC %s TICK %llu DONE\n", noc->name, tick_counter);
 
         ret = 0;
 ret_tick:
@@ -387,7 +385,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- NOC noc%d INIT GO>>> -\n", id);
+        INFO("NOC%d INIT\n", id);
 
         if (unlikely(!noc) || unlikely(!params)) {
                 ERROR("noc is %p, params is %p !!!\n",
@@ -466,7 +464,7 @@ int noc_init(ip *father, ip *noc, int id, param *params)
         //No subips
 
         /*end*/
-        INFO("- NOC noc%d INIT DONE -\n", id);
+        INFO("NOC%d INIT\n", id);
 
 ret_init:
         return ret;

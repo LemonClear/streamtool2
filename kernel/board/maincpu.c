@@ -40,7 +40,7 @@ static int __on(ip *maincpu)
         }
 
         /*begin*/
-        INFO("- MAINCPU %s POWER ON GO>>> -\n", maincpu->name);
+        INFO("MAINCPU %s POWER ON\n", maincpu->name);
 
         /*maincpu level do 1st*/
         //FIXME: todo...
@@ -52,7 +52,7 @@ static int __on(ip *maincpu)
         maincpu->status = RUN;
 
         /*end*/
-        INFO("- MAINCPU %s POWER ON DONE -\n", maincpu->name);
+        INFO("MAINCPU %s POWER ON DONE\n", maincpu->name);
 
         ret = 0;
 ret_on:
@@ -75,7 +75,7 @@ static int __off(ip *maincpu)
         }
 
         /*begin*/
-        INFO("- MAINCPU %s POWER OFF GO>>> -\n", maincpu->name);
+        INFO("MAINCPU %s POWER OFF\n", maincpu->name);
 
         /*power off subips 1st*/
         //No subips
@@ -87,7 +87,7 @@ static int __off(ip *maincpu)
         maincpu->status = OFF;
 
         /*end*/
-        INFO("- MAINCPU %s POWER OFF DONE -\n", maincpu->name);
+        INFO("MAINCPU %s POWER OFF DONE\n", maincpu->name);
 
         ret = 0;
 ret_off:
@@ -110,7 +110,7 @@ static int __idle(ip *maincpu)
         }
 
         /*begin*/
-        INFO("- MAINCPU %s IDLE GO>>> -\n", maincpu->name);
+        INFO("MAINCPU %s IDLE\n", maincpu->name);
 
         /*idle subips 1st*/
         //No subips
@@ -122,7 +122,7 @@ static int __idle(ip *maincpu)
         maincpu->status = IDLE;
 
         /*end*/
-        INFO("- MAINCPU %s IDLE DONE -\n", maincpu->name);
+        INFO("MAINCPU %s IDLE DONE\n", maincpu->name);
 
         ret = 0;
 ret_idle:
@@ -145,7 +145,7 @@ static int __sleep(ip *maincpu)
         }
 
         /*begin*/
-        INFO("- MAINCPU %s SLEEP GO>>> -\n", maincpu->name);
+        INFO("MAINCPU %s SLEEP\n", maincpu->name);
 
         /*sleep subips 1st*/
         //No subips
@@ -157,7 +157,7 @@ static int __sleep(ip *maincpu)
         maincpu->status = SLEEP;
 
         /*end*/
-        INFO("- MAINCPU %s SLEEP DONE -\n", maincpu->name);
+        INFO("MAINCPU %s SLEEP DONE\n", maincpu->name);
 
         ret = 0;
 ret_sleep:
@@ -180,7 +180,7 @@ static int __wakeup(ip *maincpu)
         }
 
         /*begin*/
-        INFO("- MAINCPU %s WAKEUP GO>>> -\n", maincpu->name);
+        INFO("MAINCPU %s WAKEUP\n", maincpu->name);
 
         /*maincpu level do 1st*/
         //FIXME: todo...
@@ -192,7 +192,7 @@ static int __wakeup(ip *maincpu)
         maincpu->status = RUN;
 
         /*end*/
-        INFO("- MAINCPU %s WAKEUP DONE -\n", maincpu->name);
+        INFO("MAINCPU %s WAKEUP DONE\n", maincpu->name);
 
         ret = 0;
 ret_wakeup:
@@ -215,7 +215,7 @@ static int __tick(ip *maincpu)
         }
 
         /*begin*/
-        INFO("- MAINCPU %s TICK %llu GO>>> -\n",
+        INFO("MAINCPU %s TICK %llu\n",
                         maincpu->name, tick_counter);
 
         /*maincpu level do 1st*/
@@ -225,7 +225,7 @@ static int __tick(ip *maincpu)
         //No subips
 
         /*end*/
-        INFO("- MAINCPU %s TICK %llu DONE -\n",
+        INFO("MAINCPU %s TICK %llu DONE\n",
                         maincpu->name, tick_counter);
 
         ret = 0;
@@ -385,7 +385,7 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- MAINCPU maincpu%d INIT GO>>> -\n", id);
+        INFO("MAINCPU%d INIT\n", id);
 
         if (unlikely(!maincpu) || unlikely(!params)) {
                 ERROR("maincpu is %p, params is %p\n",
@@ -466,7 +466,7 @@ int maincpu_init(ip *father, ip *maincpu, int id, param *params)
         //No subips
 
         /*end*/
-        INFO("- MAINCPU maincpu%d INIT DONE -\n", id);
+        INFO("MAINCPU%d INIT DONE\n", id);
 
 ret_init:
         return ret;

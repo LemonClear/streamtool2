@@ -41,7 +41,7 @@ static int __on(ip *chip)
         }
 
         /*begin*/
-        INFO("- CHIP %s POWER ON GO>>> -\n", chip->name);
+        INFO("CHIP %s POWER ON\n", chip->name);
 
         /*chip level do 1st*/
         //FIXME: todo...
@@ -69,7 +69,7 @@ static int __on(ip *chip)
         chip->status = RUN;
 
         /*end*/
-        INFO("- CHIP %s POWER ON DONE -\n", chip->name);
+        INFO("CHIP %s POWER ON DONE\n", chip->name);
 
 ret_on:
         return ret;
@@ -92,7 +92,7 @@ static int __off(ip *chip)
         }
 
         /*begin*/
-        INFO("- CHIP %s POWER OFF GO>>> -\n", chip->name);
+        INFO("CHIP %s POWER OFF\n", chip->name);
 
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
@@ -120,7 +120,7 @@ static int __off(ip *chip)
         chip->status = OFF;
 
         /*end*/
-        INFO("- CHIP %s POWER OFF DONE -\n", chip->name);
+        INFO("CHIP %s POWER OFF DONE\n", chip->name);
 
 ret_off:
         return ret;
@@ -143,7 +143,7 @@ static int __idle(ip *chip)
         }
 
         /*begin*/
-        INFO("- CHIP %s IDLE GO>>> -\n", chip->name);
+        INFO("CHIP %s IDLE\n", chip->name);
 
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
@@ -171,7 +171,7 @@ static int __idle(ip *chip)
         chip->status = IDLE;
 
         /*end*/
-        INFO("- CHIP %s IDLE DONE -\n", chip->name);
+        INFO("CHIP %s IDLE DONE\n", chip->name);
 
 ret_idle:
         return ret;
@@ -194,7 +194,7 @@ static int __sleep(ip *chip)
         }
 
         /*begin*/
-        INFO("- CHIP %s SLEEP GO>>> -\n", chip->name);
+        INFO("CHIP %s SLEEP\n", chip->name);
 
         /*chip have no subip*/
         if (unlikely(!chip->subips)) {
@@ -222,7 +222,7 @@ static int __sleep(ip *chip)
         chip->status = SLEEP;
 
         /*end*/
-        INFO("- CHIP %s SLEEP DONE -\n", chip->name);
+        INFO("CHIP %s SLEEP DONE\n", chip->name);
 
 ret_sleep:
         return ret;
@@ -245,7 +245,7 @@ static int __wakeup(ip *chip)
         }
 
         /*begin*/
-        INFO("- CHIP %s WAKEUP GO>>> -\n", chip->name);
+        INFO("CHIP %s WAKEUP\n", chip->name);
 
         /*chip level do 1st*/
         //FIXME: todo...
@@ -273,7 +273,7 @@ static int __wakeup(ip *chip)
         chip->status = RUN;
 
         /*end*/
-        INFO("- CHIP %s WAKEUP DONE -\n", chip->name);
+        INFO("CHIP %s WAKEUP DONE\n", chip->name);
 
 ret_wakeup:
         return ret;
@@ -296,7 +296,7 @@ static int __tick(ip *chip)
         }
 
         /*begin*/
-        INFO("- CHIP %s TICK %llu GO>>> -\n",
+        INFO("CHIP %s TICK %llu\n",
                         chip->name, tick_counter);
 
         /*chip level do 1st*/
@@ -322,7 +322,7 @@ static int __tick(ip *chip)
         }
 
         /*done*/
-        INFO("- CHIP %s TICK %llu DONE -\n",
+        INFO("CHIP %s TICK %llu DONE\n",
                         chip->name, tick_counter);
 
 ret_tick:
@@ -525,7 +525,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         char *addr2str = NULL;
 
         /*begin*/
-        INFO("- CHIP chip%d INIT GO>>> -\n", id);
+        INFO("CHIP%d INIT\n", id);
 
         if (unlikely(!chip) || unlikely(!params)) {
                 ERROR("chip is %p, params is %p !!!\n", chip, params);
@@ -645,7 +645,7 @@ int chip_init(ip *father, ip *chip, int id, param *params)
         }
 
         /*end*/
-        INFO("- CHIP chip%d INIT DONE -\n", id);
+        INFO("CHIP%d INIT DONE\n", id);
 
 ret_init:
         return ret;
