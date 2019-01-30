@@ -38,15 +38,15 @@
 static int load_image_bd(ip *ram, address32_t offset)
 {
         int ret = -1;
-        int id = -1;
+        int id = 0;
         int fd = -1;
         int mem_size = -1;
         address32_t *mem_head = NULL;
-        char *image = "./data/image";
+        char *image = "./data/ram.image";
 
         /*each ram mem*/
-        id = 0;
         while (ram->memory[id]) {
+                /*ram size && start addr*/
                 mem_head = ram->memory[id];
                 mem_size = malloc_usable_size(ram->memory[id]);
 
@@ -100,8 +100,8 @@ static int __on(ip *ram)
 
         /*ram level do 1st*/
         ret = load_image_bd(ram, offset);
-        if (unlikely(!ret)) {
-                ERROR("ram load image backdoor failed !!!\n");
+        if (unlikely(ret)) {
+                ERROR("backdoor load image to %s failed !!!\n", ram->name);
                 goto ret_on;
         }
         //FIXME: todo...

@@ -38,28 +38,36 @@
 static int load_image_bd(ip *ddr, address32_t offset)
 {
         int ret = -1;
-        int id = -1;
+        int id = 0;
         int fd = -1;
         int mem_size = -1;
         address32_t *mem_head = NULL;
-        char *image = "./data/image";
+        char *image = "./data/ddr.image";
  
         /*each ddr mem*/
-        id = 0;
         while (ddr->memory[id]) {
                 mem_head = ddr->memory[id];
                 mem_size = malloc_usable_size(ddr->memory[id]);
 
-                //FIXME: may load different image
+                /*open*/
                 fd = open(image, O_RDONLY);
+                //FIXME: may load different image
                 if (unlikely(-1 == fd)) {
-                        ERROR("open image file {%s} failed !!!\n", image);
+                        ERROR("open {%s} failed !!!\n", image);
                         goto ret_load;
                 }
 
-                //FIXME: todo...read, write
+                //FIXME: todo...
+                //maybe need read this file and write it to ddr
 
-                /*next*/
+                /*close*/
+                ret = close(fd);
+                if (unlikely(ret)) {
+                        ERROR("close {%s} failed !!!\n", image);
+                        goto ret_load;
+                }
+
+                /*next mem*/
                 id++;
         }
 
@@ -91,7 +99,7 @@ static int __on(ip *ddr)
 
         /*ddr level do 1st*/
         ret = load_image_bd(ddr, offset);
-        if (unlikely(!ret)) {
+        if (unlikely(ret)) {
                 ERROR("load image backdoor failed !!!\n");
                 goto ret_on;
         }

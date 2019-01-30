@@ -65,7 +65,15 @@ BUILD_OUTPUT_CONFIGS  = $(BUILD_OUTPUT)/configs
 BUILD_OUTPUT_CONFIGS := $(shell mkdir -p $(BUILD_OUTPUT_CONFIGS) && cd $(BUILD_OUTPUT_CONFIGS) && pwd)
 $(if $(BUILD_OUTPUT_CONFIGS),, $(error failed to create output directory "$(BUILD_OUTPUT_CONFIGS)"))
 
-export BUILD_OUTPUT BUILD_OUTPUT_LIBOBJS BUILD_OUTPUT_TOOLOBJS BUILD_OUTPUT_CONFIGS
+BUILD_OUTPUT_DATA  = $(BUILD_OUTPUT)/data
+BUILD_OUTPUT_DATA := $(shell mkdir -p $(BUILD_OUTPUT_DATA) && cd $(BUILD_OUTPUT_DATA) && pwd)
+$(if $(BUILD_OUTPUT_DATA),, $(error failed to create output directory "$(BUILD_OUTPUT_DATA)"))
+
+BUILD_OUTPUT_CASE  = $(BUILD_OUTPUT)/case
+BUILD_OUTPUT_CASE := $(shell mkdir -p $(BUILD_OUTPUT_CASE) && cd $(BUILD_OUTPUT_CASE) && pwd)
+$(if $(BUILD_OUTPUT_CASE),, $(error failed to create output directory "$(BUILD_OUTPUT_CASE)"))
+
+export BUILD_OUTPUT BUILD_OUTPUT_LIBOBJS BUILD_OUTPUT_TOOLOBJS BUILD_OUTPUT_CONFIGS BUILD_OUTPUT_DATA BUILD_OUTPUT_CASE
 
 # 4.Make variables (CC, etc...)
 AS              = as
@@ -110,7 +118,8 @@ DYNAMIC_LIBS     := -lc2xlayer \
 SUBDIRS         := $(srctree)/kernel \
 		   $(srctree)/lib \
 		   $(srctree)/configs \
-		   $(srctree)/tools
+		   $(srctree)/tools \
+		   $(srctree)/test
 
 INCLUDE_DIRS    := -I$(fullsrctree)/include/ \
 		   -I$(fullsrctree)/arch/include/ \
