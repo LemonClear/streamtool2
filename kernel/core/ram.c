@@ -50,16 +50,25 @@ static int load_image_bd(ip *ram, address32_t offset)
                 mem_head = ram->memory[id];
                 mem_size = malloc_usable_size(ram->memory[id]);
 
-                //FIXME: may load different image
+                /*open*/
                 fd = open(image, O_RDONLY);
+                //FIXME: may load different image here
                 if (unlikely(-1 == fd)) {
-                        ERROR("open image file {%s} failed !!!\n", image);
+                        ERROR("open {%s} failed !!!\n", image);
                         goto ret_load;
                 }
 
-                //FIXME: todo...read, write
+                //FIXME: todo...
+                //maybe need read this file and write it to ram
 
-                /*next*/
+                /*close*/
+                ret = close(fd);
+                if (unlikely(ret)) {
+                        ERROR("close {%s} failed !!!\n", image);
+                        goto ret_load;
+                }
+
+                /*next mem*/
                 id++;
         }
 
