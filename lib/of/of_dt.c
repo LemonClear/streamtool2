@@ -73,8 +73,14 @@ int of_regconfig(const char *path, regs **reglist, char delimit)
 
         /*parse each line*/
         while (-1 != (nread = getline(&line, &len, stream))) {
+                if (unlikely(!reglist[id])) {
+                        WARNING("line count overflow !!!\n");
+                        break;
+                }
+
                 /*bypass '#' lines*/
-                if (unlikely('#' == *line)) continue;
+                if (unlikely('#' == *line))
+                        continue;
 
                 /*default delimit*/
                 if (unlikely(!delimit))
