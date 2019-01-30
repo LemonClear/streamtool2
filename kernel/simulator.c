@@ -37,7 +37,7 @@ static int parse_defconfigs(param *params)
         char *defconfig = "./configs/simu_defconfig";
         char delimit = '=';
 
-        INFO("- PARSE DEFCONFIG {%s} GO>>> -\n", defconfig);
+        INFO("parse {%s}\n", defconfig);
 
         if (unlikely(!params)) {
                 ERROR("param struct is null !!!\n");
@@ -49,8 +49,6 @@ static int parse_defconfigs(param *params)
                 ERROR("parse defconfig file {%s} failed !!!\n", defconfig);
                 goto ret_config;
         }
-
-        INFO("- PARSE DEFCONFIG {%s} DONE -\n", defconfig);
 
 ret_config:
         return ret;
