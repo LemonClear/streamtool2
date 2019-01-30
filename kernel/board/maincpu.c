@@ -280,30 +280,30 @@ static const ip_operations maincpu_ops = {
 
 
 /**
- * parse_regconfig - parse reg config file xxx.reg
+ * parse_regconfig - parse regconfig file regconfig.xxx
  * @reglist:   pointer to reglist
  *
- * FIXME: to be replace by dt
  */
 static int parse_regconfig(regs **reglist)
 {
         int ret = -1;
-        char *config = "./maincpu.reg";
+        char *regconfig = "./configs/regconfig.maincpu";
+        char delimit = 0;
+
+        INFO("- PARSE REGCONFIG {%s} GO>>> -\n", regconfig);
 
         if (unlikely(!reglist)) {
                 ERROR("reglist is null !!!\n");
                 goto ret_config;
         }
 
-        /*begin*/
-        if (unlikely(access(config, F_OK))) {
-                WARNING("config file {%s} not exist !!! use default config !!!\n",
-                                config);
-                ret = 0;
+        ret = of_regconfig(regconfig, reglist, delimit);
+        if (unlikely(ret)) {
+                ERROR("parse regconfig file {%s} failed !!!\n", regconfig);
                 goto ret_config;
         }
 
-        //FIXME: todo...
+        INFO("- PARSE REGCONFIG {%s} DONE -\n", regconfig);
 
 ret_config:
         return ret;
