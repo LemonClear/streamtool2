@@ -85,8 +85,8 @@ NM              = nm
 STRIP           = strip
 OBJCOPY         = objcopy
 OBJDUMP         = objdump
-CFLAGS          = -g -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC
-CXXFLAGS        = -m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC
+CFLAGS          = -g -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC -lpthread
+CXXFLAGS        = -m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC -lpthread
 ARFLAG          = -r
 AWK             = awk
 
@@ -132,7 +132,7 @@ export ARCH_LIBS STATIC_LIBS_PATH STATIC_LIBS DYNAMIC_LIBS_PATH DYNAMIC_LIBS INC
 
 # 7.main compile
 simu:$(SUBDIRS)
-	$(CC) $(objects) -o $@ $(DYNAMIC_LIBS_PATH) $(DYNAMIC_LIBS) $(STATIC_LIBS_PATH) $(STATIC_LIBS)
+	$(CC) $(objects) -o $@ $(DYNAMIC_LIBS_PATH) $(DYNAMIC_LIBS) $(STATIC_LIBS_PATH) $(STATIC_LIBS) -lpthread
 	mv $@ $(BUILD_OUTPUT)
 
 ## build sub-dirs
