@@ -16,11 +16,20 @@
 #
 */
 #include <stdio.h>
+#include <time.h>
 #include "logger.h"
 
-void logger()
-{
-        char* name = "logger";
 
-        DEBUG("My name = %s\n", name);
+/**
+ * timenow - get system time now
+ *
+ */
+void timenow(char *now)
+{
+        time_t tim;
+        struct tm *at;
+
+        time(&tim);
+        at = localtime(&tim);
+        strftime(now, 79, "%Y-%m-%d\n%H:%M:%S\n", at);
 }
