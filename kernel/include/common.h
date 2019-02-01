@@ -22,6 +22,7 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
+#include <pthread.h>
 #include "type.h"
 #include "library.h"
 
@@ -153,6 +154,14 @@ typedef struct simulator {
         ip *product;
 }simu;
 
+/*thread_info*/
+typedef struct thread_info {    /* Used as argument to thread_start() */
+        pthread_t thread_id;    /* ID returned by pthread_create() */
+        int       thread_num;   /* Application-defined thread # */
+        param     *params;      /* Simulator parameters */
+        ip        *this;        /* This module pointer*/
+        ip        *father;      /* This module belongs to*/
+}threadinfo;
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *
@@ -185,17 +194,21 @@ int mcu_init(ip *father, ip *mcu, int id, param *params);
 int ncp_init(ip *father, ip *ncp, int id, param *params);
 int tcp_init(ip *father, ip *tcp, int id, param *params);
 int ram_init(ip *father, ip *ram, int id, param *params);
-
+void *thread_core(void *arg);
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *
  * global variants declare
  * * * * * * * * * * * * * * * * * * * * * * * */
-extern enum state global_state;  //the whole product run state-machine
-extern u64 tick_counter;         //the tick counts from the beginning
-extern u64 step_counter;         //the step counts from the beginning
-extern int all_step_done;        //all step process ok
-extern int step_enable;          //one step done, process another step
+extern enum state global_state;         //the whole product run state-machine
+extern u64 tick_counter;                //the tick counts from the beginning
+extern u64 step_counter;                //the step counts from the beginning
+extern int all_step_done;               //all step process ok
+extern int step_enable;                 //one step done, process another step
+extern unsigned int core_busy[32];
+extern pthread_cond_t cond;
+extern pthread_mutex_t mutex;
+extern pthread_mutex_t mutex2;
 
 
 #endif
