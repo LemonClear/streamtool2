@@ -1,0 +1,16 @@
+// the configured options and settings for test
+#define SIMU_VERSION_MAJOR @SIMU_VERSION_MAJOR@
+#define SIMU_VERSION_MINOR @SIMU_VERSION_MINOR@
+
+#cmakedefine USE_DEBUGGER
+#cmakedefine USE_LOGGER
+#cmakedefine USE_OF
+#cmakedefine USE_FP16
+#cmakedefine USE_FP32
+#cmakedefine USE_HASH
+#cmakedefine USE_STRING
+#cmakedefine USE_MATH
+
+// does the platform provide exp and log functions?
+#cmakedefine HAVE_LOG
+#cmakedefine HAVE_EXP
