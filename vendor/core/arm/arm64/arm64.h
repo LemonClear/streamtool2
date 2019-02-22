@@ -1,3 +1,4 @@
+/*
 #
 # Copyright LemonClear
 #
@@ -13,36 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-SUBDIRS         := 
-source          := $(wildcard *.c)
-objects         := $(patsubst %.c,%.o,$(source))
-
-## flags
-TARGET          := libof.a
-
-## main compile
-PHONY:_all
-_all:$(TARGET)
-
-$(TARGET):$(objects) $(SUBDIRS)
-	$(AR) $(ARFLAG) -o $@ $^
-	mv $@ $(BUILD_OUTPUT)
-	mv $^ $(BUILD_OUTPUT_LIBOBJS)
-
-$(objects):%.o:%.c
-	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-
-$(SUBDIRS):trace
-	+$(MAKE) -C $@
-
-trace:
-	@echo 'bengin compile...... $(SUBDIRS)'
+*/
+#ifndef __ARM64_H__
+#define __ARM64_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines arm64 core simulator things
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-clean:
-	rm -f $(objects)
-	rm -f $(TARGET)
+#include "cerr.h"
 
-##
-.PHONY: $(PHONY)
+
+
+
+#endif

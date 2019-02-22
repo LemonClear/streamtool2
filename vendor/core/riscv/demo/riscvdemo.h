@@ -1,3 +1,4 @@
+/*
 #
 # Copyright LemonClear
 #
@@ -13,31 +14,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-SUBDIRS         := ./case \
-		   ./data
-
-source          := $(wildcard *.c)
-objects         := $(patsubst %.c,%.o,$(source))
-
-
-## main compile
-PHONY:_all
-
-_all:$(objects) $(SUBDIRS)
-
-$(objects):%.o:%.c
-	$(CC) -c $(CFLAGS) $< -o $@ $(INCLUDE_DIRS)
-	mv $@ $(BUILD_OUTPUT_LIBOBJS)
-
-$(SUBDIRS):trace
-	+$(MAKE) -C $@
-
-trace:
-	@echo 'bengin compile...... $(SUBDIRS)'
+*/
+#ifndef __RISCV_H__
+#define __RISCV_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines riscv core simulator things
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
-clean:
-	rm -f $(objects)
+#include "cerr.h"
 
-.PHONY: $(PHONY)
+
+
+
+#endif
