@@ -18,10 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "type.h"
 #include "cerr.h"
-#include "compiler.h"
-#include "library.h"
 #include "logger.h"
 
 
@@ -41,6 +38,14 @@
  */
 #define HASHTABLE_COUNT_BIT 11
 #define HASHTABLE_MAXID ((1 << HASHTABLE_COUNT_BIT) - 1) //2047
+
+
+/* hashtable struct*/
+typedef struct hash_table {
+        int hashkey;
+        const char *string;
+        void *element;
+}hashtable;
 
 
 /**
