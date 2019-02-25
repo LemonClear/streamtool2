@@ -1,11 +1,21 @@
+# add the command to generate the source code
+add_custom_command (
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/fp16_table.h
+        COMMAND maketable ${CMAKE_CURRENT_BINARY_DIR}/fp16_table.h
+        DEPENDS maketable
+)
+
 # add the binary tree directory to the search path for
 # include files
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(
+        "${CMAKE_CURRENT_BINARY_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
 # add the main library
-add_library(Debugger SHARED debug.c)
+add_library(fp16 STATIC fp16.c ${CMAKE_CURRENT_BINARY_DIR}/fp16_table.h)
 
 
 # installation
-install (TARGETS Debugger DESTINATION lib)
-install (FILES debug.h DESTINATION include)
+install (TARGETS fp16 DESTINATION lib)
+install (FILES fp16.h fp16_table.h DESTINATION include)

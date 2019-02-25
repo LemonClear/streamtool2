@@ -15,13 +15,13 @@
 # limitations under the License.
 #
 */
-#include <stdio.h>
-#include "logger.h"
-#include "fp16_table.h"
+#ifndef __FP32_H__
+#define __FP32_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all fp16 functions
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+#include "compiler.h"
 
 
-void fp16_pt()
-{
-        int i = 0;
-        DEBUG("My fp16 = %d\n", i);
-}
+#endif /*__FP32_H__*/

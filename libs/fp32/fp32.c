@@ -15,3 +15,13 @@
 # limitations under the License.
 #
 */
+#include <stdio.h>
+#include "logger.h"
+#include "fp32_table.h"
+
+
+void fp32_pt()
+{
+        int i = 0;
+        DEBUG("My fp32 = %d\n", i);
+}
