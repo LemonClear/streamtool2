@@ -15,19 +15,17 @@
 # limitations under the License.
 #
 */
-#ifndef __CMATH_H__
-#define __CMATH_H__
+#ifndef __MATHFUNC_H__
+#define __MATHFUNC_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This file defines all math fucntions
+ * This file defines all math functions
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-#include "cerr.h"
-
-
-void fp16_pt();
+#include "compiler.h"
 
 
+/*fucntion definitions*/
+double mysqrt(double in);
 
 
-#endif
+#endif /*__MATHFUNC_H__*/

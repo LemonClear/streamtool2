@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "testConfig.h"
+#include "SimulatorConfig.h"
 #include "table.h"
 
 double mysqrt(double in)
