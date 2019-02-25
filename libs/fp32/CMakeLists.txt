@@ -12,8 +12,11 @@ include_directories(
         "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
+# source code
+AUX_SOURCE_DIRECTORY(. DIR_SRCS)
+
 # add the main library
-add_library(fp32 STATIC fp32.c ${CMAKE_CURRENT_BINARY_DIR}/fp32_table.h)
+add_library(fp32 STATIC ${DIR_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/fp32_table.h)
 
 
 # installation
