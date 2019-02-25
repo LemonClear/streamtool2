@@ -1,8 +1,8 @@
 ##Debugger
 option (USE_DEBUGGER "Open Debugger." ON)
 if (USE_DEBUGGER)
-        add_subdirectory (Debugger)
-        set (EXTRA_LIBS ${EXTRA_LIBS} Debugger)
+        add_subdirectory (debugger)
+        set (EXTRA_LIBS ${EXTRA_LIBS} debugger)
 endif (USE_DEBUGGER)
 
 ##Logger
