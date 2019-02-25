@@ -15,11 +15,14 @@ set(CMAKE_C_FLAGS "-m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC -lpthread")
 set(CMAKE_CXX_FLAGS "-m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC -lpthread")
 
 # 4.Directories.
-set (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/out/bin)
-set (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/out/lib)
+set (OUTPUT_PATH ${PROJECT_BINARY_DIR}/out)
+set (EXECUTABLE_OUTPUT_PATH ${OUTPUT_PATH}/bin)
+set (LIBRARY_OUTPUT_PATH ${OUTPUT_PATH}/lib)
 
 # 5.Lib Linkage Path.
-link_directories ("${PROJECT_BINARY_DIR}/out")
+link_directories (
+        "${OUTPUT_PATH}"
+)
 
 # 6.Header Files.
 include_directories (
