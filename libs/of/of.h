@@ -21,7 +21,6 @@
  * This file defines of functions
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 #include "cerr.h"
 
 
