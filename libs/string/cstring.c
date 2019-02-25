@@ -18,10 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "type.h"
 #include "cerr.h"
-#include "compiler.h"
-#include "library.h"
 #include "logger.h"
 
 
