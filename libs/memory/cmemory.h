@@ -15,14 +15,14 @@
 # limitations under the License.
 #
 */
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#ifndef __CMEMORY_H__
+#define __CMEMORY_H__
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * This file defines all cmemory functions
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #include "cerr.h"
 
 
-/**
- * function - 
- * @:
- *
- */
+
+#endif
