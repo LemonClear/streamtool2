@@ -15,15 +15,13 @@
 # limitations under the License.
 #
 */
-#ifndef __LIBRARY_H__
-#define __LIBRARY_H__
+#ifndef __MACROFUNC_H__
+#define __MACROFUNC_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * This file defines all library functions
+ * This file defines all marco functions
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 #include "cerr.h"
-#include "compiler.h"
 
 
 /**
@@ -56,31 +54,6 @@
                         ┊"pointer type mismatch in container_of()");    \
         IS_ERR_OR_NULL(__mptr) ? ERR_CAST(__mptr) :                     \
                 ((type *)(__mptr - offsetof(type, member))); })
-
-
-/* hashtable struct*/
-typedef struct hash_table {
-        int hashkey;
-        const char *string;
-        void *element;
-}hashtable;
-
-
-/* hashtable functions*/
-int insert_hashtable(const char *string, void *element, hashtable *table);
-hashtable * init_hashtable();
-void * lookfor_hashtable(const char *string, hashtable *table);
-void dump_hashtable(hashtable *table);
-int del_hashtable(hashtable *table);
-
-
-/*cstring functions*/
-char *hexdi2s(int num);
-char *hexdui2s(unsigned int num);
-char *hexdl2s(long num);
-char *hexdul2s(unsigned long num);
-char *hexdll2s(long long num);
-char *hexdull2s(unsigned long long num);
 
 
 #endif

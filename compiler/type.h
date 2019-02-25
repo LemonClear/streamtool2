@@ -65,5 +65,4 @@ typedef short int half; //16bit
 /*riscv bus masks*/
 
 
-
 #endif

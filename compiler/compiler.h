@@ -21,7 +21,6 @@
  * This file defines all compiler related things, like gcc builtins
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
 #include "type.h"
 
 /**
