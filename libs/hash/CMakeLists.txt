@@ -5,8 +5,11 @@ include_directories(
         "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
+# source code
+AUX_SOURCE_DIRECTORY(. DIR_SRCS)
+
 # add the main library
-add_library(hashtable STATIC hashtable.c)
+add_library(hashtable STATIC ${DIR_SRCS})
 
 
 # installation
