@@ -5,7 +5,7 @@ if (USE_ANDES)
 endif (USE_ANDES)
 
 ## SiFive
-option (USE_SIFIVE "USE SIFIVE Core." OFF)
+option (USE_SIFIVE "USE SIFIVE Core." ON)
 if (USE_SIFIVE)
         add_subdirectory (sifive)
-endif (USE_SIFVE)
+endif (USE_SIFIVE)

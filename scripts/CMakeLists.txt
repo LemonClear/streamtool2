@@ -1,11 +1,7 @@
-##FP16 Table
-if (USE_FP16)
-        add_subdirectory (maketable)
-        set (EXTRA_LIBS ${EXTRA_LIBS} maketable)
-endif (USE_FP16)
+## maketable
+option (USE_MAKETABLE "Open MAKETABLE." ON)
+if (USE_MAKETABLE)
 
-##FP32 Table
-if (USE_FP32)
         add_subdirectory (maketable)
         set (EXTRA_LIBS ${EXTRA_LIBS} maketable)
-endif (USE_FP32)
+endif (USE_MAKETABLE)
