@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __RISCV_H__
-#define __RISCV_H__
+#ifndef __SI32_H__
+#define __SI32_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This file defines riscv core simulator things
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -27,4 +27,4 @@
 
 
 
-#endif
+#endif /*__SI32_H__*/

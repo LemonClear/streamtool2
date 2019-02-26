@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __RISCV_H__
-#define __RISCV_H__
+#ifndef __NX25_H__
+#define __NX25_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This file defines riscv core simulator things
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -27,4 +27,4 @@
 
 
 
-#endif
+#endif /*__NX25_H__*/
