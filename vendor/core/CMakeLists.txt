@@ -11,7 +11,7 @@ if (USE_RISCV)
 endif (USE_RISCV)
 
 ## DEMO
-option (USE_DEMO "USE DEMO." OFF)
-if (USE_DEMO)
-        add_subdirectory (demo)
-endif (USE_DEMO)
+option (USE_DEMOCORE "USE DEMO." OFF)
+if (USE_DEMOCORE)
+        add_subdirectory (demo_core)
+endif (USE_DEMOCORE)

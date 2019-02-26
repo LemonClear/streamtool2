@@ -9,9 +9,9 @@ include_directories(
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # add the main library
-add_library(demo SHARED ${DIR_SRCS})
+add_library(demo_core SHARED ${DIR_SRCS})
 
 
 # installation
-install (TARGETS demo DESTINATION lib)
-install (FILES demo.h DESTINATION include)
+install (TARGETS demo_core DESTINATION lib)
+install (FILES demo_core.h DESTINATION include)

@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __DEMO_H__
-#define __DEMO_H__
+#ifndef __DEMO_CORE_H__
+#define __DEMO_CORE_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This file defines arm64 core simulator things
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -27,4 +27,4 @@
 
 
 
-#endif /*__DEMO_H__*/
+#endif /*__DEMO_CORE_H__*/
