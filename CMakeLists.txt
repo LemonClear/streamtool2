@@ -28,8 +28,11 @@ link_directories (
 include_directories (
         "${PROJECT_BINARY_DIR}"
         "${PROJECT_SOURCE_DIR}/compiler"
+        "${PROJECT_SOURCE_DIR}/libs"
         "${PROJECT_SOURCE_DIR}/tools"
-        "${PROJECT_SOURCE_DIR}/lib"
+        "${PROJECT_SOURCE_DIR}/vendor"
+        "${PROJECT_SOURCE_DIR}/scripts"
+        "${PROJECT_SOURCE_DIR}/simulator"
 )
 
 # 7.Configure a header file to pass some of the CMake settings to the source code
@@ -39,8 +42,8 @@ configure_file (
 )
 
 # 8.Add Sub-Directories
-add_subdirectory (libs)
 add_subdirectory (test)
+add_subdirectory (libs)
 add_subdirectory (tools)
 add_subdirectory (vendor)
 add_subdirectory (scripts)
