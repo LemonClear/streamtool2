@@ -15,16 +15,15 @@
 # limitations under the License.
 #
 */
-#ifndef __ARM64_H__
-#define __ARM64_H__
+#ifndef __CORTEX_M0_H__
+#define __CORTEX_M0_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This file defines arm64 core simulator things
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 
 #include "cerr.h"
 
 
 
 
-#endif
+#endif /*__CORTEX_M0_H__*/

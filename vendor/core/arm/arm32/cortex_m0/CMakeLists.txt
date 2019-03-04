@@ -9,9 +9,9 @@ include_directories(
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # add the main library
-add_library(demo_core SHARED ${DIR_SRCS})
+add_library(cortex_m0 SHARED ${DIR_SRCS})
 
 
 # installation
-install (TARGETS demo_core DESTINATION lib)
-install (FILES demo_core.h DESTINATION include)
+install (TARGETS cortex_m0 DESTINATION lib)
+install (FILES cortex_m0.h DESTINATION include)

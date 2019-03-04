@@ -1,17 +1,13 @@
-# add the binary tree directory to the search path for
-# include files
-include_directories(
-        "${CMAKE_CURRENT_BINARY_DIR}"
-        "${CMAKE_CURRENT_SOURCE_DIR}"
-)
+## A17
+option (USE_A17 "Use A17." ON)
+if (USE_A17)
+        add_subdirectory (cortex_a17)
+        set (EXTRA_LIBS ${EXTRA_LIBS} cortex_a17 CACHE INTERNAL "Libraries.")
+endif (USE_A17)
 
-# source code
-AUX_SOURCE_DIRECTORY(. DIR_SRCS)
-
-# add the main library
-add_library(arm32 SHARED ${DIR_SRCS})
-
-
-# installation
-install (TARGETS arm32 DESTINATION lib)
-install (FILES arm32.h DESTINATION include)
+## M0
+option (USE_M0 "Use M0." OFF)
+if (USE_M0)
+        add_subdirectory (cortex_m0)
+        set (EXTRA_LIBS ${EXTRA_LIBS} cortex_m0 CACHE INTERNAL "Libraries.")
+endif (USE_M0)

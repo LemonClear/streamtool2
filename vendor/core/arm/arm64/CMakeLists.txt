@@ -1,17 +1,13 @@
-# add the binary tree directory to the search path for
-# include files
-include_directories(
-        "${CMAKE_CURRENT_BINARY_DIR}"
-        "${CMAKE_CURRENT_SOURCE_DIR}"
-)
+## A53
+option (USE_A53 "Use A53." ON)
+if (USE_A53)
+        add_subdirectory (cortex_a53)
+        set (EXTRA_LIBS ${EXTRA_LIBS} cortex_a53 CACHE INTERNAL "Libraries.")
+endif (USE_A53)
 
-# source code
-AUX_SOURCE_DIRECTORY(. DIR_SRCS)
-
-# add the main library
-add_library(arm64 SHARED ${DIR_SRCS})
-
-
-# installation
-install (TARGETS arm64 DESTINATION lib)
-install (FILES arm64.h DESTINATION include)
+## A73
+option (USE_A73 "Use A73." OFF)
+if (USE_A73)
+        add_subdirectory (cortex_a73)
+        set (EXTRA_LIBS ${EXTRA_LIBS} cortex_a73 CACHE INTERNAL "Libraries.")
+endif (USE_A73)
