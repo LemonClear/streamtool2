@@ -1,23 +1,22 @@
 # Header Files.
 include_directories (
-        "${PROJECT_BINARY_DIR}"
-        "${PROJECT_SOURCE_DIR}/compiler"
-        "${PROJECT_SOURCE_DIR}/tools"
-        "${PROJECT_SOURCE_DIR}/lib"
+        "${CMAKE_CURRENT_BINARY_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 # Add Sub-Directories
 option (USE_BOARD "Use BOARD." ON)
 if (USE_BOARD)
         add_subdirectory (board)
-        set (EXTRA_LIBS ${EXTRA_LIBS} memory)
+        set (EXTRA_LIBS ${EXTRA_LIBS} board CACHE INTERNAL "Libraries.")
 endif(USE_BOARD)
 
-# Compose Executable
+# Source Code
 aux_source_directory (. DIR_SRCS)
+
+# Compose The Executable
 add_executable (simulator ${DIR_SRCS})
 target_link_libraries (simulator ${EXTRA_LIBS})
 
-# Add the make install targets
+# installation
 install (TARGETS simulator DESTINATION bin)
-install (FILES "${PROJECT_BINARY_DIR}/SimulatorConfig.h" DESTINATION include)

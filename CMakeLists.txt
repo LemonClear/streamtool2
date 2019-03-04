@@ -6,13 +6,13 @@ set (SIMU_VERSION_MAJOR 2019)
 set (SIMU_VERSION_MINOR 0)
 
 # 2.Debug Options.
-set(CMAKE_BUILE_TYPE DEBUG)
-set(CMAKE_C_FLAGS_DEBUG "-g -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC")
-set(CMAKE_CXX_FLAGS_DEBUG "-g -m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC")
+set (CMAKE_BUILE_TYPE DEBUG)
+set (CMAKE_C_FLAGS_DEBUG "-g -m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC")
+set (CMAKE_CXX_FLAGS_DEBUG "-g -m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC")
 
 # 3.Compile Options.
-set(CMAKE_C_FLAGS "-m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC -lpthread")
-set(CMAKE_CXX_FLAGS "-m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC -lpthread")
+set (CMAKE_C_FLAGS "-m64 -pipe -O2 -Wall -W -D_REENTRANT -fPIC -lpthread")
+set (CMAKE_CXX_FLAGS "-m64 -pipe -frtti -std=c++11 -O2 -Wall -W -D_REENTRANT -fPIC -lpthread")
 
 # 4.Directories.
 set (OUTPUT_PATH ${PROJECT_BINARY_DIR}/out)
@@ -20,6 +20,7 @@ set (EXECUTABLE_OUTPUT_PATH ${OUTPUT_PATH}/bin)
 set (LIBRARY_OUTPUT_PATH ${OUTPUT_PATH}/lib)
 
 # 5.Lib Linkage Path.
+set (EXTRA_LIBS "${EXTRA_LIBS}" CACHE INTERNAL "Libraries.")
 link_directories (
         "${OUTPUT_PATH}"
 )
@@ -54,16 +55,10 @@ include (CheckFunctionExists)
 check_function_exists (log HAVE_LOG)
 check_function_exists (exp HAVE_EXP)
 
-# 10.Compose Executable
-aux_source_directory (. DIR_SRCS)
-add_executable (simulator ${DIR_SRCS})
-target_link_libraries (simulator ${EXTRA_LIBS})
-
-# 11.Add the make install targets
-install (TARGETS simulator DESTINATION bin)
+# 10.Add the make install targets
 install (FILES "${PROJECT_BINARY_DIR}/SimulatorConfig.h" DESTINATION include)
 
-# 12.Build a CPack driven installer package
+# 11.Build a CPack driven installer package
 include (InstallRequiredSystemLibraries)
 set (CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
 set (CPACK_PACKAGE_VERSION_MAJOR "${SIMU_VERSION_MAJOR}")
