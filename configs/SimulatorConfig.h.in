@@ -2,14 +2,25 @@
 #define SIMU_VERSION_MAJOR @SIMU_VERSION_MAJOR@
 #define SIMU_VERSION_MINOR @SIMU_VERSION_MINOR@
 
-#cmakedefine USE_DEBUGGER
-#cmakedefine USE_LOGGER
+// libs
 #cmakedefine USE_OF
+#cmakedefine USE_MEM
 #cmakedefine USE_FP16
 #cmakedefine USE_FP32
 #cmakedefine USE_HASH
 #cmakedefine USE_STRING
 #cmakedefine USE_MATH
+
+// tools
+#cmakedefine USE_DEBUGGER
+#cmakedefine USE_LOGGER
+
+// vendor
+#cmakedefine USE_NOC1
+#cmakedefine USE_NOC2
+#cmakedefine USE_NOC3
+#cmakedefine USE_NOC4
+#cmakedefine USE_N25
 
 // does the platform provide exp and log functions?
 #cmakedefine HAVE_LOG
