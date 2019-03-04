@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __NP_H__
-#define __NP_H__
+#ifndef __NCP_TOP_H__
+#define __NCP_TOP_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This file defines all neural co-processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -72,4 +72,4 @@
 #define NCOP_DATA2_MASK5 0xFFF00000
 
 
-#endif
+#endif /*__NCP_TOP_H__*/

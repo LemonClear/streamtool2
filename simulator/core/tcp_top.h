@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __TP_H__
-#define __TP_H__
+#ifndef __TCP_INTERFACE_H__
+#define __TCP_INTERFACE_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This file defines all transmition co-processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -72,4 +72,4 @@
 #define TCOP_DATA2_MASK5 0xFFF00000
 
 
-#endif
+#endif /*__TCP_INTERFACE_H__*/

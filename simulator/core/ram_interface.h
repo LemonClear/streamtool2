@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __RAM_H__
-#define __RAM_H__
+#ifndef __RAM_INTERFACE_H__
+#define __RAM_INTERFACE_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This file defines all ram register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -72,4 +72,4 @@
 #define RAM_DATA2_MASK5 0xFFF00000
 
 
-#endif
+#endif /*__RAM_INTERFACE_H__*/

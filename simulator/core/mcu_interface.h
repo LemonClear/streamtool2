@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __CP_H__
-#define __CP_H__
+#ifndef __MCU_INTERFACE_H__
+#define __MCU_INTERFACE_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * This file defines all control processor register masks
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -72,4 +72,4 @@
 #define CTLP_DATA2_MASK5 0xFFF00000
 
 
-#endif
+#endif /*__MCU_INTERFACE_H__*/
