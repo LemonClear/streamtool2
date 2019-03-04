@@ -2,9 +2,9 @@
 set (CASE_DIR ${CASE_DIR} case)
 set (DATA_DIR ${DATA_DIR} data)
 
-##Test Config
-option (USE_TEST "USE Test." ON)
-if (USE_TEST)
+## case and data
+option (USE_CASE "USE Case and Data." ON)
+if (USE_CASE)
         # add the command to generate the source code
         add_custom_command (
                 OUTPUT COPY_RES
@@ -13,4 +13,10 @@ if (USE_TEST)
         )
         # target
         add_custom_target(CopyTask ALL DEPENDS COPY_RES)
-endif (USE_TEST)
+endif (USE_CASE)
+
+## auto test
+option (USE_AUTOTEST "USE Autotest." ON)
+if (USE_AUTOTEST)
+        add_subdirectory (autotest)
+endif (USE_AUTOTEST)
