@@ -15,8 +15,8 @@
 # limitations under the License.
 #
 */
-#ifndef __DEMO_NOC_H__
-#define __DEMO_NOC_H__
+#ifndef __NOC1_H__
+#define __NOC1_H__
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * This file defines noc1 simulator things
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -25,4 +25,4 @@
 
 
 
-#endif /*__DEMO_NOC_H__*/
+#endif /*__NOC1_H__*/

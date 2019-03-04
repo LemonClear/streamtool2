@@ -9,9 +9,9 @@ include_directories(
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # add the main library
-add_library(demo_noc SHARED ${DIR_SRCS})
+add_library(noc2 SHARED ${DIR_SRCS})
 
 
 # installation
-install (TARGETS demo_noc DESTINATION lib)
-install (FILES demo_noc.h DESTINATION include)
+install (TARGETS noc2 DESTINATION lib)
+install (FILES noc2.h DESTINATION include)

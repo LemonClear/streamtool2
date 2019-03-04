@@ -7,5 +7,5 @@ endif (USE_ARTERIS)
 ## Demo
 option (USE_DEMONOC "USE DEMO." OFF)
 if (USE_DEMONOC)
-        add_subdirectory (demo_noc)
+        add_subdirectory (demonoc)
 endif (USE_DEMONOC)
