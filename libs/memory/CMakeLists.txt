@@ -9,7 +9,7 @@ include_directories(
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # add the main library
-add_library(cmemory STATIC ${DIR_SRCS})
+add_library(cmemory SHARED ${DIR_SRCS})
 
 
 # installation

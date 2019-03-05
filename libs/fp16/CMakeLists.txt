@@ -16,7 +16,7 @@ include_directories(
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # add the main library
-add_library(fp16 STATIC ${DIR_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/fp16_table.h)
+add_library(fp16 SHARED ${DIR_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/fp16_table.h)
 
 
 # installation

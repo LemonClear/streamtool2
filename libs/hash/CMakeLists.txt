@@ -9,7 +9,7 @@ include_directories(
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 
 # add the main library
-add_library(hashtable STATIC ${DIR_SRCS})
+add_library(hashtable SHARED ${DIR_SRCS})
 
 
 # installation
