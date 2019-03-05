@@ -29,4 +29,5 @@ aux_source_directory (. DIR_SRCS)
 ## GENERATE EXECUTIVE OR LIBRARIES
 # compose binary
 add_library(core STATIC ${DIR_SRCS})
+target_link_libraries (core ncp tcp)
 add_dependencies (core ncp tcp)
