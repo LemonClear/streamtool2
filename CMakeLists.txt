@@ -43,6 +43,8 @@ include_directories (
         "${PROJECT_SOURCE_DIR}/libs/string"
         "${PROJECT_SOURCE_DIR}/tools/logger"
 )
+# speedup
+set (CMAKE_DEPENDS_IN_PROJECT_ONLY ON)
 
 
 ## SYSTEM CHECKSOME SETTING
