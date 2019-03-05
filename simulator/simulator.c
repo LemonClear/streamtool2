@@ -81,6 +81,9 @@ static int parse_commandline(int argc, char *argv[], param *params)
 
         /*begin*/
         //FIXME: todo...
+        //run locally, default
+        //run distributed model, server mode
+        //run distributed model, client mode
 
 ret_commands:
         return ret;

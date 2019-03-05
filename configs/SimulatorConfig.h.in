@@ -2,6 +2,21 @@
 #define SIMU_VERSION_MAJOR @SIMU_VERSION_MAJOR@
 #define SIMU_VERSION_MINOR @SIMU_VERSION_MINOR@
 
+// distributed model
+#cmakedefine USE_DISTRIBUTED
+#cmakedefine USE_KERNEL
+
+// sub ips
+#cmakedefine USE_BOARD
+#define BOARD_COUNT @BOARD_COUNT@
+#cmakedefine USE_CHIP
+#define CHIP_COUNT @CHIP_COUNT@
+#cmakedefine USE_CORE
+#define CORE_COUNT @CORE_COUNT@
+#cmakedefine USE_NOC
+#cmakedefine USE_NCP
+#cmakedefine USE_TCP
+
 // libs
 #cmakedefine USE_OF
 #cmakedefine USE_MEM
