@@ -23,3 +23,4 @@ aux_source_directory (. DIR_SRCS)
 ## GENERATE EXECUTIVE OR LIBRARIES
 # compose binary
 add_library(board STATIC ${DIR_SRCS})
+add_dependencies (board chip)

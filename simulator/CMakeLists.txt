@@ -30,6 +30,7 @@ aux_source_directory (. DIR_SRCS)
 # compose binary.
 add_executable (simulator ${DIR_SRCS})
 target_link_libraries (simulator ${EXTRA_LIBS})
+add_dependencies (simulator kernel)
 
 
 ## INSTALLATION THINGS
