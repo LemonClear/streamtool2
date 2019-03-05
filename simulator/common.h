@@ -25,6 +25,7 @@
 #include <pthread.h>
 #include "type.h"
 #include "hashtable.h"
+#include "SimulatorConfig.h"
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *
