@@ -42,7 +42,7 @@
  * @num: digital of int type
  *
  */
-inline char *hexdi2s(int num)
+char *hexdi2s(int num)
 {
         char *s = NULL;
         int hex_size = 0;
@@ -61,7 +61,7 @@ ret_s:
  * @num: digital of unsigned int type
  *
  */
-inline char *hexdui2s(unsigned int num)
+char *hexdui2s(unsigned int num)
 {
         char *s = NULL;
         int hex_size = 0;
@@ -80,7 +80,7 @@ ret_s:
  * @num: digital of long type
  *
  */
-inline char *hexdl2s(long num)
+char *hexdl2s(long num)
 {
         char *s = NULL;
         int hex_size = 0;
@@ -99,7 +99,7 @@ ret_s:
  * @num: digital of unsigned long type
  *
  */
-inline char *hexdul2s(unsigned long num)
+char *hexdul2s(unsigned long num)
 {
         char *s = NULL;
         int hex_size = 0;
@@ -118,7 +118,7 @@ ret_s:
  * @num: digital of long long type
  *
  */
-inline char *hexdll2s(long long num)
+char *hexdll2s(long long num)
 {
         char *s = NULL;
         int hex_size = 0;
@@ -137,7 +137,7 @@ ret_s:
  * @num: digital of unsigned long long type
  *
  */
-inline char *hexdull2s(unsigned long long num)
+char *hexdull2s(unsigned long long num)
 {
         char *s = NULL;
         int hex_size = 0;
