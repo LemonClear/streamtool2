@@ -23,6 +23,7 @@
 #include "common.h"
 #include "of.h"
 #include "logger.h"
+#include "cstring.h"
 
 
 /**
