@@ -24,7 +24,7 @@
 
 #include <pthread.h>
 #include "type.h"
-#include "library.h"
+#include "hashtable.h"
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * *

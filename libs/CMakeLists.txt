@@ -9,7 +9,7 @@ endif (USE_OF)
 option (USE_MEM "Use Memory Management Mode." ON)
 if (USE_MEM)
         add_subdirectory (memory)
-        set (EXTRA_LIBS ${EXTRA_LIBS} memory CACHE INTERNAL "Libraries.")
+        set (EXTRA_LIBS ${EXTRA_LIBS} cmemory CACHE INTERNAL "Libraries.")
 endif (USE_MEM)
 
 ##FP16 Table
@@ -30,14 +30,14 @@ endif (USE_FP32)
 option (USE_HASH "Use Private Hash-Func Implementation." ON)
 if (USE_HASH)
         add_subdirectory (hash)
-        set (EXTRA_LIBS ${EXTRA_LIBS} hash CACHE INTERNAL "Libraries.")
+        set (EXTRA_LIBS ${EXTRA_LIBS} hashtable CACHE INTERNAL "Libraries.")
 endif (USE_HASH)
 
 ##CString Func
 option (USE_STRING "Use Private String-Func Implementation." ON)
 if (USE_STRING)
         add_subdirectory (string)
-        set (EXTRA_LIBS ${EXTRA_LIBS} string CACHE INTERNAL "Libraries.")
+        set (EXTRA_LIBS ${EXTRA_LIBS} cstring CACHE INTERNAL "Libraries.")
 endif (USE_STRING)
 
 ##MathFunctions
