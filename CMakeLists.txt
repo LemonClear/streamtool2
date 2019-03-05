@@ -26,7 +26,7 @@ set (LIBRARY_OUTPUT_PATH ${OUTPUT_PATH}/lib)
 
 
 ## LINKAGE SETTING
-# libraries to link.
+# library to link.
 set (EXTRA_LIBS "${EXTRA_LIBS}" CACHE INTERNAL "Libraries.")
 # library path.
 link_directories (
@@ -37,6 +37,11 @@ include_directories (
         "${PROJECT_BINARY_DIR}/configs"
         "${PROJECT_SOURCE_DIR}/compiler"
         "${PROJECT_SOURCE_DIR}/simulator"
+
+        "${PROJECT_SOURCE_DIR}/libs/of"
+        "${PROJECT_SOURCE_DIR}/libs/hash"
+        "${PROJECT_SOURCE_DIR}/libs/string"
+        "${PROJECT_SOURCE_DIR}/tools/logger"
 )
 
 
